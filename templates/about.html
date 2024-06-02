@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <head>
+        {% block title %} <title>About Us </title>{% endblock %}
+
+        <style>
+            #about{
+                display: grid;
+                padding: 2rem;
+                grid-template-columns: 600px 2fr;
+                gap: 0.7rem;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                
+            }
+            #aboutImage{
+                max-width: 100%;
+                height: auto;
+            }
+
+            @media (max-width: 650px) {
+                #about {
+                  display: block;
+                  font-size: 80%;
+                }
+            }
+        </style>
+    </head>
+    <div class="container-fluid" id="about">
+        <div class="container-fluid" class="aboutImage" >
+            <img class="img-fluid"  src='{% static "/home-img.svg" %}' alt="" height="700" width="700"> 
+        </div>
+        <div class="container-fluid" id="aboutContent">
+
+            <p>We leave no stone unturned in taking care of those who are in need. The doctors with years of experience in the medical field are there to help you.We leave no stone unturned in taking care of those who are in need. The doctors with years of experience in the medical field are there to help you.We leave no stone unturned in taking care of those who are in need. The doctors with years of experience in the medical field are there to help you.</p>
+            <p>Let us all togther be there and work for it. Hello </p>
+        </div>
+
+    </div>
+{% endblock %}
