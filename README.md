@@ -15,6 +15,49 @@ Github: https://github.com/Its-Puja-Singh/HackathonBackend
 * PostgreSQL (An RDBMS that uses SQL)
 * Python and Django
 
+## Installation
+
+To get started with DjangoEHR, follow these installation steps:
+
+1. Clone the repository to your local machine:
+
+    ```bash
+    git clone https://github.com/yourusername/djangoehr.git
+    ```
+
+2. Create a virtual environment and activate it:
+
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
+
+3. Install project dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Configure your database settings in the `settings.py` file.
+
+5. Apply database migrations:
+
+    ```bash
+    python manage.py migrate
+    ```
+
+6. Create a superuser account:
+
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+7. Start the development server:
+
+    ```bash
+    python manage.py runserver
+    ```
+
 ## Steps to run the project in your machine
 * Clone or download the repository.
 * Create a database named hackfest in postgresql.
