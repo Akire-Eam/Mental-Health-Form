@@ -101,6 +101,40 @@
 }
 </style>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var employedRadio = document.querySelectorAll('input[name="employed"]');
+        var employmentDetails = document.getElementById('employmentDetails');
+        var religiousRadio = document.querySelectorAll('input[name="religious"]');
+        var religiousDetails = document.getElementById('religiousDetails');
+        var religiousDetailsNo = document.getElementById('religiousDetailsNo');
+        
+
+        employedRadio.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (this.value === 'yes') {
+                    employmentDetails.style.display = 'block';
+                } else {
+                    employmentDetails.style.display = 'none';
+                }
+            });
+        });
+
+        religiousRadio.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (this.value === 'yes') {
+                    religiousDetails.style.display = 'block';
+                    religiousDetailsNo.style.display = 'none';
+                } else if (this.value === 'no') {
+                    religiousDetailsNo.style.display = 'block';
+                    religiousDetails.style.display = 'none';
+                } else {
+                    religiousDetailsNo.style.display = 'none';
+                    religiousDetails.style.display = 'none';
+                }
+            });
+        });
+    });
+
     function cancel(){
         window.location.href="/doctor/patient-list/patient/{{ patientId }}";  
     }
@@ -134,91 +168,501 @@
                                                 {{message}}
                                             </div>
                                         {% endif %}
+                                        <div class="form-group">
+                                            <h3>Treatment History</h3>
+                                        </div>
                                         </div>
                                         
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <input type="number" class="form-control" name="height" placeholder="Height in cm *"  value=""  required/>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" name="weight" placeholder="Weight in kg *" value="" required/>
-                                            </div>
-                                            {% if patient.gender == "Female" %}
-                                                <div class="form-group">
-                                                    <select class="form-control" id="preg" name="pregnancyStatus"  onClick="isPregnant()" required>
-                                                        <option class="hidden" value="" selected disabled>Pregnancy Status</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                    </select>
+                                                <label>Are you currently receiving psychiatric services, professional counseling or psychotherapy elsewhere?</label>
+                                                <div>
+                                                    <label><input type="radio" name="psychiatricServices" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="psychiatricServices" value="no" required> No</label>
                                                 </div>
-                                                <div class="form-group" style="display:none;" id="pregDate">
-                                                    <input placeholder="Expected Delivery Date*" type="text" name="estimatedDelivery" class="form-control" onfocus="(this.type='date')"
-                                                    onblur="(this.type='text')"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Have you had previous psychotherapy?</label>
+                                                <div>
+                                                    <label><input type="radio" name="previousPsychotherapy" value="no" required> No</label>
+                                                    <label><input type="radio" name="previousPsychotherapy" value="yes" required> Yes, with (previous therapist’s name)</label>
                                                 </div>
-                                            {% endif %}
-                                            <div class="form-group">
-                                                <textarea class="form-control" name="allergies" placeholder="Allergies *" rows="5" value="" required ></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="bloodPressure" placeholder="Blood Pressure in mm"   value="" step="any" required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" name="pulseRate" placeholder="Pulse Rate in BPM"   value=""  step="any" required/>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" name="bodyTemprature" placeholder="Body Temprature in (°F) " value="" step="any" required/>
+                                                <input type="text" class="form-control" name="previousTherapist" placeholder="Previous therapist's name" value=""/>
                                             </div>
                                         </div>
+            
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <select class="form-control" name="isAlcolohic" required>
-                                                    <option class="hidden" value=""  selected disabled>Alcoholic</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                
+                                                <label>Are you currently taking prescribed psychiatric medication (antidepressants or others)?</label>
+                                                <div>
+                                                    <label><input type="radio" name="psychiatricMedication" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="psychiatricMedication" value="no" required> No</label>
+                                                </div>
                                             </div>
                                             <div class="form-group">
+                                                <label>If yes, please list:</label>
+                                                <input type="text" class="form-control" name="medicationList" placeholder="Medication list" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Prescribed by:</label>
+                                                <input type="text" class="form-control" name="prescribedBy" placeholder="Prescribed by" value=""/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Health And Social Information</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Do you currently have a primary physician?</label>
+                                                <div>
+                                                    <label><input type="radio" name="primaryPhysician" value="yes" required> Yes</label>
+                                                    <input type="text" class="form-control" name="primaryPhysicianName" placeholder="If yes, who is it?" value=""/>
+                                                    <label><input type="radio" name="primaryPhysician" value="no" required> No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Are you currently seeing more than one medical health specialist?</label>
+                                                <div>
+                                                    <label><input type="radio" name="multipleSpecialists" value="yes" required> Yes</label>
+                                                    <input type="text" class="form-control" name="specialistList" placeholder="If yes, please list" value=""/>
+                                                    <label><input type="radio" name="multipleSpecialists" value="no" required> No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>When was your last physical/medical examination?</label>
+                                                <input type="text" class="form-control" name="lastExamination" placeholder="Last physical/medical examination" value="" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Please list any persistent physical symptoms or health concerns:</label>
+                                                <input type="text" class="form-control" name="persistentSymptoms" placeholder="Health concerns" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Are you currently on medication to manage a physical health concern?</label>
+                                                <input type="text" class="form-control" name="physicalMedication" placeholder="If yes, please list" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>What time do you sleep? </label>
+                                                <input type="text" class="form-control" name="sleepTime" placeholder="Sleep time" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Wake up? </label>
+                                                <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Are you having any problems with your sleep habits?</label>
+                                                <div>
+                                                    <label><input type="radio" name="sleepProblems" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="sleepProblems" value="no" required> No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>If yes, check where applicable:</label>
+                                                <div>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too little"> Sleeping too little</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too much"> Sleeping too much</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Disturbing dreams"> Disturbing dreams</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Poor quality sleep"> Poor quality sleep</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Others"> Others, please indicate</label><br>
+                                                    <input type="text" class="form-control" name="otherSleepProblems" placeholder="Other sleep problems" value=""/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>How many times per week do you exercise?</label>
+                                                <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Approximately how long each time?</label>
+                                                <input type="text" class="form-control" name="exerciseDuration" placeholder="Duration" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Are you having any difficulty with appetite or eating habits?</label>
+                                                <div>
+                                                    <label><input type="radio" name="eatingHabits" value="no" required> No</label>
+                                                    <label><input type="radio" name="eatingHabits" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>If yes, check where applicable:</label>
+                                                <div>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Eating less"> Eating less</label><br>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Eating more"> Eating more</label><br>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Bingeing"> Bingeing</label><br>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Restricting"> Restricting</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Have you experienced significant weight change in the last 2 months?</label>
+                                                <div>
+                                                    <label><input type="radio" name="weightChange" value="no" required> No</label>
+                                                    <label><input type="radio" name="weightChange" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Do you regularly use alcohol?</label>
+                                                <div>
+                                                    <label><input type="radio" name="alcoholUse" value="no" required> No</label>
+                                                    <label><input type="radio" name="alcoholUse" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>In a typical month, how often do you have 4 or more alcohol/liquor intakes in a 24 hour period?</label>
+                                                <input type="text" class="form-control" name="alcoholFrequency" placeholder="Frequency" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Are you drinking (alcohol/liquor) alone? Or with the group?</label>
+                                                <input type="text" class="form-control" name="drinkingAloneOrGroup" placeholder="Alone or with group" value=""/>
+                                            </div>
+                                            
+                                        </div>
+            
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>How often do you engage in recreational drug use?</label>
+                                                <div>
+                                                    <label><input type="radio" name="drugUseFrequency" value="daily" required> Daily</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="weekly" required> Weekly</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="monthly" required> Monthly</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="rarely" required> Rarely</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="never" required> Never</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Do you smoke cigarettes or use other tobacco products?</label>
+                                                <div>
+                                                    <label><input type="radio" name="tobaccoUse" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="tobaccoUse" value="no" required> No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>How many sticks of cigarettes a day?</label>
+                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Have you had them in the past?</label>
+                                                <div>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="frequently" required> Frequently</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="sometimes" required> Sometimes</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="rarely" required> Rarely</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="never" required> Never</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Are you currently in a romantic relationship?</label>
+                                                <div>
+                                                    <label><input type="radio" name="romanticRelationship" value="no" required> No</label>
+                                                    <label><input type="radio" name="romanticRelationship" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>If yes, how long have you been in this relationship?</label>
+                                                <input type="text" class="form-control" name="relationshipDuration" placeholder="Duration" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>On a scale of 1-10 (10 being the highest quality), how would you rate your current relationship?</label>
+                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value=""/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lifeChanges">In the last year, have you experienced any significant life changes or stressors? If yes, please explain:</label>
+                                                <textarea class="form-control" id="lifeChanges" name="lifeChanges" rows="3"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Have you ever experienced any of the following? (Encircle “Yes” if it applies to you otherwise encircle “No”)</label>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Extreme depressed mood <input type="radio" name="extremeDepressedMood" value="yes"> Yes <input type="radio" name="extremeDepressedMood" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Dramatic mood swings <input type="radio" name="dramaticMoodSwings" value="yes"> Yes <input type="radio" name="dramaticMoodSwings" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Rapid speech <input type="radio" name="rapidSpeech" value="yes"> Yes <input type="radio" name="rapidSpeech" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Extreme anxiety <input type="radio" name="extremeAnxiety" value="yes"> Yes <input type="radio" name="extremeAnxiety" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Panic attacks <input type="radio" name="panicAttacks" value="yes"> Yes <input type="radio" name="panicAttacks" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Phobias <input type="radio" name="phobias" value="yes"> Yes <input type="radio" name="phobias" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Sleep disturbances <input type="radio" name="sleepDisturbances" value="yes"> Yes <input type="radio" name="sleepDisturbances" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Hallucinations <input type="radio" name="hallucinations" value="yes"> Yes <input type="radio" name="hallucinations" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Unexplained losses of time <input type="radio" name="unexplainedLossesOfTime" value="yes"> Yes <input type="radio" name="unexplainedLossesOfTime" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Unexplained memory lapses <input type="radio" name="unexplainedMemoryLapses" value="yes"> Yes <input type="radio" name="unexplainedMemoryLapses" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Alcohol/substance abuse <input type="radio" name="alcoholSubstanceAbuse" value="yes"> Yes <input type="radio" name="alcoholSubstanceAbuse" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Frequent body complaints <input type="radio" name="frequentBodyComplaints" value="yes"> Yes <input type="radio" name="frequentBodyComplaints" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Eating disorder <input type="radio" name="eatingDisorder" value="yes"> Yes <input type="radio" name="eatingDisorder" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Body image problems <input type="radio" name="bodyImageProblems" value="yes"> Yes <input type="radio" name="bodyImageProblems" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Repetitive thoughts (e.g., worries, obsessions) <input type="radio" name="repetitiveThoughts" value="yes"> Yes <input type="radio" name="repetitiveThoughts" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Repetitive behaviors (e.g., frequent checking, hand washing) <input type="radio" name="repetitiveBehaviors" value="yes"> Yes <input type="radio" name="repetitiveBehaviors" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Homicidal thoughts <input type="radio" name="homicidalThoughts" value="yes"> Yes <input type="radio" name="homicidalThoughts" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Suicidal thoughts <input type="radio" name="suicidalThoughts" value="yes"> Yes <input type="radio" name="suicidalThoughts" value="no"> No</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">Suicidal attempts <input type="radio" name="suicidalAttempts" value="yes"> Yes <input type="radio" name="suicidalAttempts" value="no"> No</label>
+                                                    <label for="suicidalAttemptsWhen">If yes, when?</label>
+                                                    <textarea class="form-control" id="suicidalAttemptsWhen" name="suicidalAttemptsWhen" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Occupational Information</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Are you currently employed?</label>
+                                                <div>
+                                                    <label><input type="radio" name="employed" value="no" required> No</label>
+                                                    <label><input type="radio" name="employed" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+
+                                            <div id="employmentDetails" style="display: none;">
+                                                <div class="form-group">
+                                                    <label>Who is your current employer/office assignment?</label>
+                                                    <input type="text" class="form-control" name="employer" placeholder="Your current employer/office assignment">
+                                                </div>
                                                 
-                                                <select class="form-control" name="isSmoker" required>
-                                                    
-                                                    <option class="hidden" value=""  selected disabled>Smoker</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
+                                                <div class="form-group">
+                                                    <label>Are you happy with your current position/designation?</label>
+                                                    <input type="text" class="form-control" name="position_happiness" placeholder="Your current position/designation">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>How many years have you been in the service?</label>
+                                                    <input type="number" class="form-control" name="years_in_service" placeholder="Number of years in service">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>How many years have you been in your current position?</label>
+                                                    <input type="number" class="form-control" name="years_in_position" placeholder="Number of years in current position">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Please list any work-related stressors, if there's any</label>
+                                                    <textarea class="form-control" name="work_stressors" rows="3" placeholder="Work-related stressors"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Religious/Spiritual Information</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Do you consider yourself to be religious?</label>
+                                                <div>
+                                                    <label><input type="radio" name="religious" value="no" required> No</label>
+                                                    <label><input type="radio" name="religious" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div id="religiousDetails" style="display: none;">
+                                                <div class="form-group">
+                                                    <label>What is your faith?</label>
+                                                    <input type="text" class="form-control" name="faith" placeholder="Your faith">
+                                                </div>
+                                            </div>
+                                            
+                                            <div id="religiousDetailsNo" style="display: none;">
+                                                <label>Do you consider yourself to be spiritual?</label>
+                                                <div>
+                                                    <label><input type="radio" name="spiritual" value="no" required> No</label>
+                                                    <label><input type="radio" name="spiritual" value="yes" required> Yes</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Family Mental Health History</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Has anyone in your family (either immediate family members or relatives) experienced difficulties with the following?</label>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Difficulty</th>
+                                                            <th>Yes / No</th>
+                                                            <th>Family Member</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Depression</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Depression" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Depression" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="DepressionMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Bipolar disorder</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Bipolar" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Bipolar" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="BipolarMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Anxiety disorder</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Anxiety" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Anxiety" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="AnxietyMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Panic attacks</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Panic" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Panic" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="PanicMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Schizophrenia</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Schizophrenia" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Schizophrenia" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="SchizophreniaMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Alcohol/substance abuse</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Alcohol" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Alcohol" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="AlcoholMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Eating disorders</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Eating" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Eating" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="EatingMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Learning disabilities</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Learning" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Learning" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="LearningMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Trauma history</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Trauma" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Trauma" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="TraumaMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Suicide attempts</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Suicide" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Suicide" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="SuicideMember"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Chronic illness</td>
+                                                            <td>
+                                                                <label><input type="radio" name="Chronic" value="yes"> Yes</label>
+                                                                <label><input type="radio" name="Chronic" value="no"> No</label>
+                                                            </td>
+                                                            <td><input type="text" class="form-control" name="ChronicMember"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Other Information</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="strengths">What do you consider to be your strengths?</label>
+                                                <textarea class="form-control" id="strengths" name="strengths" rows="4"></textarea>
                                             </div>
                                             
                                             <div class="form-group">
-                                                <select class="form-control" name="isDiabetic" required>
-                                                    
-                                                    <option class="hidden" value="" selected disabled>Diabetic</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
+                                                <label for="likeYourself">What do you like most about yourself?</label>
+                                                <textarea class="form-control" id="likeYourself" name="likeYourself" rows="4"></textarea>
                                             </div>
+                                            
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="insurancePlanName" placeholder="Insurance Plan Name*" value="" pattern="[a-zA-Z0-9]*" required/>
+                                                <label for="copingStrategies">What are effective coping strategies that you have learned?</label>
+                                                <textarea class="form-control" id="copingStrategies" name="copingStrategies" rows="4"></textarea>
                                             </div>
+                                            
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="insurancePlanNumber" placeholder="Insurance Number*" value=""  pattern="[a-zA-Z0-9]*" required/ >
+                                                <label>Do you think you will be needing help/assistance from our Psychological Service?</label><br>
+                                                <label><input type="radio" name="needAssistance" value="no"> No</label>
+                                                <label><input type="radio" name="needAssistance" value="yes"> Yes</label>
                                             </div>
+                                            
                                             <div class="form-group">
-                                                <textarea class="form-control" name="previousSurgery" placeholder="Any Previous Surgery *" rows="5" value="" required > </textarea>
+                                                <label for="areaConcern">If yes, at what area or concern?</label>
+                                                <textarea class="form-control" id="areaConcern" name="areaConcern" rows="4"></textarea>
                                             </div>
-                                            <div class="form-group">
-                                                <select class="form-control" name="status" required>
-                                                    <option class="hidden" value=""  selected disabled>Status</option>
-                                                    <option value="Recovered">Recovered</option>
-                                                    <option value="Under Treatment">Under Treatment</option>
-                                                </select>
-                                            </div>
-                                            <input type="submit" class="btnRegister"  value="Register"/>
                                         </div>
+                                        
+
+                                        <div class="col-md-12">
+                                            <input type="submit" class="btnRegister" value="Register"/>
+                                        </div>
+            
+                                    </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+

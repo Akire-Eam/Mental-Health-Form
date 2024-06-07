@@ -30,4 +30,18 @@ class Migration(migrations.Migration):
                 ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
+        migrations.RunSQL(
+            """
+            INSERT INTO public.accounts_role (role)
+            VALUES
+                ('Doctor'),
+                ('Nurse'),
+                ('Admin');
+
+            """
+        ),
+
+        # INSERT INTO public.accounts_userrolemap  (user_id_id,role_id_id)
+        # VALUES
+        #     (1,3);
     ]

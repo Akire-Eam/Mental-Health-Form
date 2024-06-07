@@ -54,7 +54,7 @@ def both_middleware(get_response):
  
 def nursedata_middleware(get_response):
     def nurse(request, patientId):
-        if request.session.get("role") !="Nurse":
+        if request.session.get("role") !=  "Doctor" and request.session.get("role") !="Nurse":
             return redirect('/accounts/loginpage')
         response = get_response(request, patientId)
         return response

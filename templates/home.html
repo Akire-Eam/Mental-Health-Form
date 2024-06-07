@@ -170,6 +170,7 @@
               <a href="/accounts/createnurse/" class="btn btn-primary btn-lg zoomOut" id="button1">Create Nurse </a>
               {% elif request.session.role == 'Doctor' %}
                 <a href="/doctor/patient-list/" class="btn btn-primary btn-lg zoomOut" id="button1">View Patients </a>
+                <a href="/healthcare/newPatient" class="btn btn-primary btn-lg zoomOut" id="button1">Register Patient</a>
               {% else %}
                 <a href="/doctor/patient-list/" class="btn btn-primary btn-lg zoomOut" id="button1">View Patient </a>
                 <a href="/healthcare/newPatient" class="btn btn-primary btn-lg zoomOut" id="button1">Register Patient</a>
