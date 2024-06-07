@@ -69,16 +69,16 @@ To get started with DjangoEHR, follow these installation steps:
 * The accounts_role table is being used as master table so enter data in the same using:
 
 ```
-INSERT INTO table_name (role)
+INSERT INTO public.accounts_role (role)
 VALUES
-    (‘Doctor’),
-    (‘Nurse’),
-    (‘Admin’);
+    ('Doctor'),
+    ('Nurse'),
+    ('Admin');
 ```
 * Then run `python manage.py createsuperuser` to create an admin or superuser.
 And then inside the accounts_userrolemap insert data for the admin you created:
 ```
-INSERT INTO accounts_userrolemap  (user_id,role_id)
+INSERT INTO public.accounts_userrolemap  (user_id_id,role_id_id)
 VALUES
     (1,3);
 ```
