@@ -1,6 +1,13 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- JSignature -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsignature@2.1.2/libs/jquery.ui.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsignature@2.1.2/libs/jSignature.min.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
 {% block title %} <title>Add Patient Record</title>{% endblock %}
 <style>
@@ -147,6 +154,25 @@
             document.getElementById('pregDate').style.display = "none";
         }
     }
+
+    $(document).ready(function() {
+        // Initialize jSignature
+        $("#signature").jSignature();
+
+        // Handle save button click
+        $("#saveSignature").click(function() {
+            var data = $("#signature").jSignature("getData", "svgbase64");
+            console.log(data);
+
+            // Display the signature image
+            $("#signatureImage").html('<img src="data:' + data[0] + ',' + data[1] + '" />');
+        });
+
+        // Handle clear button click
+        $("#clearSignature").click(function() {
+            $("#signature").jSignature("reset");
+        });
+    });
 </script>
 <div class="container register">
                 <div class="row">
@@ -652,8 +678,12 @@
                                                 <textarea class="form-control" id="areaConcern" name="areaConcern" rows="4"></textarea>
                                             </div>
                                         </div>
-                                        
 
+                                        <div id="signature" style="border: 1px solid black; width: 400px; height: 100px;"></div>
+                                        <button id="saveSignature">Save Signature</button>
+                                        <button id="clearSignature">Clear Signature</button>
+                                        <div id="signatureImage"></div>
+                                        
                                         <div class="col-md-12">
                                             <input type="submit" class="btnRegister" value="Register"/>
                                         </div>

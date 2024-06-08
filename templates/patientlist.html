@@ -20,16 +20,15 @@
     body {
         padding: 0px;
         margin: 0;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: Helvetica, sans-serif;
+        background-color: #EEEAE3;
     }
-    table {
-        
-       
+    table { 
         border-collapse: collapse;
-        width: 80%;
-       
-        border: 4px solid #bdc3c7;
+        width: 100%;  
+        border: 4px solid #D8DEE1;
         box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+        background-color: white !important;
     }
     
     tr {
@@ -45,7 +44,7 @@
     }
     
     #header {
-        background-color: #16a085;
+        background-color: #587892;
         color: #fff;
     }
     
@@ -62,6 +61,28 @@
         transform: scale(1.04);
         box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
     }
+
+    .pagination {
+        display: flex;
+        justify-content: center; /* Horizontally center the items */
+        align-items: center; /* Vertically center the items */
+        text-align: center; /* Center the text content */
+    }
+
+    .btn-primary {
+        background-color: #767C80 !important;
+        border-color: #767C80 !important;
+        color: #FFFFFF;
+        transition: transform 80ms ease-in;
+    }
+
+    .btn-info {
+        background-color: #B0A99F !important;
+        border-color: #B0A99F !important;
+        color: #FFFFFF;
+        transition: transform 80ms ease-in;
+    }
+
     
     @media only screen and (max-width: 80%) {
         table {
@@ -72,27 +93,38 @@
 </head>
 
 <body>
-    <table class="table" style="max-width: 80%; margin-left:10%;">
+    <br>
+    <div class="d-flex justify-content-end">
+    <form class="d-flex" method="post" action="{% url 'searchlist' %}" style="margin-right: 3%;">
+        {% csrf_token %}
+        <input type="search" id="form1" class="form-control me-1" name="searched" placeholder="Search" style="width: 5cm;" />
+        <button type="submit" class="btn btn-primary">
+        <i class="fa fa-search"></i>
+        </button>
+    </form>
+    </div>
+    <br>
+    
+
+    <table class="table" style="max-width: 100%;">
         <tr id="header">
+            <!-- <th scope="col"></th> -->
             <th scope="col">Patient Name</th>
             <th scope="col">Phone Number</th>
             <th scope="col">Registration Number</th>
             <th scope="col">Registered Date</th>
 
-            <th scope="col">
-            <form class="d-flex" method="post" action="{% url 'searchlist' %}">
-              {% csrf_token %}
-                <input type="search" id="form1" class="form-control me-1" name="searched" placeholder="Search" style="width:5cm"/>
-                <button type="submit" class="btn btn-primary">
-                  <i class="fa fa-search"></i>
-                </button>
-              </form>
-              
+            <th scope="col">  
             </th>
         </tr>
         {% if data %}
                 {% for patient in data %}
                 <tr>
+                    <!-- <td>
+                        <button type="button" class="btn btn-success exploder">
+                        <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </td> -->
                     <td>{{patient.name}}</td>
                     <td>{{patient.mobile}}</td>
                     <td>{{patient.registrationNumber}}</td>
@@ -104,19 +136,64 @@
                         {% endif %} -->
                     </td>
                 </tr>
+                <!-- <tr class="explode hide">
+                    <td colspan="6" style="background: #CCC; display: none;">
+                        <table class="table table-condensed">
+                          <thead>
+                            <tr>
+                              <th>Form</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                                <td>Personal Information Sheet</td>
+                                <td>
+                                    {% if patient.has_form %}
+                                        <a href="/doctor/patient-list/patient/{{patient.id}}" class="btn btn-info btn-sm" title="View Form">
+                                            <span class="fas fa-eye"></span>
+                                        </a>
+                                        <a href="/doctor/patient-list/patient/{{patient.id}}/edit" class="btn btn-warning btn-sm" title="Edit Form">
+                                            <span class="fas fa-pencil-alt"></span>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm" title="Delete Form">
+                                            <span class="fas fa-trash-alt"></span>
+                                        </button>
+                                    {% else %}
+                                        <button type="button" class="btn btn-primary btn-sm" title="Add Form">
+                                            <span class="fas fa-plus"></span>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                              </tr>
+                            <tr>
+                              <td>Consent Form</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>Counseling</td>
+                            </tr>
+                            <tr>
+                              <td>Treatment Plan</td>
+                              <td></td>
+                            </tr>
+                          </tbody>
+                      </table>
+                     </td>
+                  </tr> -->
                 {% endfor %}
             {% endif %}
     </table>
-    <!-- style="position:fixed; bottom: 30px; right:35%" -->
-    <div class="pagination" style="margin-left: 35%; margin-bottom: 20px;">
+
+    <div class="pagination">
         <span class="step-links">
             {% if data.has_previous %}
                 <a href="?page=1" style="text-decoration: none; color:white;background-color:#16a085;padding:5px; font-weight: 20px; font-size:20px; border:solid 1px #16a085; border-radius:2px;">&laquo; First</a>
                 <a href="?page={{ data.previous_page_number }}" style="text-decoration: none; color:white;background-color:#16a085;padding:5px; font-weight: 20px; font-size:20px; border:solid 1px #16a085; border-radius:2px;">Previous</a>
             {% endif %}
     
-            <span class="current" style="color:#16a085;padding:5px; font-weight: 20px; font-size:20px; margin:2px;">
-                Page {{ data.number }} of {{ data.paginator.num_pages }}.
+            <span class="current" style="color:#587892;padding:5px; font-weight: 20px; font-size:20px; margin:2px;">
+                Page {{ data.number }} of {{ data.paginator.num_pages }}
             </span>
             {% if data.has_next %}
                 <a href="?page={{ data.next_page_number }}" style="text-decoration: none; color:white;background-color:#16a085;padding:5px; font-weight: 20px; font-size:20px; border:solid 1px #16a085; border-radius:2px;">Next</a>
@@ -125,6 +202,25 @@
         </span>
     </div>
 </body>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    
+    $(".exploder").click(function(){
+  
+    $(this).toggleClass("btn-success btn-danger");
+    
+    $(this).children("span").toggleClass("glyphicon-search glyphicon-zoom-out");  
+    
+    $(this).closest("tr").next("tr").toggleClass("hide");
+    
+    if($(this).closest("tr").next("tr").hasClass("hide")){
+        $(this).closest("tr").next("tr").children("td").slideUp();
+    }
+    else{
+        $(this).closest("tr").next("tr").children("td").slideDown(350);
+    }
+    });
+</script> -->
 
 </html>
 {% endblock %}
