@@ -173,6 +173,12 @@
             $("#signature").jSignature("reset");
         });
     });
+
+    function updateDate(input) {
+    if (!input.value) {
+        input.value = null;
+    }
+    }
 </script>
 <div class="container register">
                 <div class="row">
@@ -203,15 +209,15 @@
                                             <div class="form-group">
                                                 <label>Are you currently receiving psychiatric services, professional counseling or psychotherapy elsewhere?</label>
                                                 <div>
-                                                    <label><input type="radio" name="psychiatricServices" value="yes" required> Yes</label>
-                                                    <label><input type="radio" name="psychiatricServices" value="no" required> No</label>
+                                                    <label><input type="radio" name="psychiatricServices" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="psychiatricServices" value="no"> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Have you had previous psychotherapy?</label>
                                                 <div>
-                                                    <label><input type="radio" name="previousPsychotherapy" value="no" required> No</label>
-                                                    <label><input type="radio" name="previousPsychotherapy" value="yes" required> Yes, with (previous therapist’s name)</label>
+                                                    <label><input type="radio" name="previousPsychotherapy" value="no"> No</label>
+                                                    <label><input type="radio" name="previousPsychotherapy" value="yes"> Yes, with (previous therapist’s name)</label>
                                                 </div>
                                                 <input type="text" class="form-control" name="previousTherapist" placeholder="Previous therapist's name" value=""/>
                                             </div>
@@ -221,8 +227,8 @@
                                             <div class="form-group">
                                                 <label>Are you currently taking prescribed psychiatric medication (antidepressants or others)?</label>
                                                 <div>
-                                                    <label><input type="radio" name="psychiatricMedication" value="yes" required> Yes</label>
-                                                    <label><input type="radio" name="psychiatricMedication" value="no" required> No</label>
+                                                    <label><input type="radio" name="psychiatricMedication" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="psychiatricMedication" value="no"> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -245,17 +251,17 @@
                                             <div class="form-group">
                                                 <label>Do you currently have a primary physician?</label>
                                                 <div>
-                                                    <label><input type="radio" name="primaryPhysician" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="primaryPhysician" value="yes"> Yes</label>
                                                     <input type="text" class="form-control" name="primaryPhysicianName" placeholder="If yes, who is it?" value=""/>
-                                                    <label><input type="radio" name="primaryPhysician" value="no" required> No</label>
+                                                    <label><input type="radio" name="primaryPhysician" value="no"> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Are you currently seeing more than one medical health specialist?</label>
                                                 <div>
-                                                    <label><input type="radio" name="multipleSpecialists" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="multipleSpecialists" value="yes"> Yes</label>
                                                     <input type="text" class="form-control" name="specialistList" placeholder="If yes, please list" value=""/>
-                                                    <label><input type="radio" name="multipleSpecialists" value="no" required> No</label>
+                                                    <label><input type="radio" name="multipleSpecialists" value="no"> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -281,8 +287,8 @@
                                             <div class="form-group">
                                                 <label>Are you having any problems with your sleep habits?</label>
                                                 <div>
-                                                    <label><input type="radio" name="sleepProblems" value="yes" required> Yes</label>
-                                                    <label><input type="radio" name="sleepProblems" value="no" required> No</label>
+                                                    <label><input type="radio" name="sleepProblems" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="sleepProblems" value="no"> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -298,7 +304,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>How many times per week do you exercise?</label>
-                                                <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value=""/>
+                                                <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value="0"/>
                                             </div>
                                             <div class="form-group">
                                                 <label>Approximately how long each time?</label>
@@ -307,8 +313,8 @@
                                             <div class="form-group">
                                                 <label>Are you having any difficulty with appetite or eating habits?</label>
                                                 <div>
-                                                    <label><input type="radio" name="eatingHabits" value="no" required> No</label>
-                                                    <label><input type="radio" name="eatingHabits" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="eatingHabits" value="no"> No</label>
+                                                    <label><input type="radio" name="eatingHabits" value="yes"> Yes</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -323,15 +329,15 @@
                                             <div class="form-group">
                                                 <label>Have you experienced significant weight change in the last 2 months?</label>
                                                 <div>
-                                                    <label><input type="radio" name="weightChange" value="no" required> No</label>
-                                                    <label><input type="radio" name="weightChange" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="weightChange" value="no"> No</label>
+                                                    <label><input type="radio" name="weightChange" value="yes"> Yes</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Do you regularly use alcohol?</label>
                                                 <div>
-                                                    <label><input type="radio" name="alcoholUse" value="no" required> No</label>
-                                                    <label><input type="radio" name="alcoholUse" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="alcoholUse" value="no"> No</label>
+                                                    <label><input type="radio" name="alcoholUse" value="yes"> Yes</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -349,38 +355,38 @@
                                             <div class="form-group">
                                                 <label>How often do you engage in recreational drug use?</label>
                                                 <div>
-                                                    <label><input type="radio" name="drugUseFrequency" value="daily" required> Daily</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="weekly" required> Weekly</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="monthly" required> Monthly</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="rarely" required> Rarely</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="never" required> Never</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="daily"> Daily</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="weekly"> Weekly</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="monthly"> Monthly</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="rarely"> Rarely</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="never"> Never</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Do you smoke cigarettes or use other tobacco products?</label>
                                                 <div>
-                                                    <label><input type="radio" name="tobaccoUse" value="yes" required> Yes</label>
-                                                    <label><input type="radio" name="tobaccoUse" value="no" required> No</label>
+                                                    <label><input type="radio" name="tobaccoUse" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="tobaccoUse" value="no"> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>How many sticks of cigarettes a day?</label>
-                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value=""/>
+                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value="0"/>
                                             </div>
                                             <div class="form-group">
                                                 <label>Have you had them in the past?</label>
                                                 <div>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="frequently" required> Frequently</label>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="sometimes" required> Sometimes</label>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="rarely" required> Rarely</label>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="never" required> Never</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="frequently"> Frequently</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="sometimes"> Sometimes</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="rarely"> Rarely</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="never"> Never</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Are you currently in a romantic relationship?</label>
                                                 <div>
-                                                    <label><input type="radio" name="romanticRelationship" value="no" required> No</label>
-                                                    <label><input type="radio" name="romanticRelationship" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="romanticRelationship" value="no"> No</label>
+                                                    <label><input type="radio" name="romanticRelationship" value="yes"> Yes</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -389,7 +395,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>On a scale of 1-10 (10 being the highest quality), how would you rate your current relationship?</label>
-                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value=""/>
+                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value="1"/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="lifeChanges">In the last year, have you experienced any significant life changes or stressors? If yes, please explain:</label>
@@ -470,8 +476,8 @@
                                             <div class="form-group">
                                                 <label>Are you currently employed?</label>
                                                 <div>
-                                                    <label><input type="radio" name="employed" value="no" required> No</label>
-                                                    <label><input type="radio" name="employed" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="employed" value="no"> No</label>
+                                                    <label><input type="radio" name="employed" value="yes"> Yes</label>
                                                 </div>
                                             </div>
 
@@ -513,8 +519,8 @@
                                             <div class="form-group">
                                                 <label>Do you consider yourself to be religious?</label>
                                                 <div>
-                                                    <label><input type="radio" name="religious" value="no" required> No</label>
-                                                    <label><input type="radio" name="religious" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="religious" value="no"> No</label>
+                                                    <label><input type="radio" name="religious" value="yes"> Yes</label>
                                                 </div>
                                             </div>
                                             
@@ -528,8 +534,8 @@
                                             <div id="religiousDetailsNo" style="display: none;">
                                                 <label>Do you consider yourself to be spiritual?</label>
                                                 <div>
-                                                    <label><input type="radio" name="spiritual" value="no" required> No</label>
-                                                    <label><input type="radio" name="spiritual" value="yes" required> Yes</label>
+                                                    <label><input type="radio" name="spiritual" value="no"> No</label>
+                                                    <label><input type="radio" name="spiritual" value="yes"> Yes</label>
                                                 </div>
                                             </div>
                                         </div>
