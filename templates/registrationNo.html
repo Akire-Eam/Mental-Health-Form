@@ -16,12 +16,12 @@
 }
 
 body {
-	background: #f6f5f7;
+	background: #A9B5C2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Helvetica', sans-serif;
 	height: 100vh;
 	margin: -20px 0 50px;
 }
@@ -29,6 +29,7 @@ body {
 h1 {
 	font-weight: bold;
 	margin: 0;
+	color: #587892;
 }
 
 h2 {
@@ -36,11 +37,7 @@ h2 {
 }
 
 p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
+	color:#767C80;
 }
 
 span {
@@ -81,7 +78,7 @@ button.ghost {
 }
 
 form {
-	background-color: #FFFFFF;
+	background-color: #EEEAE3;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -177,13 +174,13 @@ input {
 }
 
 .overlay {
-	background: #16a085;
-	background: -webkit-linear-gradient(to right, #16a085, #16a085);
-	background: linear-gradient(to right, #16a085, #16a085);
+	background: #D8DEE1;
+	background: -webkit-linear-gradient(to right, #D8DEE1, #D8DEE1);
+	background: linear-gradient(to right, #D8DEE1, #D8DEE1);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
-	color: #FFFFFF;
+	color: #587892;
 	position: relative;
 	left: -100%;
 	height: 100%;
@@ -267,18 +264,24 @@ footer a {
     color: #16a085;
     text-decoration: none;
 }
+
+.btn-primary {
+	background-color: #B0A99F !important;
+	border-color: #B0A99F !important;
+	color: #FFFFFF;
+	transition: transform 80ms ease-in;
+}
  </style>   
 </head>
 <body>
   <div class="container" id="container">
     <div class="form-container sign-in-container">
       <form action="/registrationNoSubmit" method="post">{% csrf_token %}
-        <h1>View Report</h1>
-      </br>
-         </br>
-        <input type='text' placeholder="Enter the Registration ID" name='registerId'>
+        <h1>View Record</h1>
+		<p>Enter your Registration ID sent to your Email</p>
+        <input type='text' placeholder="Registration ID" name='registerId'>
         </br>
-        <button type="submit" class="button-color">Get Report</button></br>
+        <button type="submit" class="btn btn-primary">Get Record</button></br>
       </form>
     </div>
     <div class="overlay-container">

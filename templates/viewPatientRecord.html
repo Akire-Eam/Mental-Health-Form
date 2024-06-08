@@ -1,8 +1,15 @@
-{% extends "base.html" %} 
+{% extends "base.html"%}
 {% load static %}
+
 {% block content %}
 {% block title %} <title>Patient Record</title>{% endblock %}
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         [data-tab-content] {
             display: none;
@@ -36,6 +43,28 @@
             color: #D8000C;
             background-color: #FFBABA;
           }
+
+          body {
+        padding: 0px;
+        margin: 0;
+        font-family: Helvetica, sans-serif;
+        background-color: #EEEAE3;
+        }
+
+        .inactiveTab {
+            background-color: #BCC1C4 !important; 
+            border-color: #BCC1C4 !important;
+        }
+
+        .btn-primary, .btn-primary:hover, .btn-primary.activeTab {
+            background-color: #587892;
+            border-color: #587892;
+        }
+
+        .btn-primary{
+            margin: 3px;
+        }
+        
           
 
     </style>
@@ -56,40 +85,25 @@
 	
     
        <div class="container-fluid">
-        <div class="card text-center custom-basic">
-            <div class="card-header">
-              <ul class="nav nav-pills card-header-pills">
-                <li class="nav-item " data-tab-target="#BasicDetails" class="activeDiv" >
-                  <a class="nav-link active" href="#" style="background-color: #16a085;" >Basic Details</a>
-                </li>
-                {% if noRecord %}
-                    
-                  {% else %}
-                    <li class="nav-item"  data-tab-target="#MedicalHistory">
-                      <a class="nav-link active" href="#" style="background-color: #16a085;" >Medical History</a>
-                    </li>
-                    <li class="nav-item" data-tab-target="#Prescriptions">
-                      <a class="nav-link active" href="#" style="background-color: #16a085;" >Prescriptions</a>
-                    </li>
-                {% endif %}
-                <li class="nav-item" data-tab-target="#Back">
-                  <h3>
-                    <a class="nav-link" href="/doctor/patient-list" style="float: right; position: absolute; right:20px" ><i class="fas fa-caret-square-left fa-lg zoomOut" style="color: #16a085;"></i></a>
-                  </h3>
-                </li>
-                
-              </ul>
-            </div>
-        </div>
-        <div class="tab-content">
+            <div class="card text-center custom-basic">
+                <div class="card-header">
+                    <div class="nav nav-pills card-header-pills">
+                        <button class="nav-item btn btn-primary activeTab" data-tab-target="#BasicDetails">Basic Details</button>
+                        <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#PersonalInformationSheet">Personal Information Sheet</button>
+                        <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#ConsentForm">Consent Form</button>
+                        <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Counseling">Counseling</button>
+                        <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#TreatmentPlan">Treatment Plan</button>
+                        <h3>
+                            <a class="nav-link" href="/doctor/patient-list" style="float: right; position: absolute; right:20px">
+                                <i class="fas fa-caret-square-left fa-lg zoomOut" style="color: #767C80;"></i>
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+        
+        <div class="tab-content" style="margin-top: 30px;">
             <div id="BasicDetails" data-tab-content class="activeDiv">
-                {% if noRecord %}
-                <h1>Basic Details 
-                    <a href="/healthcare/patientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#16a085; color:white; float:right; margin-top:5px; margin-right:5px;">Add Record</a>
-                </h1>
-                 {% else %}
-                 <h1>Basic Details</h1>
-                {% endif %}
+                <h1>Basic Details</h1>
                 <div class="card-body pt-0" id="table1">
                     <table class="table table-bordered" >
                       <tr>
@@ -123,12 +137,16 @@
                   </div>
 
             </div>
-            <div id="MedicalHistory" data-tab-content>
-                <h1>Medical History
-                  {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                    <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#16a085; color:white; float:right; margin-top:5px; margin-right:5px;">Update</a>
-                  {% endif %}
+            <div id="PersonalInformationSheet" data-tab-content>
+                <h1>Personal Information Sheet</h1>
+                {% if noRecord %}
+                <h1>
+                    <a href="/healthcare/patientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Add Personal Information Sheet</a>
                 </h1>
+                {% else %}
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Update Personal Information Sheet</a>
+                {% endif %}
                 <div class="card-body pt-0" id="table2">
                     <table class="table table-bordered">
                       <tr>
@@ -583,6 +601,7 @@
                       </tr>
                     </table>
                   </div>
+                {% endif %}
             </div>
             <div id="Prescriptions" data-tab-content>
                 <h1>Prescriptions 
@@ -616,31 +635,37 @@
                           {% endif %}
                   </table>
                     {% endif %}
-                    
-
                   </div>
             </div>
         </div>
        </div>
+    </div>
         
     
 </body>
 <script>
-    const tabs = document.querySelectorAll('[data-tab-target]')
-    const tabContents = document.querySelectorAll('[data-tab-content]')
+    const tabs = document.querySelectorAll('[data-tab-target]');
+    const tabContents = document.querySelectorAll('[data-tab-content]');
 
     tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
-        tabContents.forEach(tabContent => {
-        tabContent.classList.remove('activeDiv')
-        })
-        tabs.forEach(tab => {
-        tab.classList.remove('activeDiv')
-        })
-        tab.classList.add('activeDiv')
-        target.classList.add('activeDiv')
-})
-})
+        tab.addEventListener('click', () => {
+            const target = document.querySelector(tab.dataset.tabTarget);
+            
+            tabContents.forEach(tabContent => {
+                tabContent.classList.remove('activeDiv');
+            });
+
+            tabs.forEach(otherTab => {
+                otherTab.classList.add('inactiveTab'); // Add class to inactive tabs
+                otherTab.classList.remove('activeTab'); // Remove active class
+            });
+
+            tab.classList.add('activeTab'); // Add active class to clicked tab
+            tab.classList.remove('inactiveTab'); // Remove inactive class from clicked tab
+            target.classList.add('activeDiv');
+        });
+    });
+
+
 </script>
 {% endblock %}
