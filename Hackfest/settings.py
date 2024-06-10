@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'Hackfest.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'medical1',        # DB_DATABASE
+        'NAME': 'medical',        # DB_DATABASE
         'USER': 'postgres',         # DB_USERNAME
-        'PASSWORD': '248650', # DB_PASSWORD
+        'PASSWORD': 'antoninofamily', # DB_PASSWORD
         'HOST': '127.0.0.1',        # DB_HOST
         'PORT': '5432',             # DB_PORT
     }
@@ -127,6 +127,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

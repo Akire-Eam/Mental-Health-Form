@@ -313,7 +313,7 @@ function toggleReligiousDetails(isReligious) {
                                         <div class="col-md-12">
                                             {% if success %}
                                             <div class="alert alert-success" role="alert">
-                                                Patient Information Sheet Successfully Created
+                                                Patient Information Sheet Successfully Created <a href="/healthcare/consentForm/{{patientId}}" class="alert-link">Click here</a> to add an Informed Consent for Psychological Counseling.
                                             </div>
                                             {% endif %}
                                             {% if message %}
@@ -322,11 +322,15 @@ function toggleReligiousDetails(isReligious) {
                                                 </div>
                                             {% endif %}
                                   
-                                        <div class="form-group">
-                                            <h3>Treatment History</h3>
                                         </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Treatment History</h3>
+                                            </div>
                                         </div>
-                                        
+                                    
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Are you currently receiving psychiatric services, professional counseling or psychotherapy elsewhere?</label>
@@ -391,7 +395,9 @@ function toggleReligiousDetails(isReligious) {
                                             </div>
                                             <div class="form-group">
                                                 <label>When was your last physical/medical examination?</label>
-                                                <input type="text" class="form-control" name="lastExamination" placeholder="Last physical/medical examination" value="{% if patient.lastExamination %}{{ patient.lastExamination }}{% endif %}" required>
+                                                <label>Last physical/medical examination:</label>
+                                                <input type="text" class="form-control" name="lastExamination" placeholder="mm/dd/yyyy" value="{% if patient.lastExamination %}{{ patient.lastExamination|date:'Y-m-d' }}{% endif %}" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                                                
                                             </div>                                
                                             <div class="form-group">
                                                 <label>Please list any persistent physical symptoms or health concerns:</label>
@@ -410,7 +416,7 @@ function toggleReligiousDetails(isReligious) {
                                             
                                             <div class="form-group">
                                                 <label>Wake up? </label>
-                                                <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time" value="{{ patient.wakeUpTime | default:'' }}" required>
+                                                <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time (HH:MM:ss)" value="{{ patient.wakeUpTime | default:'' }}" required>
                                             </div>
                                             
                                             <div class="form-group">
@@ -439,7 +445,7 @@ function toggleReligiousDetails(isReligious) {
                                             
                                             <div class="form-group">
                                                 <label>Approximately how long each time?</label>
-                                                <input type="text" class="form-control" name="exerciseDuration" placeholder="Duration" value="{{ patient.exerciseDuration | default:'' }}" required>
+                                                <input type="text" class="form-control" name="exerciseDuration" placeholder="# of days/weeks/months, HH:MM:ss" value="{{ patient.exerciseDuration | default:'' }}" required>
                                             </div>
                                             
                                             <div class="form-group">
@@ -505,7 +511,7 @@ function toggleReligiousDetails(isReligious) {
                                             
                                             <div class="form-group" id="cigaretteInput" {% if patient.tobaccoUse != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>How many sticks of cigarettes a day?</label>
-                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value="{{ patient.cigarettesPerDay | default:'' }}">
+                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value="{{ patient.cigarettesPerDay | default:'0'  }}">
                                             </div>
                                             <div class="form-group">
                                                 <label>Have you had them in the past?</label>
@@ -531,12 +537,12 @@ function toggleReligiousDetails(isReligious) {
                                             
                                             <div class="form-group" id="relationshipDetails" {% if patient.romanticRelationship != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>How long have you been in this relationship?</label>
-                                                <input type="text" class="form-control" name="relationshipDuration" placeholder="Duration" value="{{ patient.relationshipDuration | default:'' }}">
+                                                <input type="text" class="form-control" name="relationshipDuration" placeholder="# of days/weeks/months, HH:MM:ss" value="{{ patient.relationshipDuration | default:'' }}">
                                             </div>
                                             
                                             <div class="form-group" id="relationshipRating" {% if patient.romanticRelationship != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>On a scale of 1-10 (10 being the highest quality), how would you rate your current relationship?</label>
-                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value="{{ patient.relationshipRating | default:'' }}" required>
+                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value="{{ patient.relationshipRating | default:'' }}">
                                             </div>
                                             
                                             <div class="form-group">
