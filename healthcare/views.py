@@ -65,6 +65,38 @@ def newPatient(request):
     except KeyError as e:
             logger.error(f"Missing key: {e}")
             return render(request, 'newPatient.html', {'message': 'Missing required fields'})
+    
+def updatePatient(request, patientId):
+    patient = Patient.objects.filter(id=patientId).first()
+    # print(patient.id) 
+
+    if request.method == 'POST':
+        try:
+            patient.name = request.POST['name']
+            patient.mobile = request.POST['mobile']
+            patient.email = request.POST['email']
+            patient.gender = request.POST['gender']
+            patient.dateOfBirth = request.POST['dateOfBirth']
+            patient.age = request.POST['age']
+            patient.address = request.POST['address']
+            patient.civilStatus = request.POST['civilStatus']
+            patient.nrOfChildren = request.POST['nrOfChildren']
+            patient.nrOfSiblings = request.POST['nrOfSiblings']
+            patient.birthOrder = request.POST['birthOrder']
+            patient.educationalAttainment = request.POST['educationalAttainment']
+
+            patient.save()
+
+            return render(request, 'updatePatient.html', {'success': True, 'patient': patient})
+
+        except KeyError as e:
+            logger.error(f"Missing key: {e}")
+            return render(request, 'updatePatient.html', {'message': 'Missing required fields', 'patient': patient})
+        except Exception as e:
+            logger.error(f"Error while updating patient: {e}")
+            return render(request, 'updatePatient.html', {'message': 'Something went wrong', 'patient': patient})
+
+    return render(request, 'updatePatient.html', {'patient': patient})
 
 # Create new patient record
 def to_none_if_empty(value):

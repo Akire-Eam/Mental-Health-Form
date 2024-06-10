@@ -104,6 +104,9 @@
         <div class="tab-content" style="margin-top: 30px;">
             <div id="BasicDetails" data-tab-content class="activeDiv">
                 <h1>Basic Details</h1>
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                <a href="/healthcare/updatePatient/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Update Basic Details</a>
+                {% endif %}
                 <div class="card-body pt-0" id="table1">
                     <table class="table table-bordered" >
                       <tr>
