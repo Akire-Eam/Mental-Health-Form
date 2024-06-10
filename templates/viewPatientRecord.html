@@ -1022,6 +1022,74 @@
                     {% endif %}
                   </div>
             </div>
+            <div id="Counseling" data-tab-content>
+                <h1>Counselling</h1>
+                <div class="card-body pt-0" id="table1">
+                    <table class="table table-bordered" style="margin: 2px; text-align: left; padding: 2px; background: #F9FAFA">
+                      <tr>
+                        <th width="20%">Patient Name</th>
+                        <td>{{details.name}}</td>
+                      </tr>
+                      <tr>
+                        <th width="20%">Date of birth	</th>
+                        <td>{{details.dateOfBirth}}</td>
+                      </tr>
+                      
+                      <tr>
+                        <th width="20%">Gender</th>
+                        <td>{{details.gender}}</td>
+                      </tr>
+                      
+                      <tr>
+                        <th width="20%">Mobile Number </th>
+                        <td>{{details.mobile}}</td>
+                      </tr>
+                      <tr>
+                        <th width="20%">Email</th>
+                        <td>{{details.email}}</td>
+                      </tr>
+                    </table>
+                </div>
+
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                <a href="/healthcare/counselling/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-bottom: 2%; margin-top: .5%;">Add Counselling</a>
+                {% endif %}
+
+            </div>
+            <div id="TreatmentPlan" data-tab-content>
+                <h1>Treatment Plan</h1>
+                <div class="card-body pt-0" id="table1">
+                    <table class="table table-bordered" style="margin: 2px; text-align: left; padding: 2px; background: #F9FAFA">
+                      <tr>
+                        <th width="20%">Patient Name</th>
+                        <td>{{details.name}}</td>
+                      </tr>
+                      <tr>
+                        <th width="20%">Date of birth	</th>
+                        <td>{{details.dateOfBirth}}</td>
+                      </tr>
+                      
+                      <tr>
+                        <th width="20%">Gender</th>
+                        <td>{{details.gender}}</td>
+                      </tr>
+                      
+                      <tr>
+                        <th width="20%">Mobile Number </th>
+                        <td>{{details.mobile}}</td>
+                      </tr>
+                      <tr>
+                        <th width="20%">Email</th>
+                        <td>{{details.email}}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                <a href="/healthcare/treatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-bottom: 2%; margin-top: .5%;">Add Treatment Plan</a>
+                {% endif %}
+
+            </div>
         </div>
        </div>
     </div>
