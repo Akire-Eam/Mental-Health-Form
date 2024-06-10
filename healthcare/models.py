@@ -38,7 +38,7 @@ class PatientRecord(models.Model):
     primaryPhysicianName = models.CharField(max_length=100, null=True, blank=True)
     multipleSpecialists = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], null=True, blank=True)
     specialistList = models.TextField(null=True, blank=True)
-    lastExamination = models.TextField(null=True, blank=True)
+    lastExamination = models.DateField(null=True, blank=True)
     persistentSymptoms = models.TextField(null=True, blank=True)
     physicalMedication = models.TextField(null=True, blank=True)
     sleepTime = models.TimeField(null=True, blank=True)
@@ -149,10 +149,16 @@ class PatientRecord(models.Model):
     need_assistance = models.CharField(
         max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], null=True, blank=True
     )
+
     area_concern = models.TextField(null=True, blank=True)
     # Timestamps
     createdDate = models.DateField(default=datetime.datetime.now)
     updatedDate = models.DateField(default=datetime.datetime.now)
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name in ['sleepTime', 'wakeUpTime']:
+            return db_field.formfield(widget=forms.TimeInput(format='%H:%M:%S'))
+        return super().formfield_for_dbfield(db_field, **kwargs)
 
 class ConsentForm(models.Model):
     patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)

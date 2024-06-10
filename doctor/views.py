@@ -119,39 +119,18 @@ def patientList(request):
 def patientRecord(request, patientId):
     try:
         patientDetails = Patient.objects.get(pk=patientId)
-        his = PatientRecord.objects.filter(patientId=patientDetails)
-
+        patientRecordDetails = PatientRecord.objects.filter(patientId=patientId).first()
         consentForm = ConsentForm.objects.filter(patientId=patientDetails).first()
-
-        if len(his) != 0:
-            history = his.first()
-            allPrescription = Prescription.objects.filter(patientId=patientDetails)
-            prescriptionListData = []
-            for prep in allPrescription:
-                diagnosis = Diagnosis.objects.get(pk=prep.diagnosisId.id)
-                prescriptionListData.append({
-                    'diagnosisCreatedDate': diagnosis.createdDate,
-                    'diagnosisName': diagnosis.diagnosisName,
-                    'prescriptionId': prep.id
-                })
-            return render(request, "viewPatientRecord.html", {
-                'history': history,
-                'details': patientDetails,
-                'prescriptionList': prescriptionListData,
-                'consentForm': consentForm,
-                'noConsent': consentForm is None
-            })
+        
+        if patientRecordDetails:
+            return render(request, "viewPatientRecord.html", {'details': patientDetails, 'PIS_details': patientRecordDetails, 'consentForm': consentForm, 'noConsent': consentForm is None})
         else:
-            return render(request, "viewPatientRecord.html", {
-                'noRecord': True,
-                'details': patientDetails,
-                'consentForm': consentForm,
-                'noConsent': consentForm is None
-            })
-    except Exception as e:
-        print(e)
-        messages.add_message(request, messages.ERROR, "Please Add Valid Details !")
+            return render(request, "viewPatientRecord.html", {'noRecord': True, 'details': patientDetails, 'PIS_details': None, 'consentForm': consentForm, 'noConsent': consentForm is None})
+    
+    except Patient.DoesNotExist:
+        messages.add_message(request, messages.ERROR, "Patient not found.")
         return redirect('/')
+
 
 # See Prescription
 def viewMedicine(request,medicineId,prescriptionId):

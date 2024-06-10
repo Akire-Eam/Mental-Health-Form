@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Birthday:</label>
-                                    <input placeholder="mm/dd/yyyy" type="text" name="dateOfBirth" class="form-control" value="{{ patient.dateOfBirth }}" onfocus="(this.type='date')" onblur="(this.type='text')" required/>
+                                    <input placeholder="mm/dd/yyyy" type="text" name="dateOfBirth" class="form-control" value="{{ patient.dateOfBirth |date:'Y-m-d' }}" onfocus="(this.type='date')" onblur="(this.type='text')" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Phone number:</label>
