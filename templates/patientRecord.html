@@ -12,7 +12,7 @@
 {% block title %} <title>Add Patient Record</title>{% endblock %}
 <style>
     .register{
-    background: -webkit-linear-gradient(left, #16a085, #0ef6c8);
+    background: -webkit-linear-gradient(left, #A9B5C2, #587892);
     margin-top: 3%;
     padding: 3%;
     }
@@ -108,39 +108,7 @@
 }
 </style>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var employedRadio = document.querySelectorAll('input[name="employed"]');
-        var employmentDetails = document.getElementById('employmentDetails');
-        var religiousRadio = document.querySelectorAll('input[name="religious"]');
-        var religiousDetails = document.getElementById('religiousDetails');
-        var religiousDetailsNo = document.getElementById('religiousDetailsNo');
-        
 
-        employedRadio.forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                if (this.value === 'yes') {
-                    employmentDetails.style.display = 'block';
-                } else {
-                    employmentDetails.style.display = 'none';
-                }
-            });
-        });
-
-        religiousRadio.forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                if (this.value === 'yes') {
-                    religiousDetails.style.display = 'block';
-                    religiousDetailsNo.style.display = 'none';
-                } else if (this.value === 'no') {
-                    religiousDetailsNo.style.display = 'block';
-                    religiousDetails.style.display = 'none';
-                } else {
-                    religiousDetailsNo.style.display = 'none';
-                    religiousDetails.style.display = 'none';
-                }
-            });
-        });
-    });
 
     function cancel(){
         window.location.href="/doctor/patient-list/patient/{{ patientId }}";  
@@ -152,6 +120,154 @@
         }
         else{
             document.getElementById('pregDate').style.display = "none";
+        }
+    }
+
+    function togglePrimaryPhysicianInput(input) {
+    var primaryPhysicianInput = document.getElementById("primaryPhysicianName");
+    if (input.value === "yes") {
+        primaryPhysicianInput.style.display = "block";
+    } else {
+        primaryPhysicianInput.style.display = "none";
+    }
+    }
+
+    function togglePsychiatricMedicationInput(selectedRadioButton) {
+        var psychiatricMedicationDetails = document.getElementById("psychiatricMedicationDetails");
+        var prescribedByDetails = document.getElementById("prescribedByDetails");
+        
+        if (selectedRadioButton.value === "yes") {
+            psychiatricMedicationDetails.style.display = "block";
+            prescribedByDetails.style.display = "block";
+        } else if (selectedRadioButton.value === "no") {
+            psychiatricMedicationDetails.style.display = "none";
+            prescribedByDetails.style.display = "none";
+        }
+    }
+
+    // Hide details initially
+    window.onload = function() {
+        var psychiatricMedication = document.querySelector('input[name="psychiatricMedication"]:checked');
+        if (!psychiatricMedication) {
+            var psychiatricMedicationDetails = document.getElementById("psychiatricMedicationDetails");
+            var prescribedByDetails = document.getElementById("prescribedByDetails");
+            psychiatricMedicationDetails.style.display = "none";
+            prescribedByDetails.style.display = "none";
+        }
+    };
+
+
+    function toggleSpecialistListInput(input) {
+        var specialistListInput = document.getElementById("specialistList");
+        if (input.value === "yes") {
+            specialistListInput.style.display = "block";
+        } else {
+            specialistListInput.style.display = "none";
+        }
+    }
+
+    function toggleSleepProblemInput(input) {
+    var sleepProblemsDetails = document.getElementById("sleepProblemsDetails");
+    if (input.value === "yes") {
+        sleepProblemsDetails.style.display = "block";
+    } else {
+        sleepProblemsDetails.style.display = "none";
+    }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var otherSleepProblemsInput = document.querySelector('input[name="sleepProblemsType"][value="Others"]');
+        var otherSleepProblemsTextInput = document.querySelector('input[name="otherSleepProblems"]');
+        otherSleepProblemsInput.addEventListener('change', function() {
+            if (this.checked) {
+                otherSleepProblemsTextInput.style.display = 'block';
+            } else {
+                otherSleepProblemsTextInput.style.display = 'none';
+            }
+        });
+    });
+
+    function toggleEatingHabitsInput(input) {
+    var eatingHabitsDetails = document.getElementById("eatingHabitsDetails");
+    if (input.value === "yes") {
+        eatingHabitsDetails.style.display = "block";
+    } else {
+        eatingHabitsDetails.style.display = "none";
+    }
+    }
+
+    function toggleCigaretteInput(input) {
+        var cigaretteInput = document.getElementById("cigaretteInput");
+        if (input.value === "yes") {
+            cigaretteInput.style.display = "block";
+        } else {
+            cigaretteInput.style.display = "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var relationshipInput = document.querySelectorAll('input[name="romanticRelationship"]');
+    relationshipInput.forEach(function(input) {
+        input.addEventListener("change", function() {
+            var relationshipDetails = document.getElementById("relationshipDetails");
+            var relationshipRating = document.getElementById("relationshipRating");
+            if (this.value === "yes") {
+                relationshipDetails.style.display = "block";
+                relationshipRating.style.display = "block";
+            } else {
+                relationshipDetails.style.display = "none";
+                relationshipRating.style.display = "none";
+            }
+        });
+    });
+});
+
+function toggleSuicidalAttempts(input) {
+    var suicidalAttemptsWhenContainer = document.getElementById("suicidalAttemptsWhenContainer");
+    if (input.value === "yes") {
+        suicidalAttemptsWhenContainer.style.display = "block";
+    } else {
+        suicidalAttemptsWhenContainer.style.display = "none";
+    }
+}
+
+
+function toggleEmploymentDetails(input) {
+        var employmentDetails = document.getElementById("employmentDetails");
+        if (input.value === "yes") {
+            employmentDetails.style.display = "block";
+        } else {
+            employmentDetails.style.display = "none";
+        }
+}
+
+function toggleReligiousDetails(isReligious) {
+        var religiousDetails = document.getElementById("religiousDetails");
+        var religiousDetailsNo = document.getElementById("religiousDetailsNo");
+        if (isReligious) {
+            religiousDetails.style.display = "block";
+            religiousDetailsNo.style.display = "none";
+        } else {
+            religiousDetails.style.display = "none";
+            religiousDetailsNo.style.display = "block";
+        }
+    }
+    
+    function toggleAssistanceDetails(input) {
+        var assistanceDetails = document.getElementById("assistanceDetails");
+        if (input.value === "yes") {
+            assistanceDetails.style.display = "block";
+        } else {
+            assistanceDetails.style.display = "none";
+        }
+    }
+
+    function togglePreviousPsychotherapyInput(selectedRadioButton) {
+        var previousTherapistInput = document.getElementById("previousTherapist");
+        if (selectedRadioButton.value === "yes") {
+            previousTherapistInput.style.display = "block";
+        } else {
+            previousTherapistInput.style.display = "none";
         }
     }
 
@@ -185,7 +301,7 @@
                     <div class="col-md-3 register-left">
                         <img src="http://www.downloadclipart.net/large/37802-red-stethoscope-clipart.png" alt=""/>
                         <h3>Patient Details</h3>
-                        <p>The art of medicine consists of amusing the patient while nature cures the disease.</p>
+                        <p>Nurturing Mental Health, One Mend at a Time</p>
                         <input type="submit" name="" value="Cancel" onClick="cancel()"/><br/>
                     </div>
                     <div class="col-md-9 register-right">
@@ -195,11 +311,17 @@
                                 <form action="/healthcare/patientRecord/{{patientId}}" method="post">{% csrf_token %}
                                     <div class="row register-form">
                                         <div class="col-md-12">
-                                        {% if message %}
-                                            <div class="alert alert-danger" role="alert">
-                                                {{message}}
+                                            {% if success %}
+                                            <div class="alert alert-success" role="alert">
+                                                Patient Information Sheet Successfully Created
                                             </div>
-                                        {% endif %}
+                                            {% endif %}
+                                            {% if message %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{message}}
+                                                </div>
+                                            {% endif %}
+                                  
                                         <div class="form-group">
                                             <h3>Treatment History</h3>
                                         </div>
@@ -209,17 +331,18 @@
                                             <div class="form-group">
                                                 <label>Are you currently receiving psychiatric services, professional counseling or psychotherapy elsewhere?</label>
                                                 <div>
-                                                    <label><input type="radio" name="psychiatricServices" value="yes"> Yes</label>
-                                                    <label><input type="radio" name="psychiatricServices" value="no"> No</label>
-                                                </div>
+                                                    <label><input type="radio" name="psychiatricServices" value="yes" {% if patient.psychiatricServices == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="psychiatricServices" value="no" {% if patient.psychiatricServices == "no" %} checked {% endif %} required> No</label>
+                                                </div>                                    
                                             </div>
                                             <div class="form-group">
                                                 <label>Have you had previous psychotherapy?</label>
                                                 <div>
-                                                    <label><input type="radio" name="previousPsychotherapy" value="no"> No</label>
-                                                    <label><input type="radio" name="previousPsychotherapy" value="yes"> Yes, with (previous therapist’s name)</label>
-                                                </div>
-                                                <input type="text" class="form-control" name="previousTherapist" placeholder="Previous therapist's name" value=""/>
+                                                    <label><input type="radio" name="previousPsychotherapy" value="yes" onclick="togglePreviousPsychotherapyInput(this)" {% if patient.previousPsychotherapy == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <input type="text" class="form-control" name="previousTherapist" id="previousTherapist" placeholder="Who was your previous therapist?" {% if patient.previousPsychotherapy == "yes" %} value="{{ patient.previousTherapist }}" {% else %} style="display: none;" {% endif %}>
+                                                    <label><input type="radio" name="previousPsychotherapy" value="no" onclick="togglePreviousPsychotherapyInput(this)" {% if patient.previousPsychotherapy == "no" %} checked {% endif %} required> No</label>
+                                                </div>                                    
+                                                
                                             </div>
                                         </div>
             
@@ -227,317 +350,344 @@
                                             <div class="form-group">
                                                 <label>Are you currently taking prescribed psychiatric medication (antidepressants or others)?</label>
                                                 <div>
-                                                    <label><input type="radio" name="psychiatricMedication" value="yes"> Yes</label>
-                                                    <label><input type="radio" name="psychiatricMedication" value="no"> No</label>
+                                                    <label><input type="radio" name="psychiatricMedication" value="yes" onclick="togglePsychiatricMedicationInput(this)" {% if patient.psychiatricMedication == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="psychiatricMedication" value="no" onclick="togglePsychiatricMedicationInput(this)" {% if patient.psychiatricMedication == "no" %} checked {% endif %} required> No</label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>If yes, please list:</label>
-                                                <input type="text" class="form-control" name="medicationList" placeholder="Medication list" value=""/>
+                                            
+                                            <div class="form-group" id="psychiatricMedicationDetails" {% if patient.psychiatricMedication == "no" %} style="display: none;" {% endif %} required>
+                                                <label>Please list:</label>
+                                                <input type="text" class="form-control" name="medicationList" placeholder="Medication list" value="{{ patient.medicationList | default:'' }}">
                                             </div>
-                                            <div class="form-group">
+                                            
+                                            <div class="form-group" id="prescribedByDetails" {% if patient.psychiatricMedication == "no" %} style="display: none;" {% endif %} required>
                                                 <label>Prescribed by:</label>
-                                                <input type="text" class="form-control" name="prescribedBy" placeholder="Prescribed by" value=""/>
-                                            </div>
+                                                <input type="text" class="form-control" name="prescribedBy" placeholder="Prescribed by" value="{{ patient.prescribedBy | default:'' }}">
+                                            </div>                                                      
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <h3>Health And Social Information</h3>
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Do you currently have a primary physician?</label>
                                                 <div>
-                                                    <label><input type="radio" name="primaryPhysician" value="yes"> Yes</label>
-                                                    <input type="text" class="form-control" name="primaryPhysicianName" placeholder="If yes, who is it?" value=""/>
-                                                    <label><input type="radio" name="primaryPhysician" value="no"> No</label>
+                                                    <label><input type="radio" name="primaryPhysician" value="yes" onclick="togglePrimaryPhysicianInput(this)" {% if patient.primaryPhysician == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <input type="text" class="form-control" name="primaryPhysicianName" id="primaryPhysicianName" placeholder="Who is it?" {% if patient.primaryPhysician == "yes" %} value="{{ patient.primaryPhysicianName }}" {% else %} style="display: none;" {% endif %}>
+                                                    <label><input type="radio" name="primaryPhysician" value="no" onclick="togglePrimaryPhysicianInput(this)" {% if patient.primaryPhysician == "no" %} checked {% endif %} required> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Are you currently seeing more than one medical health specialist?</label>
                                                 <div>
-                                                    <label><input type="radio" name="multipleSpecialists" value="yes"> Yes</label>
-                                                    <input type="text" class="form-control" name="specialistList" placeholder="If yes, please list" value=""/>
-                                                    <label><input type="radio" name="multipleSpecialists" value="no"> No</label>
+                                                    <label><input type="radio" name="multipleSpecialists" value="yes" onclick="toggleSpecialistListInput(this)" {% if patient.multipleSpecialists == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <input type="text" class="form-control" name="specialistList" id="specialistList" placeholder="Please list" {% if patient.multipleSpecialists == "yes" %} value="{{ patient.specialistList }}" {% else %} style="display: none;" {% endif %}>
+                                                    <label><input type="radio" name="multipleSpecialists" value="no" onclick="toggleSpecialistListInput(this)" {% if patient.multipleSpecialists == "no" %} checked {% endif %} required> No</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>When was your last physical/medical examination?</label>
-                                                <input type="text" class="form-control" name="lastExamination" placeholder="Last physical/medical examination" value="" onfocus="(this.type='date')" onblur="(this.type='text')"/>
-                                            </div>
+                                                <input type="text" class="form-control" name="lastExamination" placeholder="Last physical/medical examination" value="{% if patient.lastExamination %}{{ patient.lastExamination }}{% endif %}" required>
+                                            </div>                                
                                             <div class="form-group">
                                                 <label>Please list any persistent physical symptoms or health concerns:</label>
-                                                <input type="text" class="form-control" name="persistentSymptoms" placeholder="Health concerns" value=""/>
+                                                <input type="text" class="form-control" name="persistentSymptoms" placeholder="Health concerns" value="{{ patient.persistentSymptoms | default:'' }}" required>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Are you currently on medication to manage a physical health concern?</label>
-                                                <input type="text" class="form-control" name="physicalMedication" placeholder="If yes, please list" value=""/>
+                                                <input type="text" class="form-control" name="physicalMedication" placeholder="Please list" value="{{ patient.physicalMedication | default:'' }}" required>
                                             </div>
+                                            
                                             <div class="form-group">
-                                                <label>What time do you sleep? </label>
-                                                <input type="text" class="form-control" name="sleepTime" placeholder="Sleep time" value=""/>
+                                                <label>What time do you sleep?</label>
+                                                <input type="text" class="form-control" name="sleepTime" placeholder="Sleep time (HH:MM:ss)" value="{{ patient.sleepTime | default:'' }}" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)(?::(?:[0-5]\d))?" title="Enter a valid time in HH:MM:ss format" required>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Wake up? </label>
-                                                <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time" value=""/>
+                                                <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time" value="{{ patient.wakeUpTime | default:'' }}" required>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Are you having any problems with your sleep habits?</label>
                                                 <div>
-                                                    <label><input type="radio" name="sleepProblems" value="yes"> Yes</label>
-                                                    <label><input type="radio" name="sleepProblems" value="no"> No</label>
+                                                    <label><input type="radio" name="sleepProblems" value="yes" onclick="toggleSleepProblemInput(this)" {% if patient.sleepProblems == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="sleepProblems" value="no" onclick="toggleSleepProblemInput(this)" {% if patient.sleepProblems == "no" %} checked {% endif %} required> No</label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            
+                                            <div class="form-group" id="sleepProblemsDetails" {% if patient.sleepProblems != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>If yes, check where applicable:</label>
                                                 <div>
-                                                    <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too little"> Sleeping too little</label><br>
-                                                    <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too much"> Sleeping too much</label><br>
-                                                    <label><input type="checkbox" name="sleepProblemsType" value="Disturbing dreams"> Disturbing dreams</label><br>
-                                                    <label><input type="checkbox" name="sleepProblemsType" value="Poor quality sleep"> Poor quality sleep</label><br>
-                                                    <label><input type="checkbox" name="sleepProblemsType" value="Others"> Others, please indicate</label><br>
-                                                    <input type="text" class="form-control" name="otherSleepProblems" placeholder="Other sleep problems" value=""/>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too little" {% if "Sleeping too little" in patient.sleepProblemsType %} checked {% endif %}> Sleeping too little</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too much" {% if "Sleeping too much" in patient.sleepProblemsType %} checked {% endif %}> Sleeping too much</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Disturbing dreams" {% if "Disturbing dreams" in patient.sleepProblemsType %} checked {% endif %}> Disturbing dreams</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Poor quality sleep" {% if "Poor quality sleep" in patient.sleepProblemsType %} checked {% endif %}> Poor quality sleep</label><br>
+                                                    <label><input type="checkbox" name="sleepProblemsType" value="Others" {% if "Others" in patient.sleepProblemsType %} checked {% endif %}> Others, please indicate</label><br>
+                                                    <input type="text" class="form-control" name="otherSleepProblems" placeholder="Other sleep problems" {% if "Others" in patient.sleepProblemsType %} value="{{ patient.otherSleepProblems }}" {% else %} style="display: none;" {% endif %}>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>How many times per week do you exercise?</label>
-                                                <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value="0"/>
+                                                <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value="{{ patient.exerciseFrequency | default:'' }}" required>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Approximately how long each time?</label>
-                                                <input type="text" class="form-control" name="exerciseDuration" placeholder="Duration" value=""/>
+                                                <input type="text" class="form-control" name="exerciseDuration" placeholder="Duration" value="{{ patient.exerciseDuration | default:'' }}" required>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label>Are you having any difficulty with appetite or eating habits?</label>
                                                 <div>
-                                                    <label><input type="radio" name="eatingHabits" value="no"> No</label>
-                                                    <label><input type="radio" name="eatingHabits" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="eatingHabits" value="yes" onclick="toggleEatingHabitsInput(this)" {% if patient.eatingHabits == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="eatingHabits" value="no" onclick="toggleEatingHabitsInput(this)" {% if patient.eatingHabits == "no" %} checked {% endif %} required> No</label>   
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            
+                                            <div class="form-group" id="eatingHabitsDetails" {% if patient.eatingHabits != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>If yes, check where applicable:</label>
                                                 <div>
-                                                    <label><input type="checkbox" name="eatingHabitsType" value="Eating less"> Eating less</label><br>
-                                                    <label><input type="checkbox" name="eatingHabitsType" value="Eating more"> Eating more</label><br>
-                                                    <label><input type="checkbox" name="eatingHabitsType" value="Bingeing"> Bingeing</label><br>
-                                                    <label><input type="checkbox" name="eatingHabitsType" value="Restricting"> Restricting</label>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Eating less" {% if "Eating less" in patient.eatingHabitsType %} checked {% endif %}> Eating less</label><br>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Eating more" {% if "Eating more" in patient.eatingHabitsType %} checked {% endif %}> Eating more</label><br>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Bingeing" {% if "Bingeing" in patient.eatingHabitsType %} checked {% endif %}> Bingeing</label><br>
+                                                    <label><input type="checkbox" name="eatingHabitsType" value="Restricting" {% if "Restricting" in patient.eatingHabitsType %} checked {% endif %}> Restricting</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Have you experienced significant weight change in the last 2 months?</label>
                                                 <div>
-                                                    <label><input type="radio" name="weightChange" value="no"> No</label>
-                                                    <label><input type="radio" name="weightChange" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="weightChange" value="yes" {% if patient.weightChange == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="weightChange" value="no" {% if patient.weightChange == "no" %} checked {% endif %} required> No</label>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Do you regularly use alcohol?</label>
-                                                <div>
-                                                    <label><input type="radio" name="alcoholUse" value="no"> No</label>
-                                                    <label><input type="radio" name="alcoholUse" value="yes"> Yes</label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>In a typical month, how often do you have 4 or more alcohol/liquor intakes in a 24 hour period?</label>
-                                                <input type="text" class="form-control" name="alcoholFrequency" placeholder="Frequency" value=""/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Are you drinking (alcohol/liquor) alone? Or with the group?</label>
-                                                <input type="text" class="form-control" name="drinkingAloneOrGroup" placeholder="Alone or with group" value=""/>
                                             </div>
                                             
-                                        </div>
-            
-                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Do you regularly use alcohol?</label>
+                                                <div>        
+                                                    <label><input type="radio" name="alcoholUse" value="yes" {% if patient.alcoholUse == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="alcoholUse" value="no" {% if patient.alcoholUse == "no" %} checked {% endif %} required> No</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>In a typical month, how often do you have 4 or more alcohol/liquor intakes in a 24 hour period?</label>
+                                                <input type="text" class="form-control" name="alcoholFrequency" placeholder="Frequency" value="{{ patient.alcoholFrequency | default:'' }}" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Are you drinking (alcohol/liquor) alone? Or with the group?</label>
+                                                <input type="text" class="form-control" name="drinkingAloneOrGroup" placeholder="Alone or with group" value="{{ patient.drinkingAloneOrGroup | default:'' }}" required>
+                                            </div>     
+                                            
                                             <div class="form-group">
                                                 <label>How often do you engage in recreational drug use?</label>
                                                 <div>
-                                                    <label><input type="radio" name="drugUseFrequency" value="daily"> Daily</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="weekly"> Weekly</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="monthly"> Monthly</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="rarely"> Rarely</label>
-                                                    <label><input type="radio" name="drugUseFrequency" value="never"> Never</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="daily" {% if patient.drugUseFrequency == "daily" %} checked {% endif %} required> Daily</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="weekly" {% if patient.drugUseFrequency == "weekly" %} checked {% endif %} required> Weekly</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="monthly" {% if patient.drugUseFrequency == "monthly" %} checked {% endif %} required> Monthly</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="rarely" {% if patient.drugUseFrequency == "rarely" %} checked {% endif %} required> Rarely</label>
+                                                    <label><input type="radio" name="drugUseFrequency" value="never" {% if patient.drugUseFrequency == "never" %} checked {% endif %} required> Never</label>
                                                 </div>
-                                            </div>
+                                            </div>  
                                             <div class="form-group">
                                                 <label>Do you smoke cigarettes or use other tobacco products?</label>
                                                 <div>
-                                                    <label><input type="radio" name="tobaccoUse" value="yes"> Yes</label>
-                                                    <label><input type="radio" name="tobaccoUse" value="no"> No</label>
+                                                    <label><input type="radio" name="tobaccoUse" value="yes" onclick="toggleCigaretteInput(this)" {% if patient.tobaccoUse == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="tobaccoUse" value="no" onclick="toggleCigaretteInput(this)" {% if patient.tobaccoUse == "no" %} checked {% endif %} required> No</label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            
+                                            <div class="form-group" id="cigaretteInput" {% if patient.tobaccoUse != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>How many sticks of cigarettes a day?</label>
-                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value="0"/>
+                                                <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value="{{ patient.cigarettesPerDay | default:'' }}">
                                             </div>
                                             <div class="form-group">
                                                 <label>Have you had them in the past?</label>
                                                 <div>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="frequently"> Frequently</label>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="sometimes"> Sometimes</label>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="rarely"> Rarely</label>
-                                                    <label><input type="radio" name="tobaccoPastUse" value="never"> Never</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="frequently" {% if patient.tobaccoPastUse == "frequently" %} checked {% endif %} required> Frequently</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="sometimes" {% if patient.tobaccoPastUse == "sometimes" %} checked {% endif %} required> Sometimes</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="rarely" {% if patient.tobaccoPastUse == "rarely" %} checked {% endif %} required> Rarely</label>
+                                                    <label><input type="radio" name="tobaccoPastUse" value="never" {% if patient.tobaccoPastUse == "never" %} checked {% endif %} required> Never</label>
                                                 </div>
-                                            </div>
+                                            </div>        
+                                            
+                                        </div>
+            
+                                        <div class="col-md-6">
+                                                              
                                             <div class="form-group">
                                                 <label>Are you currently in a romantic relationship?</label>
                                                 <div>
-                                                    <label><input type="radio" name="romanticRelationship" value="no"> No</label>
-                                                    <label><input type="radio" name="romanticRelationship" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="romanticRelationship" value="yes" {% if patient.romanticRelationship == "yes" %} checked {% endif %} required> Yes</label>
+                                                    <label><input type="radio" name="romanticRelationship" value="no" {% if patient.romanticRelationship == "no" %} checked {% endif %} required> No</label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>If yes, how long have you been in this relationship?</label>
-                                                <input type="text" class="form-control" name="relationshipDuration" placeholder="Duration" value=""/>
+                                            
+                                            <div class="form-group" id="relationshipDetails" {% if patient.romanticRelationship != "yes" %} style="display: none;" {% endif %} required>
+                                                <label>How long have you been in this relationship?</label>
+                                                <input type="text" class="form-control" name="relationshipDuration" placeholder="Duration" value="{{ patient.relationshipDuration | default:'' }}">
                                             </div>
-                                            <div class="form-group">
+                                            
+                                            <div class="form-group" id="relationshipRating" {% if patient.romanticRelationship != "yes" %} style="display: none;" {% endif %} required>
                                                 <label>On a scale of 1-10 (10 being the highest quality), how would you rate your current relationship?</label>
-                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value="1"/>
+                                                <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value="{{ patient.relationshipRating | default:'' }}" required>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label for="lifeChanges">In the last year, have you experienced any significant life changes or stressors? If yes, please explain:</label>
-                                                <textarea class="form-control" id="lifeChanges" name="lifeChanges" rows="3"></textarea>
-                                            </div>
-
+                                                <textarea class="form-control" id="lifeChanges" name="lifeChanges" rows="3" required>{{ patient.lifeChanges | default:'' }} </textarea>
+                                            </div>                                
                                             <div class="form-group">
                                                 <label>Have you ever experienced any of the following? (Encircle “Yes” if it applies to you otherwise encircle “No”)</label>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Extreme depressed mood <input type="radio" name="extremeDepressedMood" value="yes"> Yes <input type="radio" name="extremeDepressedMood" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Extreme depressed mood <br><input type="radio" name="extremeDepressedMood" value="yes" {% if patient.extremeDepressedMood == "yes" %} checked {% endif %} required> Yes <input type="radio" name="extremeDepressedMood" value="no" {% if patient.extremeDepressedMood == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Dramatic mood swings <input type="radio" name="dramaticMoodSwings" value="yes"> Yes <input type="radio" name="dramaticMoodSwings" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Dramatic mood swings<br> <input type="radio" name="dramaticMoodSwings" value="yes" {% if patient.dramaticMoodSwings == "yes" %} checked {% endif %} required> Yes <input type="radio" name="dramaticMoodSwings" value="no" {% if patient.dramaticMoodSwings == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Rapid speech <input type="radio" name="rapidSpeech" value="yes"> Yes <input type="radio" name="rapidSpeech" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Rapid speech <br><input type="radio" name="rapidSpeech" value="yes" {% if patient.rapidSpeech == "yes" %} checked {% endif %} required> Yes <input type="radio" name="rapidSpeech" value="no" {% if patient.rapidSpeech == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Extreme anxiety <input type="radio" name="extremeAnxiety" value="yes"> Yes <input type="radio" name="extremeAnxiety" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Extreme anxiety <br><input type="radio" name="extremeAnxiety" value="yes" {% if patient.extremeAnxiety == "yes" %} checked {% endif %} required> Yes <input type="radio" name="extremeAnxiety" value="no" {% if patient.extremeAnxiety == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Panic attacks <input type="radio" name="panicAttacks" value="yes"> Yes <input type="radio" name="panicAttacks" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Panic attacks <br><input type="radio" name="panicAttacks" value="yes" {% if patient.panicAttacks == "yes" %} checked {% endif %} required> Yes <input type="radio" name="panicAttacks" value="no" {% if patient.panicAttacks == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Phobias <input type="radio" name="phobias" value="yes"> Yes <input type="radio" name="phobias" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Phobias <br><input type="radio" name="phobias" value="yes" {% if patient.phobias == "yes" %} checked {% endif %} required> Yes <input type="radio" name="phobias" value="no" {% if patient.phobias == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Sleep disturbances <input type="radio" name="sleepDisturbances" value="yes"> Yes <input type="radio" name="sleepDisturbances" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Sleep disturbances <br><input type="radio" name="sleepDisturbances" value="yes" {% if patient.sleepDisturbances == "yes" %} checked {% endif %} required> Yes <input type="radio" name="sleepDisturbances" value="no" {% if patient.sleepDisturbances == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Hallucinations <input type="radio" name="hallucinations" value="yes"> Yes <input type="radio" name="hallucinations" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Hallucinations <br><input type="radio" name="hallucinations" value="yes" {% if patient.hallucinations == "yes" %} checked {% endif %} required> Yes <input type="radio" name="hallucinations" value="no" {% if patient.hallucinations == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Unexplained losses of time <input type="radio" name="unexplainedLossesOfTime" value="yes"> Yes <input type="radio" name="unexplainedLossesOfTime" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Unexplained losses of time <br><input type="radio" name="unexplainedLossesOfTime" value="yes" {% if patient.unexplainedLossesOfTime == "yes" %} checked {% endif %} required> Yes <input type="radio" name="unexplainedLossesOfTime" value="no" {% if patient.unexplainedLossesOfTime == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Unexplained memory lapses <input type="radio" name="unexplainedMemoryLapses" value="yes"> Yes <input type="radio" name="unexplainedMemoryLapses" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Unexplained memory lapses <br><input type="radio" name="unexplainedMemoryLapses" value="yes" {% if patient.unexplainedMemoryLapses == "yes" %} checked {% endif %} required> Yes <input type="radio" name="unexplainedMemoryLapses" value="no" {% if patient.unexplainedMemoryLapses == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Alcohol/substance abuse <input type="radio" name="alcoholSubstanceAbuse" value="yes"> Yes <input type="radio" name="alcoholSubstanceAbuse" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Alcohol/substance abuse<br> <input type="radio" name="alcoholSubstanceAbuse" value="yes" {% if patient.alcoholSubstanceAbuse == "yes" %} checked {% endif %} required> Yes <input type="radio" name="alcoholSubstanceAbuse" value="no" {% if patient.alcoholSubstanceAbuse == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Frequent body complaints <input type="radio" name="frequentBodyComplaints" value="yes"> Yes <input type="radio" name="frequentBodyComplaints" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Frequent body complaints <br><input type="radio" name="frequentBodyComplaints" value="yes" {% if patient.frequentBodyComplaints == "yes" %} checked {% endif %} required> Yes <input type="radio" name="frequentBodyComplaints" value="no" {% if patient.frequentBodyComplaints == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Eating disorder <input type="radio" name="eatingDisorder" value="yes"> Yes <input type="radio" name="eatingDisorder" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Eating disorder <br><input type="radio" name="eatingDisorder" value="yes" {% if patient.eatingDisorder == "yes" %} checked {% endif %} required> Yes <input type="radio" name="eatingDisorder" value="no" {% if patient.eatingDisorder == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Body image problems <input type="radio" name="bodyImageProblems" value="yes"> Yes <input type="radio" name="bodyImageProblems" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Body image problems <br><input type="radio" name="bodyImageProblems" value="yes" {% if patient.bodyImageProblems == "yes" %} checked {% endif %} required> Yes <input type="radio" name="bodyImageProblems" value="no" {% if patient.bodyImageProblems == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Repetitive thoughts (e.g., worries, obsessions) <input type="radio" name="repetitiveThoughts" value="yes"> Yes <input type="radio" name="repetitiveThoughts" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Repetitive thoughts (e.g., worries, obsessions) <br><input type="radio" name="repetitiveThoughts" value="yes" {% if patient.repetitiveThoughts == "yes" %} checked {% endif %} required> Yes <input type="radio" name="repetitiveThoughts" value="no" {% if patient.repetitiveThoughts == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Repetitive behaviors (e.g., frequent checking, hand washing) <input type="radio" name="repetitiveBehaviors" value="yes"> Yes <input type="radio" name="repetitiveBehaviors" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Repetitive behaviors (e.g., frequent checking, hand washing) <br><input type="radio" name="repetitiveBehaviors" value="yes" {% if patient.repetitiveBehaviors == "yes" %} checked {% endif %} required> Yes <input type="radio" name="repetitiveBehaviors" value="no" {% if patient.repetitiveBehaviors == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Homicidal thoughts <input type="radio" name="homicidalThoughts" value="yes"> Yes <input type="radio" name="homicidalThoughts" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Homicidal thoughts <br><input type="radio" name="homicidalThoughts" value="yes" {% if patient.homicidalThoughts == "yes" %} checked {% endif %} required> Yes <input type="radio" name="homicidalThoughts" value="no" {% if patient.homicidalThoughts == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Suicidal thoughts <input type="radio" name="suicidalThoughts" value="yes"> Yes <input type="radio" name="suicidalThoughts" value="no"> No</label>
-                                                </div>
+                                                    <label class="form-check-label">Suicidal thoughts<br> <input type="radio" name="suicidalThoughts" value="yes" {% if patient.suicidalThoughts == "yes" %} checked {% endif %} required> Yes <input type="radio" name="suicidalThoughts" value="no" {% if patient.suicidalThoughts == "no" %} checked {% endif %} required> No</label>
+                                                </div><br>
                                                 <div class="form-check">
-                                                    <label class="form-check-label">Suicidal attempts <input type="radio" name="suicidalAttempts" value="yes"> Yes <input type="radio" name="suicidalAttempts" value="no"> No</label>
-                                                    <label for="suicidalAttemptsWhen">If yes, when?</label>
-                                                    <textarea class="form-control" id="suicidalAttemptsWhen" name="suicidalAttemptsWhen" rows="2"></textarea>
+                                                    <label class="form-check-label" style="display: inline-block;">Have you had suicidal attempts?</label><br>
+                                                    <label class="form-check-label" style="display: inline-block;">
+                                                        <input type="radio" name="suicidalAttempts" value="yes" {% if patient.suicidalAttempts == "yes" %} checked {% endif %} onclick="toggleSuicidalAttempts(this)" required> Yes 
+                                                    </label>
+                                                    <div id="suicidalAttemptsWhenContainer" style="display: {% if patient.suicidalAttempts == "yes" %} block {% else %} none {% endif %}">
+                                                        <textarea class="form-control" id="suicidalAttemptsWhen" name="suicidalAttemptsWhen" rows="2" placeholder="When?">{{ patient.suicidalAttemptsWhen | default:'' }}</textarea>
+                                                    </div>
+                                                    <label class="form-check-label" style="display: inline-block;">
+                                                        <input type="radio" name="suicidalAttempts" value="no" {% if patient.suicidalAttempts == "no" %} checked {% endif %} onclick="toggleSuicidalAttempts(this)" required> No
+                                                    </label>
                                                 </div>
+                                                
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <h3>Occupational Information</h3>
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Are you currently employed?</label>
                                                 <div>
-                                                    <label><input type="radio" name="employed" value="no"> No</label>
-                                                    <label><input type="radio" name="employed" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="employed" value="yes" {% if patient.employed == "yes" %} checked {% endif %} onclick="toggleEmploymentDetails(this)" required> Yes</label>
+                                                    <label><input type="radio" name="employed" value="no" {% if patient.employed == "no" %} checked {% endif %} onclick="toggleEmploymentDetails(this)" required> No</label>
                                                 </div>
                                             </div>
-
-                                            <div id="employmentDetails" style="display: none;">
+                                            
+                                            <div id="employmentDetails" style="display: {% if patient.employed == "yes" %} block {% else %} none {% endif %};" required>
                                                 <div class="form-group">
                                                     <label>Who is your current employer/office assignment?</label>
-                                                    <input type="text" class="form-control" name="employer" placeholder="Your current employer/office assignment">
+                                                    <input type="text" class="form-control" name="employer" placeholder="Your current employer/office assignment" value="{{ patient.employer | default:'' }}">
                                                 </div>
-                                                
+                                            
                                                 <div class="form-group">
                                                     <label>Are you happy with your current position/designation?</label>
-                                                    <input type="text" class="form-control" name="position_happiness" placeholder="Your current position/designation">
+                                                    <input type="text" class="form-control" name="position_happiness" placeholder="Your current position/designation" value="{{ patient.position_happiness | default:'' }}">
                                                 </div>
-                                                
+                                            
                                                 <div class="form-group">
                                                     <label>How many years have you been in the service?</label>
-                                                    <input type="number" class="form-control" name="years_in_service" placeholder="Number of years in service">
+                                                    <input type="number" class="form-control" name="years_in_service" placeholder="Number of years in service" value="{{ patient.years_in_service | default:'' }}">
                                                 </div>
-                                                
+                                            
                                                 <div class="form-group">
                                                     <label>How many years have you been in your current position?</label>
-                                                    <input type="number" class="form-control" name="years_in_position" placeholder="Number of years in current position">
+                                                    <input type="number" class="form-control" name="years_in_position" placeholder="Number of years in current position" value="{{ patient.years_in_position | default:'' }}">
                                                 </div>
-                                                
+                                            
                                                 <div class="form-group">
                                                     <label>Please list any work-related stressors, if there's any</label>
-                                                    <textarea class="form-control" name="work_stressors" rows="3" placeholder="Work-related stressors"></textarea>
+                                                    <textarea class="form-control" name="work_stressors" rows="3" placeholder="Work-related stressors">{{ patient.work_stressors | default:'' }}</textarea>
                                                 </div>
                                             </div>
+                                            
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <h3>Religious/Spiritual Information</h3>
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Do you consider yourself to be religious?</label>
                                                 <div>
-                                                    <label><input type="radio" name="religious" value="no"> No</label>
-                                                    <label><input type="radio" name="religious" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="religious" value="yes" {% if patient.religious == "yes" %} checked {% endif %} onclick="toggleReligiousDetails(true)" required> Yes</label>
+                                                    <label><input type="radio" name="religious" value="no" {% if patient.religious == "no" %} checked {% endif %} onclick="toggleReligiousDetails(false)" required> No</label>
                                                 </div>
                                             </div>
                                             
-                                            <div id="religiousDetails" style="display: none;">
+                                            <div id="religiousDetails" style="display: {% if patient.religious == "yes" %} block {% else %} none {% endif %};">
                                                 <div class="form-group">
                                                     <label>What is your faith?</label>
-                                                    <input type="text" class="form-control" name="faith" placeholder="Your faith">
+                                                    <input type="text" class="form-control" name="faith" placeholder="Your faith" value="{{ patient.faith | default:'' }}">
                                                 </div>
                                             </div>
                                             
-                                            <div id="religiousDetailsNo" style="display: none;">
+                                            <div id="religiousDetailsNo" style="display: {% if patient.religious == "no" %} block {% else %} none {% endif %};">
                                                 <label>Do you consider yourself to be spiritual?</label>
                                                 <div>
-                                                    <label><input type="radio" name="spiritual" value="no"> No</label>
-                                                    <label><input type="radio" name="spiritual" value="yes"> Yes</label>
+                                                    <label><input type="radio" name="spiritual" value="yes" {% if patient.spiritual == "yes" %} checked {% endif %}> Yes</label>
+                                                    <label><input type="radio" name="spiritual" value="no" {% if patient.spiritual == "no" %} checked {% endif %}> No</label>
                                                 </div>
-                                            </div>
+                                            </div>                                
                                         </div>
                                         
                                         <div class="col-md-12">
@@ -545,7 +695,7 @@
                                                 <h3>Family Mental Health History</h3>
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Has anyone in your family (either immediate family members or relatives) experienced difficulties with the following?</label>
@@ -561,134 +711,136 @@
                                                         <tr>
                                                             <td>Depression</td>
                                                             <td>
-                                                                <label><input type="radio" name="Depression" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Depression" value="no"> No</label>
+                                                                <label><input type="radio" name="Depression" value="yes" {% if patient.depression == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Depression" value="no" {% if patient.depression == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="DepressionMember"></td>
+                                                            <td><input type="text" class="form-control" name="DepressionMember" value="{{ patient.depression_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Bipolar disorder</td>
                                                             <td>
-                                                                <label><input type="radio" name="Bipolar" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Bipolar" value="no"> No</label>
+                                                                <label><input type="radio" name="Bipolar" value="yes" {% if patient.bipolar == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Bipolar" value="no" {% if patient.bipolar == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="BipolarMember"></td>
+                                                            <td><input type="text" class="form-control" name="BipolarMember" value="{{ patient.bipolar_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Anxiety disorder</td>
                                                             <td>
-                                                                <label><input type="radio" name="Anxiety" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Anxiety" value="no"> No</label>
+                                                                <label><input type="radio" name="Anxiety" value="yes" {% if patient.anxiety == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Anxiety" value="no" {% if patient.anxiety == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="AnxietyMember"></td>
+                                                            <td><input type="text" class="form-control" name="AnxietyMember" value="{{ patient.anxiety_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Panic attacks</td>
                                                             <td>
-                                                                <label><input type="radio" name="Panic" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Panic" value="no"> No</label>
+                                                                <label><input type="radio" name="Panic" value="yes" {% if patient.panic == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Panic" value="no" {% if patient.panic == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="PanicMember"></td>
+                                                            <td><input type="text" class="form-control" name="PanicMember" value="{{ patient.panic_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Schizophrenia</td>
                                                             <td>
-                                                                <label><input type="radio" name="Schizophrenia" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Schizophrenia" value="no"> No</label>
+                                                                <label><input type="radio" name="Schizophrenia" value="yes" {% if patient.schizophrenia == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Schizophrenia" value="no" {% if patient.schizophrenia == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="SchizophreniaMember"></td>
+                                                            <td><input type="text" class="form-control" name="SchizophreniaMember" value="{{ patient.schizophrenia_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Alcohol/substance abuse</td>
                                                             <td>
-                                                                <label><input type="radio" name="Alcohol" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Alcohol" value="no"> No</label>
+                                                                <label><input type="radio" name="Alcohol" value="yes" {% if patient.alcohol == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Alcohol" value="no" {% if patient.alcohol == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="AlcoholMember"></td>
+                                                            <td><input type="text" class="form-control" name="AlcoholMember" value="{{ patient.alcohol_member | default:'' }}" ></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Eating disorders</td>
                                                             <td>
-                                                                <label><input type="radio" name="Eating" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Eating" value="no"> No</label>
+                                                                <label><input type="radio" name="Eating" value="yes" {% if patient.eating == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Eating" value="no" {% if patient.eating == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="EatingMember"></td>
+                                                            <td><input type="text" class="form-control" name="EatingMember" value="{{ patient.eating_member | default:'' }}" ></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Learning disabilities</td>
                                                             <td>
-                                                                <label><input type="radio" name="Learning" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Learning" value="no"> No</label>
+                                                                <label><input type="radio" name="Learning" value="yes" {% if patient.learning == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Learning" value="no" {% if patient.learning == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="LearningMember"></td>
+                                                            <td><input type="text" class="form-control" name="LearningMember" value="{{ patient.learning_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Trauma history</td>
                                                             <td>
-                                                                <label><input type="radio" name="Trauma" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Trauma" value="no"> No</label>
+                                                                <label><input type="radio" name="Trauma" value="yes" {% if patient.trauma == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Trauma" value="no" {% if patient.trauma == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="TraumaMember"></td>
+                                                            <td><input type="text" class="form-control" name="TraumaMember" value="{{ patient.trauma_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Suicide attempts</td>
                                                             <td>
-                                                                <label><input type="radio" name="Suicide" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Suicide" value="no"> No</label>
+                                                                <label><input type="radio" name="Suicide" value="yes" {% if patient.suicide == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Suicide" value="no" {% if patient.suicide == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="SuicideMember"></td>
+                                                            <td><input type="text" class="form-control" name="SuicideMember" value="{{ patient.suicide_member | default:'' }}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Chronic illness</td>
                                                             <td>
-                                                                <label><input type="radio" name="Chronic" value="yes"> Yes</label>
-                                                                <label><input type="radio" name="Chronic" value="no"> No</label>
+                                                                <label><input type="radio" name="Chronic" value="yes" {% if patient.chronic == "yes" %} checked {% endif %} required> Yes</label>
+                                                                <label><input type="radio" name="Chronic" value="no" {% if patient.chronic == "no" %} checked {% endif %} required> No</label>
                                                             </td>
-                                                            <td><input type="text" class="form-control" name="ChronicMember"></td>
+                                                            <td><input type="text" class="form-control" name="ChronicMember" value="{{ patient.chronic_member | default:'' }}"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <h3>Other Information</h3>
                                             </div>
                                         </div>
-
+            
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="strengths">What do you consider to be your strengths?</label>
-                                                <textarea class="form-control" id="strengths" name="strengths" rows="4"></textarea>
+                                                <textarea class="form-control" id="strengths" name="strengths" rows="4">{{ patient.strengths | default:'' }}</textarea>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label for="likeYourself">What do you like most about yourself?</label>
-                                                <textarea class="form-control" id="likeYourself" name="likeYourself" rows="4"></textarea>
+                                                <textarea class="form-control" id="likeYourself" name="likeYourself" rows="4">{{ patient.like_yourself | default:'' }}</textarea>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label for="copingStrategies">What are effective coping strategies that you have learned?</label>
-                                                <textarea class="form-control" id="copingStrategies" name="copingStrategies" rows="4"></textarea>
+                                                <textarea class="form-control" id="copingStrategies" name="copingStrategies" rows="4">{{ patient.coping_strategies | default:'' }}</textarea>
                                             </div>
                                             
                                             <div class="form-group">
                                                 <label>Do you think you will be needing help/assistance from our Psychological Service?</label><br>
-                                                <label><input type="radio" name="needAssistance" value="no"> No</label>
-                                                <label><input type="radio" name="needAssistance" value="yes"> Yes</label>
+                                                <label><input type="radio" name="needAssistance" value="yes" {% if patient.need_assistance == "yes" %} checked {% endif %} onclick="toggleAssistanceDetails(this)" required> Yes</label>
+                                                <label><input type="radio" name="needAssistance" value="no" {% if patient.need_assistance == "no" %} checked {% endif %} onclick="toggleAssistanceDetails(this)" required> No</label>
                                             </div>
                                             
-                                            <div class="form-group">
-                                                <label for="areaConcern">If yes, at what area or concern?</label>
-                                                <textarea class="form-control" id="areaConcern" name="areaConcern" rows="4"></textarea>
+                                            <div id="assistanceDetails" style="display: {% if patient.need_assistance == "yes" %} block {% else %} none {% endif %};">
+                                                <div class="form-group">
+                                                    <label for="areaConcern">At what area or concern?</label>
+                                                    <textarea class="form-control" id="areaConcern" name="areaConcern" rows="4">{{ patient.area_concern | default:'' }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div id="signature" style="border: 1px solid black; width: 400px; height: 100px;"></div>
+            
+                                        <!-- <div id="signature" style="border: 1px solid black; width: 400px; height: 100px;"></div>
                                         <button id="saveSignature">Save Signature</button>
                                         <button id="clearSignature">Clear Signature</button>
-                                        <div id="signatureImage"></div>
+                                        <div id="signatureImage"></div> -->
                                         
                                         <div class="col-md-12">
                                             <input type="submit" class="btnRegister" value="Register"/>

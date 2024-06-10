@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('primaryPhysicianName', models.CharField(max_length=100, null=True, blank=True)),
                 ('multipleSpecialists', models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], null=True, blank=True)),
                 ('specialistList', models.TextField(null=True, blank=True)),
-                ('lastExamination', models.DateField(null=True, blank=True)),
+                ('lastExamination', models.TextField(null=True, blank=True)),
                 ('persistentSymptoms', models.TextField(null=True, blank=True)),
                 ('physicalMedication', models.TextField(null=True, blank=True)),
                 ('sleepTime', models.TimeField(null=True, blank=True)),

@@ -63,8 +63,18 @@
 
         .btn-primary{
             margin: 3px;
+        } 
+
+        table {
+            border-collapse:separate;
+            border:solid black 1px;
+            border-radius:6px;
         }
         
+        td {
+            border-left:solid black 1px;
+            border-top:solid black 1px;
+        }
           
 
     </style>
@@ -101,502 +111,501 @@
                     </div>
                 </div>
         
-        <div class="tab-content" style="margin-top: 30px;">
+        <div class="tab-content" style="margin-top: 18px; margin-bottom: 5px">
             <div id="BasicDetails" data-tab-content class="activeDiv">
                 <h1>Basic Details</h1>
                 <div class="card-body pt-0" id="table1">
-                    <table class="table table-bordered" >
+                    <table class="table table-bordered" style="margin: 2px; text-align: left; padding: 2px; background: #F9FAFA">
                       <tr>
-                        <th width="30%">Patient Name</th>
-                        <td width="2%">:</td>
+                        <th width="20%">Patient Name</th>
                         <td>{{details.name}}</td>
                       </tr>
                       <tr>
-                        <th width="30%">Date of birth	</th>
-                        <td width="2%">:</td>
+                        <th width="20%">Date of birth	</th>
                         <td>{{details.dateOfBirth}}</td>
                       </tr>
                       
                       <tr>
-                        <th width="30%">Gender</th>
-                        <td width="2%">:</td>
+                        <th width="20%">Gender</th>
                         <td>{{details.gender}}</td>
                       </tr>
                       
                       <tr>
-                        <th width="30%">Mobile Number </th>
-                        <td width="2%">:</td>
+                        <th width="20%">Mobile Number </th>
                         <td>{{details.mobile}}</td>
                       </tr>
                       <tr>
-                        <th width="30%">Email</th>
-                        <td width="2%">:</td>
+                        <th width="20%">Email</th>
                         <td>{{details.email}}</td>
                       </tr>
                     </table>
                   </div>
+
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                <a href="/healthcare/updatePatient/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-bottom: 2%; margin-top: .5%;">Update Basic Details</a>
+                {% endif %}
 
             </div>
             <div id="PersonalInformationSheet" data-tab-content>
                 <h1>Personal Information Sheet</h1>
                 {% if noRecord %}
                 <h1>
-                    <a href="/healthcare/patientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Add Personal Information Sheet</a>
+                    <a href="/healthcare/patientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Personal Information Sheet</a>
                 </h1>
                 {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Update Personal Information Sheet</a>
+                <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Personal Information Sheet</a>
                 {% endif %}
                 <div class="card-body pt-0" id="table2">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="background: #F9FAFA">
                       <tr>
-                          <th width="30%">Psychiatric Services</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Psychiatric Services</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.psychiatric_services}}</td>
                       </tr>
                       <tr>
-                          <th width="30%">Previous Psychotherapy</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Previous Psychotherapy</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.previous_psychotherapy}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Previous Therapist</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Previous Therapist</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.previous_therapist}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Psychiatric Medication</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Psychiatric Medication</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.psychiatric_medication}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Medication List</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Medication List</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.medication_list}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Prescribed By</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Prescribed By</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.prescribed_by}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Primary Physician</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Primary Physician</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.primary_physician}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Primary Physician Name</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Primary Physician Name</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.primary_physician_name}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Multiple Specialists</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Multiple Specialists</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.multiple_specialists}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Specialist List</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Specialist List</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.specialist_list}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Last Examination</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Last Examination</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.last_examination}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Persistent Symptoms</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Persistent Symptoms</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.persistent_symptoms}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Physical Medication</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Physical Medication</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.physical_medication}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Sleep Time</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Sleep Time</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.sleep_time}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Wake Up Time</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Wake Up Time</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.wake_up_time}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Sleep Problems</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Sleep Problems</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.sleep_problems}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Sleep Problems Type</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Sleep Problems Type</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.sleep_problems_type}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Other Sleep Problems</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Other Sleep Problems</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.other_sleep_problems}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Exercise Frequency</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Exercise Frequency</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.exercise_frequency}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Exercise Duration</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Exercise Duration</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.exercise_duration}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Eating Habits</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Eating Habits</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.eating_habits}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Eating Habits Type</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Eating Habits Type</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.eating_habits_type}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Weight Change</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Weight Change</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.weight_change}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Alcohol Use</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Alcohol Use</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.alcohol_use}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Alcohol Frequency</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Alcohol Frequency</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.alcohol_frequency}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Drinking Alone or Group</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Drinking Alone or Group</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.drinking_alone_or_group}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Drug Use Frequency</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Drug Use Frequency</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.drug_use_frequency}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Tobacco Use</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Tobacco Use</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.tobacco_use}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Cigarettes Per Day</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Cigarettes Per Day</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.cigarettes_per_day}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Tobacco Past Use</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Tobacco Past Use</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.tobacco_past_use}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Romantic Relationship</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Romantic Relationship</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.romantic_relationship}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Relationship Duration</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Relationship Duration</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.relationship_duration}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Relationship Rating</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Relationship Rating</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.relationship_rating}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Life Changes</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Life Changes</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.life_changes}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Extreme Depressed Mood</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Extreme Depressed Mood</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.extreme_depressed_mood}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Dramatic Mood Swings</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Dramatic Mood Swings</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.dramatic_mood_swings}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Rapid Speech</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Rapid Speech</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.rapid_speech}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Extreme Anxiety</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Extreme Anxiety</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.extreme_anxiety}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Panic Attacks</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Panic Attacks</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.panic_attacks}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Phobias</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Phobias</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.phobias}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Sleep Disturbances</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Sleep Disturbances</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.sleep_disturbances}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Hallucinations</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Hallucinations</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.hallucinations}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Unexplained Losses Of Time</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Unexplained Losses Of Time</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.unexplained_losses_of_time}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Unexplained Memory Lapses</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Unexplained Memory Lapses</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.unexplained_memory_lapses}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Alcohol Substance Abuse</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Alcohol Substance Abuse</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.alcohol_substance_abuse}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Frequent Body Complaints</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Frequent Body Complaints</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.frequent_body_complaints}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Eating Disorder</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Eating Disorder</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.eating_disorder}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Body Image Problems</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Body Image Problems</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.body_image_problems}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Repetitive Thoughts</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Repetitive Thoughts</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.repetitive_thoughts}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Repetitive Behaviors</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Repetitive Behaviors</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.repetitive_behaviors}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Homicidal Thoughts</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Homicidal Thoughts</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.homicidal_thoughts}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Suicidal Thoughts</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Suicidal Thoughts</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.suicidal_thoughts}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Suicidal Attempts</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Suicidal Attempts</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.suicidal_attempts}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Suicidal Attempts When</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Suicidal Attempts When</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.suicidal_attempts_when}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Employed</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Employed</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.employed}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Employer</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Employer</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.employer}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Position Happiness</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Position Happiness</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.position_happiness}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Years In Service</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Years In Service</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.years_in_service}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Years In Position</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Years In Position</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.years_in_position}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Work Stressors</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Work Stressors</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.work_stressors}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Religious</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Religious</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.religious}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Faith</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Faith</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.faith}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Spiritual</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Spiritual</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.spiritual}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Depression</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Depression</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.depression}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Depression Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Depression Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.depression_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Bipolar</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Bipolar</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.bipolar}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Bipolar Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Bipolar Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.bipolar_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Anxiety</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Anxiety</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.anxiety}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Anxiety Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Anxiety Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.anxiety_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Panic</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Panic</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.panic}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Panic Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Panic Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.panic_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Schizophrenia</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Schizophrenia</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.schizophrenia}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Schizophrenia Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Schizophrenia Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.schizophrenia_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Alcohol</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Alcohol</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.alcohol}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Alcohol Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Alcohol Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.alcohol_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Eating</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Eating</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.eating}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Eating Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Eating Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.eating_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Learning</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Learning</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.learning}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Learning Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Learning Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.learning_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Trauma</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Trauma</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.trauma}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Trauma Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Trauma Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.trauma_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Suicide</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Suicide</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.suicide}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Suicide Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Suicide Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.suicide_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Chronic</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Chronic</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.chronic}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Chronic Member</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Chronic Member</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.chronic_member}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Strengths</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Strengths</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.strengths}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Like Yourself</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Like Yourself</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.like_yourself}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Coping Strategies</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Coping Strategies</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.coping_strategies}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Need Assistance</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Need Assistance</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.need_assistance}}</td>
                       </tr>
                       <tr>  
-                          <th width="30%">Area Concern</th>
-                          <td width="2%">:</td>
+                          <th width="20%">Area Concern</th>
+                          <!--<td width="2%">:</td>-->
                           <td>{{history.area_concern}}</td>
                       </tr>
                     </table>

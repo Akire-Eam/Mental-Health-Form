@@ -46,12 +46,12 @@ def newPatient(request):
                 return render(request, 'newPatient.html',{'message':'Something went Wrong'})
             try:
                 send_mail(
-                    subject='Registered to Innovative Healthcare',
+                    subject='Registered to Mend',
                     message='',
                     html_message=f'''Hi {name}, <br><br>
-                Thank you for being part of Innovative healthcare.<br> Use the following registration id to view you prescription history<br>
+                Thank you for being part of Mend<br> Use the following Registration ID to view you prescription history<br>
                 <b>{registrationNumber}</b><br><br>Regards<br>
-                Innovative Healthcare''',
+                Mend''',
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=[email]
                 )
@@ -62,9 +62,41 @@ def newPatient(request):
                 return render(request, 'newPatient.html',{'success':True, 'patientId':patientData.id})
         else:
             return render(request, 'newPatient.html')
-    except Exception as e:
-        print(e)
-        return render(request, 'newPatient.html',{'message':'Something went wrong'})
+    except KeyError as e:
+            logger.error(f"Missing key: {e}")
+            return render(request, 'newPatient.html', {'message': 'Missing required fields'})
+    
+def updatePatient(request, patientId):
+    patient = Patient.objects.filter(id=patientId).first()
+    # print(patient.id) 
+
+    if request.method == 'POST':
+        try:
+            patient.name = request.POST['name']
+            patient.mobile = request.POST['mobile']
+            patient.email = request.POST['email']
+            patient.gender = request.POST['gender']
+            patient.dateOfBirth = request.POST['dateOfBirth']
+            patient.age = request.POST['age']
+            patient.address = request.POST['address']
+            patient.civilStatus = request.POST['civilStatus']
+            patient.nrOfChildren = request.POST['nrOfChildren']
+            patient.nrOfSiblings = request.POST['nrOfSiblings']
+            patient.birthOrder = request.POST['birthOrder']
+            patient.educationalAttainment = request.POST['educationalAttainment']
+
+            patient.save()
+
+            return render(request, 'updatePatient.html', {'success': True, 'patient': patient})
+
+        except KeyError as e:
+            logger.error(f"Missing key: {e}")
+            return render(request, 'updatePatient.html', {'message': 'Missing required fields', 'patient': patient})
+        except Exception as e:
+            logger.error(f"Error while updating patient: {e}")
+            return render(request, 'updatePatient.html', {'message': 'Something went wrong', 'patient': patient})
+
+    return render(request, 'updatePatient.html', {'patient': patient})
 
 # Create new patient record
 def to_none_if_empty(value):
@@ -244,6 +276,13 @@ def updatePatientRecord(request, patientId):
         # if request.session['role'] != "Nurse":
         #     return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
 
+    
+        
+        # your existing code...
+        
+        if request.method == 'POST':
+            logging.debug('Form submitted: %s' % request.POST)
+
         patientP = Patient.objects.filter(id=patientId).first()
         patient = PatientRecord.objects.filter(patientId=patientId)
         if len(patient) == 0:
@@ -328,6 +367,41 @@ def updatePatientRecord(request, patientId):
             patient_record.suicidalThoughts = request.POST.get('suicidalThoughts')
             patient_record.suicidalAttempts = request.POST.get('suicidalAttempts')
             patient_record.suicidalAttemptsWhen = request.POST.get('suicidalAttemptsWhen')
+            patient_record.employed = request.POST.get('employed')
+            patient_record.employer = request.POST.get('employer')
+            patient_record.position_happiness = request.POST.get('position_happiness')
+            patient_record.years_in_service = to_none_if_empty(request.POST.get('years_in_service', None))
+            patient_record.years_in_position = to_none_if_empty(request.POST.get('years_in_position', None))
+            patient_record.work_stressors = request.POST.get('work_stressors')
+            patient_record.religious = request.POST.get('religious')
+            patient_record.faith = request.POST.get('faith')
+            patient_record.spiritual = request.POST.get('spiritual')
+            patient_record.depression = request.POST.get('Depression')
+            patient_record.depression_member = request.POST.get('DepressionMember')
+            patient_record.bipolar = request.POST.get('Bipolar')
+            patient_record.bipolar_member = request.POST.get('BipolarMember')
+            patient_record.anxiety = request.POST.get('Anxiety')
+            patient_record.anxiety_member = request.POST.get('AnxietyMember')
+            patient_record.panic = request.POST.get('Panic')
+            patient_record.panic_member = request.POST.get('PanicMember')
+            patient_record.schizophrenia = request.POST.get('Schizophrenia')
+            patient_record.schizophrenia_member = request.POST.get('SchizophreniaMember')
+            patient_record.alcohol = request.POST.get('Alcohol')
+            patient_record.alcohol_member = request.POST.get('AlcoholMember')
+            patient_record.eating = request.POST.get('Eating')
+            patient_record.eating_member = request.POST.get('EatingMember')
+            patient_record.learning = request.POST.get('Learning')
+            patient_record.learning_member = request.POST.get('LearningMember')
+            patient_record.trauma = request.POST.get('Trauma')
+            patient_record.trauma_member = request.POST.get('TraumaMember')
+            patient_record.suicide = request.POST.get('Suicide')
+            patient_record.suicide_member = request.POST.get('SuicideMember')
+            patient_record.chronic = request.POST.get('Chronic')
+            patient_record.chronic_member = request.POST.get('ChronicMember')
+            patient_record.strengths = request.POST.get('strengths')
+            patient_record.like_yourself = request.POST.get('likeYourself')
+            patient_record.coping_strategies = request.POST.get('copingStrategies')
+            patient_record.need_assistance = request.POST.get('needAssistance')
             patient_record.area_concern = request.POST.get('areaConcern')
 
             patient_record.save()
@@ -336,5 +410,5 @@ def updatePatientRecord(request, patientId):
         else:
             return render(request, 'updatePatientRecord.html', {'patient': patient_record, 'profile': patientP})
     except Exception as e:
-        print(e)
+        logging.exception('Exception occurred: %s' % e)
         return HttpResponse("<h1>Something went wrong!!!</h1>")

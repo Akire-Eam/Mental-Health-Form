@@ -109,7 +109,7 @@
     <div class="row">
         <div class="col-md-3 register-left">
             <img src="http://www.downloadclipart.net/large/37802-red-stethoscope-clipart.png" alt="" />
-            <h3>Welcome</h3>
+            <h3>Update Basic Details</h3>
             <p>Together, We Mend and Heal</p>
             <input type="submit" name="" value="Cancel" onclick="cancel()" /><br />
         </div>
@@ -117,12 +117,12 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading">Register a Patient</h3>
-                    <form action="newPatient" method="post">{% csrf_token %}
+                    <form action="/healthcare/updatePatient/{{patient.id}}"  method="post"> {% csrf_token %}
                         <div class="row register-form">
                             <div class="col-md-12">
                                 {% if success %}
                                 <div class="alert alert-success" role="alert">
-                                    Patient Successfully registered <a href="/healthcare/patientRecord/{{patientId}}" class="alert-link">Click here</a> to add his/her personal information sheet.
+                                    Records Successfully updated
                                 </div>
                                 {% endif %}
                                 {% if message %}
@@ -134,62 +134,62 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name:</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Name" pattern="[a-zA-Z'-'\s]*" value="" required/>
+                                    <input type="text" class="form-control" name="name" placeholder="Name" pattern="[a-zA-Z'-'\s]*" value="{{ patient.name }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Birthday:</label>
-                                    <input placeholder="mm/dd/yyyy" type="text" name="dateOfBirth" class="form-control" value="" onfocus="(this.type='date')" onblur="(this.type='text')" required/>
+                                    <input placeholder="mm/dd/yyyy" type="text" name="dateOfBirth" class="form-control" value="{{ patient.dateOfBirth }}" onfocus="(this.type='date')" onblur="(this.type='text')" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Phone number:</label>
-                                    <input type="text" minlength="10" maxlength="10" name="mobile" class="form-control" pattern="[0-9]+" placeholder="9*********" value="" required/>
+                                    <input type="text" minlength="10" maxlength="10" name="mobile" class="form-control" pattern="[0-9]+" placeholder="9*********" value="{{ patient.mobile }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Gender:</label>
                                     <select class="form-control" name="gender">
-                                        <option class="hidden" value="" selected disabled>Gender</option>
-                                        <option value="Male" required>Male</option>
-                                        <option value="Female" required>Female</option>
-                                        <option value="Other" required>Other</option>
+                                        <option value="" disabled {% if not patient.gender %}selected{% endif %}>Select Gender</option>
+                                        <option value="Male" {% if patient.gender == "Male" %}selected{% endif %}>Male</option>
+                                        <option value="Female" {% if patient.gender == "Female" %}selected{% endif %}>Female</option>
+                                        <option value="Other" {% if patient.gender == "Other" %}selected{% endif %}>Other</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Number of Children:</label>
-                                    <input type="number" class="form-control" name="nrOfChildren" value="" required/>
+                                    <input type="number" class="form-control" name="nrOfChildren" value="{{ patient.nrOfChildren }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Educational Attainment:</label>
-                                    <textarea class="form-control" name="educationalAttainment" rows="2" required></textarea>
+                                    <textarea class="form-control" name="educationalAttainment" rows="2" required>{{ patient.educationalAttainment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Address:</label>
-                                    <textarea class="form-control" name="address" rows="2" required></textarea>
+                                    <textarea class="form-control" name="address" rows="2" required>{{ patient.address }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Age:</label>
-                                    <input type="number" class="form-control" name="age" value="" required/>
+                                    <input type="number" class="form-control" name="age" value="{{ patient.age }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Email:</label>
-                                    <input type="email" class="form-control" name="email" placeholder="Your Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="" required/>
+                                    <input type="email" class="form-control" name="email" placeholder="Your Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="{{ patient.email }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Civil Status:</label>
-                                    <input type="text" class="form-control" name="civilStatus" value="" required/>
+                                    <input type="text" class="form-control" name="civilStatus" value="{{ patient.civilStatus }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Number of Siblings:</label>
-                                    <input type="number" class="form-control" name="nrOfSiblings" value="" required/>
+                                    <input type="number" class="form-control" name="nrOfSiblings" value="{{ patient.nrOfSiblings }}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Birth Order:</label>
-                                    <input type="text" class="form-control" name="birthOrder" value="" required/>
+                                    <input type="text" class="form-control" name="birthOrder" value="{{ patient.birthOrder }}" required/>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <input type="submit" class="btnRegister" value="Register" required/>
+                                <input type="submit" class="btnRegister" value="Update" required/>
                             </div>
                         </div>
                     </form>
