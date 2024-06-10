@@ -173,7 +173,10 @@
             border-left:solid black 1px;
             border-top:solid black 1px;
         }
-          
+
+        p {
+            text-align: justify;
+        }          
 
     </style>
    
@@ -217,13 +220,13 @@
                     </div>
                 </div>
         
-        <div class="tab-content" style="margin-top: 18px; margin-bottom: 5px">
+        <div class="tab-content" style="margin-top: 18px; margin-bottom: 0px">
             <div id="BasicDetails" data-tab-content class="activeDiv">
                 <h1>Basic Details</h1>
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                <a href="/healthcare/updatePatient/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Basic Details</a>
+                <a href="/healthcare/updatePatient/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Update Basic Details</a>
                 {% endif %}
-                <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
+                <div class="container register" style="margin-top: 3%; margin-bottom: 7%;">
                     <div class="row">
                         <div class="col-md-12 register-right">
                             <div class="tab-content" id="myTabContent">
@@ -315,9 +318,9 @@
                 </h1>
                 {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Personal Information Sheet</a>
+                <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Update Personal Information Sheet</a>
                 {% endif %}
-                <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
+                <div class="container register" style="margin-top: 3%; margin-bottom: 7%;">
                     <div class="row">
                         <div class="col-md-12 register-right">
                             <div class="tab-content" id="myTabContent">
@@ -878,9 +881,9 @@
                 </h1>
                 {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                <a href="/healthcare/updateConsentForm/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Informed Consent</a>
+                <a href="/healthcare/updateConsentForm/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Update Informed Consent</a>
                 {% endif %}
-                <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
+                <div class="container register" style="margin-top: 3%; margin-bottom: 7%;">
                     <div class="row">
                         <div class="col-md-12 register-right">
                             <div class="tab-content" id="myTabContent">
@@ -903,7 +906,7 @@
                                             
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <h3>CONTACTING THE PSYCHOTHERAPIST/PSYCHOLOGIST/COUNSELOR</h3>
+                                                    <h3>CONTACTING THE PSYCHOTHERAPIST/ PSYCHOLOGIST/ COUNSELOR</h3>
                                                     <p>
                                                         Psychotherapist/Psychologist/counselor often not immediately available by telephone and
                                                         may not answer the phone when with a client/patient/informant. When unavailable,

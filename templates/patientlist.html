@@ -97,6 +97,7 @@
     <div class="d-flex justify-content-end">
     <form class="d-flex" method="post" action="{% url 'searchlist' %}" style="margin-right: 3%;">
         {% csrf_token %}
+        <!--<input type="search" id="search-input" class="form-control me-1" placeholder="Search" style="width: 5cm;" />-->
         <input type="search" id="form1" class="form-control me-1" name="searched" placeholder="Search" style="width: 5cm;" />
         <button type="submit" class="btn btn-primary">
         <i class="fa fa-search"></i>
@@ -229,7 +230,36 @@
         $(this).closest("tr").next("tr").children("td").slideDown(350);
     }
     });
-</script> -->
+</script> 
+
+<script>
+    document.getElementById('search-input').addEventListener('input', function() {
+        const query = this.value;
+        fetch(`/searchlist/?query=${query}`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const patientList = document.getElementById('patient-list');
+            patientList.innerHTML = '';
+            data.forEach(patient => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${patient.name}</td>
+                    <td>${patient.mobile}</td>
+                    <td>${patient.registrationNumber}</td>
+                    <td>${patient.createdDate}</td>
+                    <td>${patient.is_active ? '<span style="color: green;">Active</span>' : '<span style="color: red;">Inactive</span>'}</td>
+                    <td><a href="/doctor/patient-list/patient/${patient.id}" class="btn btn-info btm-sm">View Records</a></td>
+                `;
+                patientList.appendChild(row);
+            });
+        });
+    });
+</script>-->
 
 </html>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.core.checks import messages
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, response
+from django.http import HttpResponse, response, JsonResponse
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -263,4 +263,24 @@ def medication(request, prescriptionId):
         print(e)
         allMeds = Medicine.objects.all()
         return render(request, "medicationPage.html",{'prescriptionId':prescriptionId,'allMeds':allMeds,'message':"Please Fill All The Required Details!"})
+    
+'''    
+def search_list(request):
+    query = request.GET.get('query', '')
+    if query:
+        patients = Patient.objects.filter(name__icontains=query)
+    else:
+        patients = Patient.objects.all()
+    
+    patient_data = [{
+        'name': patient.name,
+        'mobile': patient.mobile,
+        'registrationNumber': patient.registrationNumber,
+        'createdDate': patient.createdDate.strftime('%Y-%m-%d'),
+        'is_active': patient.is_active,
+        'id': patient.id
+    } for patient in patients]
 
+    return JsonResponse(patient_data, safe=False)
+
+'''
