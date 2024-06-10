@@ -62,11 +62,12 @@
             }
 
             .page-hero {
-              height: 90%;
+              height: 100%;
               width: 100%;
               display: flex;
               justify-content: center;
               align-items: center;
+              /* background-color: white; */
               background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0.5, 0.5));
             }
 
@@ -172,8 +173,9 @@
     
    <div class="page-hero bg-image overlay-dark">
        <div class="container-home wow zoomIn">
-         <h1 style="font-size: 150px;">You Matter.</h1>
-         <h2 style="color: #767C80;">Get Professional Help Today!</h2>
+         <h1 style="font-size: 50px;">Nurturing Mental Health, One Mend at a Time</h1>
+         <h2 style="color: #767C80;">Offering Compassionate Care Anytime, Anywhere</h2>
+         <br>
          {% if request.session.role %}
             {% if request.session.role == 'Admin' %}
               <a href="/accounts/createdoctor/" class="btn btn-primary btn-lg zoomOut" id="button1">Create Doctor </a>
