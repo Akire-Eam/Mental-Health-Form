@@ -9,6 +9,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
     <style>
         [data-tab-content] {
@@ -61,7 +63,7 @@
             border-color: #587892;
         }
 
-        .btn-primary{
+        .btn-primary, .btn-success, .btn{
             margin: 3px;
         } 
 
@@ -199,8 +201,16 @@
                         <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#ConsentForm">Consent Form</button>
                         <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Counseling">Counseling</button>
                         <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#TreatmentPlan">Treatment Plan</button>
+                        <button class="nav-item btn {% if details.is_active %}btn-success{% else %}btn-danger{% endif %} toggle-status" data-id="{{ details.id }}" style="float: right; position:absolute; right: 5%;">
+                            {% if details.is_active %}
+                                Active
+                            {% else %}
+                                Inactive
+                            {% endif %}
+                        </button>
+                        
                         <h3>
-                            <a class="nav-link" href="/doctor/patient-list" style="float: right; position: absolute; right:20px">
+                            <a class="nav-link" href="/doctor/patient-list" style="float: right; position: absolute; right:1%">
                                 <i class="fas fa-caret-square-left fa-lg zoomOut" style="color: #767C80;"></i>
                             </a>
                         </h3>
@@ -1198,6 +1208,67 @@ function toggleReligiousDetails(isReligious) {
             previousTherapistInput.style.display = "none";
         }
     }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    $(document).ready(function() {
+    $('.toggle-status').on('click', function(e) {
+        e.preventDefault();  // Prevent default form submission
+
+        var button = $(this); // Store reference to the button element
+        var patientId = button.data('id');
+        var isActive = button.hasClass('btn-success');
+
+        // Send a request to update the status
+        $.ajax({
+            url: '/healthcare/updatePatient/' + patientId,  
+            method: 'POST',
+            data: {
+                is_active: !isActive,
+                csrfmiddlewaretoken: csrftoken  // Include CSRF token
+            },
+            success: function(response) {
+                console.log(response);
+
+                // Update button appearance and text
+                if (response.is_active) {
+                    button
+                        .removeClass('btn-danger')
+                        .addClass('btn-success')
+                        .html('Active');
+                } else {
+                    button
+                        .removeClass('btn-success')
+                        .addClass('btn-danger')
+                        .html('Inactive');
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error(error);
+            }
+        });
+    });
+});
+
+
+
+
 
 
 </script>

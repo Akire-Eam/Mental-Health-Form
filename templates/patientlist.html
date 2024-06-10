@@ -113,6 +113,7 @@
             <th scope="col">Phone Number</th>
             <th scope="col">Registration Number</th>
             <th scope="col">Registered Date</th>
+            <th scope="col">Status</th>
 
             <th scope="col">  
             </th>
@@ -129,6 +130,14 @@
                     <td>{{patient.mobile}}</td>
                     <td>{{patient.registrationNumber}}</td>
                     <td>{{patient.createdDate}}</td>
+                    <td>
+                        {% if patient.is_active %}
+                            <span style="color: green;">Active</span>
+                        {% else %}
+                            <span style="color: red;">Inactive</span>
+                        {% endif %}
+                    </td>
+                    
                     <td>
                         <a href="/doctor/patient-list/patient/{{patient.id}}" class="btn btn-info btm-sm">View Records</a>
                         <!-- {% if request.session.role == "Nurse" %}

@@ -116,9 +116,10 @@
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">Register a Patient</h3>
+                    <h3 class="register-heading">Basic Details</h3>
                     <form action="/healthcare/updatePatient/{{patient.id}}"  method="post"> {% csrf_token %}
                         <div class="row register-form">
+                            
                             <div class="col-md-12">
                                 {% if success %}
                                 <div class="alert alert-success" role="alert">
@@ -130,7 +131,11 @@
                                     {{message}}
                                 </div>
                                 {% endif %}
+                              
                             </div>
+                           
+                               
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name:</label>
