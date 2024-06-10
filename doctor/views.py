@@ -119,24 +119,20 @@ def patientList(request):
 def patientRecord(request, patientId):
     try:
         patientDetails = Patient.objects.get(pk=patientId)
-        his = PatientRecord.objects.filter(patientId=patientDetails)
-        if(len(his)!=0):
-            history=his.first()
-            allPrescription = Prescription.objects.filter(patientId=patientDetails)
-            prescriptionListData = []
-            for prep in allPrescription:
-                diagnosis = Diagnosis.objects.get(pk=prep.diagnosisId.id)
-                prescriptionListData.append({
-                    'diagnosisCreatedDate': diagnosis.createdDate,
-                    'diagnosisName': diagnosis.diagnosisName,
-                    'prescriptionId':prep.id
-                })
-            return render(request, "viewPatientRecord.html", {'history':history, 'details':patientDetails,'prescriptionList':prescriptionListData}) 
+        patientRecordDetails = PatientRecord.objects.filter(patientId=patientId).first()
+        
+        if patientRecordDetails:
+            return render(request, "viewPatientRecord.html", {'details': patientDetails, 'PIS_details': patientRecordDetails})
         else:
-            return render(request, "viewPatientRecord.html", {'noRecord':True, 'details':patientDetails})
+            return render(request, "viewPatientRecord.html", {'noRecord': True, 'details': patientDetails, 'PIS_details': None})
+    
+    except Patient.DoesNotExist:
+        messages.add_message(request, messages.ERROR, "Patient not found.")
+        return redirect('/')
+    
     except Exception as e:
         print(e)
-        messages.add_message(request, messages.ERROR, "Please Add Valid Details !")
+        messages.add_message(request, messages.ERROR, "An error occurred. Please try again.")
         return redirect('/')
 
 # See Prescription

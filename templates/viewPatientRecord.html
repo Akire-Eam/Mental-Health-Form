@@ -65,6 +65,102 @@
             margin: 3px;
         }
         
+        .register{
+            background: -webkit-linear-gradient(left, #A9B5C2, #587892);
+            margin-top: 3%;
+            padding: 3%;
+            width: 70%;
+        }
+        .register-left{
+            text-align: center;
+            color: #fff;
+            margin-top: 4%;
+        }
+        .register-left input{
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            width: 60%;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #383d41;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            cursor: pointer;
+        }
+        .register-right{
+            background: #f8f9fa;
+            border-top-left-radius: 10% 50%;
+            border-bottom-left-radius: 10% 50%;
+        }
+        .register-left img{
+            margin-top: 15%;
+            margin-bottom: 5%;
+            width: 25%;
+            -webkit-animation: mover 2s infinite  alternate;
+            animation: mover 1s infinite  alternate;
+        }
+        @-webkit-keyframes mover {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        @keyframes mover {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        .register-left p{
+            font-weight: lighter;
+            padding: 12%;
+            margin-top: -9%;
+        }
+        .register .register-form{
+            padding: 10%;
+            margin-top: 10%;
+        }
+        .btnRegister{
+            float: right;
+            margin-top: 10%;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            background: #16a085;
+            color: #fff;
+            font-weight: 600;
+            width: 50%;
+            cursor: pointer;
+        }
+        .register .nav-tabs{
+            margin-top: 3%;
+            border: none;
+            background: #16a085;
+            border-radius: 1.5rem;
+            width: 28%;
+            float: right;
+        }
+        .register .nav-tabs .nav-link{
+            padding: 2%;
+            height: 34px;
+            font-weight: 600;
+            color: #fff;
+            border-top-right-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+        .register .nav-tabs .nav-link:hover{
+            border: none;
+        }
+        .register .nav-tabs .nav-link.active{
+            width: 100px;
+            color: #16a085;
+            border: 2px solid #16a085;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
+        }
+        .register-heading{
+            text-align: center;
+            margin-top: 8%;
+            margin-bottom: -15%;
+            color: #495057;
+        }
           
 
     </style>
@@ -107,37 +203,89 @@
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <a href="/healthcare/updatePatient/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Update Basic Details</a>
                 {% endif %}
-                <div class="card-body pt-0" id="table1">
-                    <table class="table table-bordered" >
-                      <tr>
-                        <th width="30%">Patient Name</th>
-                        <td width="2%">:</td>
-                        <td>{{details.name}}</td>
-                      </tr>
-                      <tr>
-                        <th width="30%">Date of birth	</th>
-                        <td width="2%">:</td>
-                        <td>{{details.dateOfBirth}}</td>
-                      </tr>
-                      
-                      <tr>
-                        <th width="30%">Gender</th>
-                        <td width="2%">:</td>
-                        <td>{{details.gender}}</td>
-                      </tr>
-                      
-                      <tr>
-                        <th width="30%">Mobile Number </th>
-                        <td width="2%">:</td>
-                        <td>{{details.mobile}}</td>
-                      </tr>
-                      <tr>
-                        <th width="30%">Email</th>
-                        <td width="2%">:</td>
-                        <td>{{details.email}}</td>
-                      </tr>
-                    </table>
-                  </div>
+                <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
+                    <div class="row">
+                        <div class="col-md-12 register-right">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <form action="/healthcare/updatePatient/{{patient.id}}"  method="post"> {% csrf_token %}
+                                        <div class="row register-form" style="margin-top: 0 !important;">
+                                            <div class="col-md-12">
+                                                {% if success %}
+                                                <div class="alert alert-success" role="alert">
+                                                    Records Successfully updated
+                                                </div>
+                                                {% endif %}
+                                                {% if message %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{message}}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Name:</label>
+                                                    <input type="text" class="form-control" name="name" placeholder="Name" pattern="[a-zA-Z'-'\s]*" value="{{ details.name }}" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Birthday:</label>
+                                                    <input placeholder="mm/dd/yyyy" type="text" name="dateOfBirth" class="form-control" value="{{ details.dateOfBirth |date:'Y-m-d' }}" onfocus="(this.type='date')" onblur="(this.type='text')" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Phone number:</label>
+                                                    <input type="text" minlength="10" maxlength="10" name="mobile" class="form-control" pattern="[0-9]+" placeholder="9*********" value="{{ details.mobile }}" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Gender:</label>
+                                                    <select class="form-control" name="gender">
+                                                        <option value="" disabled {% if not details.gender %}selected{% endif %} disabled>Select Gender</option>
+                                                        <option value="Male" {% if details.gender == "Male" %}selected{% endif %} disabled>Male</option>
+                                                        <option value="Female" {% if details.gender == "Female" %}selected{% endif %} disabled>Female</option>
+                                                        <option value="Other" {% if details.gender == "Other" %}selected{% endif %} disabled>Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Number of Children:</label>
+                                                    <input type="number" class="form-control" name="nrOfChildren" value="{{ details.nrOfChildren }}" required disabled/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Educational Attainment:</label>
+                                                    <textarea class="form-control" name="educationalAttainment" rows="2" required readonly="readonly">{{ details.educationalAttainment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Address:</label>
+                                                    <textarea class="form-control" name="address" rows="2" required readonly="readonly">{{ details.address }}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Age:</label>
+                                                    <input type="number" class="form-control" name="age" value="{{ details.age }}" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Email:</label>
+                                                    <input type="email" class="form-control" name="email" placeholder="Your Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="{{ details.email }}" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Civil Status:</label>
+                                                    <input type="text" class="form-control" name="civilStatus" value="{{ details.civilStatus }}" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Number of Siblings:</label>
+                                                    <input type="number" class="form-control" name="nrOfSiblings" value="{{ details.nrOfSiblings }}" disabled required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Birth Order:</label>
+                                                    <input type="text" class="form-control" name="birthOrder" value="{{ details.birthOrder }}" disabled required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <div id="PersonalInformationSheet" data-tab-content>
@@ -150,460 +298,559 @@
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:right; margin: 2%;">Update Personal Information Sheet</a>
                 {% endif %}
-                <div class="card-body pt-0" id="table2">
-                    <table class="table table-bordered">
-                      <tr>
-                          <th width="30%">Psychiatric Services</th>
-                          <td width="2%">:</td>
-                          <td>{{history.psychiatric_services}}</td>
-                      </tr>
-                      <tr>
-                          <th width="30%">Previous Psychotherapy</th>
-                          <td width="2%">:</td>
-                          <td>{{history.previous_psychotherapy}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Previous Therapist</th>
-                          <td width="2%">:</td>
-                          <td>{{history.previous_therapist}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Psychiatric Medication</th>
-                          <td width="2%">:</td>
-                          <td>{{history.psychiatric_medication}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Medication List</th>
-                          <td width="2%">:</td>
-                          <td>{{history.medication_list}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Prescribed By</th>
-                          <td width="2%">:</td>
-                          <td>{{history.prescribed_by}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Primary Physician</th>
-                          <td width="2%">:</td>
-                          <td>{{history.primary_physician}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Primary Physician Name</th>
-                          <td width="2%">:</td>
-                          <td>{{history.primary_physician_name}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Multiple Specialists</th>
-                          <td width="2%">:</td>
-                          <td>{{history.multiple_specialists}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Specialist List</th>
-                          <td width="2%">:</td>
-                          <td>{{history.specialist_list}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Last Examination</th>
-                          <td width="2%">:</td>
-                          <td>{{history.last_examination}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Persistent Symptoms</th>
-                          <td width="2%">:</td>
-                          <td>{{history.persistent_symptoms}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Physical Medication</th>
-                          <td width="2%">:</td>
-                          <td>{{history.physical_medication}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Sleep Time</th>
-                          <td width="2%">:</td>
-                          <td>{{history.sleep_time}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Wake Up Time</th>
-                          <td width="2%">:</td>
-                          <td>{{history.wake_up_time}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Sleep Problems</th>
-                          <td width="2%">:</td>
-                          <td>{{history.sleep_problems}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Sleep Problems Type</th>
-                          <td width="2%">:</td>
-                          <td>{{history.sleep_problems_type}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Other Sleep Problems</th>
-                          <td width="2%">:</td>
-                          <td>{{history.other_sleep_problems}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Exercise Frequency</th>
-                          <td width="2%">:</td>
-                          <td>{{history.exercise_frequency}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Exercise Duration</th>
-                          <td width="2%">:</td>
-                          <td>{{history.exercise_duration}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Eating Habits</th>
-                          <td width="2%">:</td>
-                          <td>{{history.eating_habits}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Eating Habits Type</th>
-                          <td width="2%">:</td>
-                          <td>{{history.eating_habits_type}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Weight Change</th>
-                          <td width="2%">:</td>
-                          <td>{{history.weight_change}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Alcohol Use</th>
-                          <td width="2%">:</td>
-                          <td>{{history.alcohol_use}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Alcohol Frequency</th>
-                          <td width="2%">:</td>
-                          <td>{{history.alcohol_frequency}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Drinking Alone or Group</th>
-                          <td width="2%">:</td>
-                          <td>{{history.drinking_alone_or_group}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Drug Use Frequency</th>
-                          <td width="2%">:</td>
-                          <td>{{history.drug_use_frequency}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Tobacco Use</th>
-                          <td width="2%">:</td>
-                          <td>{{history.tobacco_use}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Cigarettes Per Day</th>
-                          <td width="2%">:</td>
-                          <td>{{history.cigarettes_per_day}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Tobacco Past Use</th>
-                          <td width="2%">:</td>
-                          <td>{{history.tobacco_past_use}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Romantic Relationship</th>
-                          <td width="2%">:</td>
-                          <td>{{history.romantic_relationship}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Relationship Duration</th>
-                          <td width="2%">:</td>
-                          <td>{{history.relationship_duration}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Relationship Rating</th>
-                          <td width="2%">:</td>
-                          <td>{{history.relationship_rating}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Life Changes</th>
-                          <td width="2%">:</td>
-                          <td>{{history.life_changes}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Extreme Depressed Mood</th>
-                          <td width="2%">:</td>
-                          <td>{{history.extreme_depressed_mood}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Dramatic Mood Swings</th>
-                          <td width="2%">:</td>
-                          <td>{{history.dramatic_mood_swings}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Rapid Speech</th>
-                          <td width="2%">:</td>
-                          <td>{{history.rapid_speech}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Extreme Anxiety</th>
-                          <td width="2%">:</td>
-                          <td>{{history.extreme_anxiety}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Panic Attacks</th>
-                          <td width="2%">:</td>
-                          <td>{{history.panic_attacks}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Phobias</th>
-                          <td width="2%">:</td>
-                          <td>{{history.phobias}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Sleep Disturbances</th>
-                          <td width="2%">:</td>
-                          <td>{{history.sleep_disturbances}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Hallucinations</th>
-                          <td width="2%">:</td>
-                          <td>{{history.hallucinations}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Unexplained Losses Of Time</th>
-                          <td width="2%">:</td>
-                          <td>{{history.unexplained_losses_of_time}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Unexplained Memory Lapses</th>
-                          <td width="2%">:</td>
-                          <td>{{history.unexplained_memory_lapses}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Alcohol Substance Abuse</th>
-                          <td width="2%">:</td>
-                          <td>{{history.alcohol_substance_abuse}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Frequent Body Complaints</th>
-                          <td width="2%">:</td>
-                          <td>{{history.frequent_body_complaints}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Eating Disorder</th>
-                          <td width="2%">:</td>
-                          <td>{{history.eating_disorder}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Body Image Problems</th>
-                          <td width="2%">:</td>
-                          <td>{{history.body_image_problems}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Repetitive Thoughts</th>
-                          <td width="2%">:</td>
-                          <td>{{history.repetitive_thoughts}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Repetitive Behaviors</th>
-                          <td width="2%">:</td>
-                          <td>{{history.repetitive_behaviors}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Homicidal Thoughts</th>
-                          <td width="2%">:</td>
-                          <td>{{history.homicidal_thoughts}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Suicidal Thoughts</th>
-                          <td width="2%">:</td>
-                          <td>{{history.suicidal_thoughts}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Suicidal Attempts</th>
-                          <td width="2%">:</td>
-                          <td>{{history.suicidal_attempts}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Suicidal Attempts When</th>
-                          <td width="2%">:</td>
-                          <td>{{history.suicidal_attempts_when}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Employed</th>
-                          <td width="2%">:</td>
-                          <td>{{history.employed}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Employer</th>
-                          <td width="2%">:</td>
-                          <td>{{history.employer}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Position Happiness</th>
-                          <td width="2%">:</td>
-                          <td>{{history.position_happiness}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Years In Service</th>
-                          <td width="2%">:</td>
-                          <td>{{history.years_in_service}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Years In Position</th>
-                          <td width="2%">:</td>
-                          <td>{{history.years_in_position}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Work Stressors</th>
-                          <td width="2%">:</td>
-                          <td>{{history.work_stressors}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Religious</th>
-                          <td width="2%">:</td>
-                          <td>{{history.religious}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Faith</th>
-                          <td width="2%">:</td>
-                          <td>{{history.faith}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Spiritual</th>
-                          <td width="2%">:</td>
-                          <td>{{history.spiritual}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Depression</th>
-                          <td width="2%">:</td>
-                          <td>{{history.depression}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Depression Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.depression_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Bipolar</th>
-                          <td width="2%">:</td>
-                          <td>{{history.bipolar}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Bipolar Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.bipolar_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Anxiety</th>
-                          <td width="2%">:</td>
-                          <td>{{history.anxiety}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Anxiety Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.anxiety_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Panic</th>
-                          <td width="2%">:</td>
-                          <td>{{history.panic}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Panic Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.panic_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Schizophrenia</th>
-                          <td width="2%">:</td>
-                          <td>{{history.schizophrenia}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Schizophrenia Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.schizophrenia_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Alcohol</th>
-                          <td width="2%">:</td>
-                          <td>{{history.alcohol}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Alcohol Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.alcohol_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Eating</th>
-                          <td width="2%">:</td>
-                          <td>{{history.eating}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Eating Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.eating_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Learning</th>
-                          <td width="2%">:</td>
-                          <td>{{history.learning}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Learning Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.learning_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Trauma</th>
-                          <td width="2%">:</td>
-                          <td>{{history.trauma}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Trauma Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.trauma_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Suicide</th>
-                          <td width="2%">:</td>
-                          <td>{{history.suicide}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Suicide Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.suicide_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Chronic</th>
-                          <td width="2%">:</td>
-                          <td>{{history.chronic}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Chronic Member</th>
-                          <td width="2%">:</td>
-                          <td>{{history.chronic_member}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Strengths</th>
-                          <td width="2%">:</td>
-                          <td>{{history.strengths}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Like Yourself</th>
-                          <td width="2%">:</td>
-                          <td>{{history.like_yourself}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Coping Strategies</th>
-                          <td width="2%">:</td>
-                          <td>{{history.coping_strategies}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Need Assistance</th>
-                          <td width="2%">:</td>
-                          <td>{{history.need_assistance}}</td>
-                      </tr>
-                      <tr>  
-                          <th width="30%">Area Concern</th>
-                          <td width="2%">:</td>
-                          <td>{{history.area_concern}}</td>
-                      </tr>
-                    </table>
-                  </div>
+                <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
+                    <div class="row">
+                        <div class="col-md-12 register-right">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <h3 class="register-heading">{{patient.name}}</h3>
+                                    <form action="/healthcare/patientRecord/{{patientId}}" method="post">{% csrf_token %}
+                                        <div class="row register-form">
+                                            <div class="col-md-12">
+                                                {% if success %}
+                                                <div class="alert alert-success" role="alert">
+                                                    Patient Information Sheet Successfully Created
+                                                </div>
+                                                {% endif %}
+                                                {% if message %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{message}}
+                                                    </div>
+                                                {% endif %}
+                                      
+                                            <div class="form-group">
+                                                <h3>Treatment History</h3>
+                                            </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Are you currently receiving psychiatric services, professional counseling or psychotherapy elsewhere?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="psychiatricServices" value="yes" {% if PIS_details.psychiatricServices == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="psychiatricServices" value="no" {% if PIS_details.psychiatricServices == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>                                    
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Have you had previous psychotherapy?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="previousPsychotherapy" value="yes" onclick="togglePreviousPsychotherapyInput(this)" {% if PIS_details.previousPsychotherapy == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <input type="text" class="form-control" name="previousTherapist" id="previousTherapist" placeholder="Who was your previous therapist?" {% if PIS_details.previousPsychotherapy == "yes" %} value="{{ PIS_details.previousTherapist }}" readonly="readonly"{% else %} style="display: none;"   {% endif %}>
+                                                        <label><input type="radio" name="previousPsychotherapy" value="no" onclick="togglePreviousPsychotherapyInput(this)" {% if PIS_details.previousPsychotherapy == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>                                    
+                                                    
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Are you currently taking prescribed psychiatric medication (antidepressants or others)?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="psychiatricMedication" value="yes" onclick="togglePsychiatricMedicationInput(this)" {% if PIS_details.psychiatricMedication == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="psychiatricMedication" value="no" onclick="togglePsychiatricMedicationInput(this)" {% if PIS_details.psychiatricMedication == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="psychiatricMedicationDetails" {% if PIS_details.psychiatricMedication == "no" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>Please list:</label>
+                                                    <input type="text" class="form-control" name="medicationList" placeholder="Medication list" value="{{ PIS_details.medicationList | default:'' }}" readonly="readonly">
+                                                </div>
+                                                
+                                                <div class="form-group" id="prescribedByDetails" {% if PIS_details.psychiatricMedication == "no" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>Prescribed by:</label>
+                                                    <input type="text" class="form-control" name="prescribedBy" placeholder="Prescribed by" value="{{ PIS_details.prescribedBy | default:'' }}" readonly="readonly">
+                                                </div>                                                      
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Health And Social Information</h3>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Do you currently have a primary physician?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="primaryPhysician" value="yes" onclick="togglePrimaryPhysicianInput(this)" {% if PIS_details.primaryPhysician == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <input type="text" class="form-control" name="primaryPhysicianName" id="primaryPhysicianName" placeholder="Who is it?" {% if PIS_details.primaryPhysician == "yes" %} value="{{ PIS_details.primaryPhysicianName }}" readonly="readonly" {% else %} style="display: none;" {% endif %}>
+                                                        <label><input type="radio" name="primaryPhysician" value="no" onclick="togglePrimaryPhysicianInput(this)" {% if PIS_details.primaryPhysician == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Are you currently seeing more than one medical health specialist?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="multipleSpecialists" value="yes" onclick="toggleSpecialistListInput(this)" {% if PIS_details.multipleSpecialists == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <input type="text" class="form-control" name="specialistList" id="specialistList" placeholder="Please list" {% if PIS_details.multipleSpecialists == "yes" %} value="{{ PIS_details.specialistList }}" readonly="readonly" {% else %} style="display: none;" {% endif %}>
+                                                        <label><input type="radio" name="multipleSpecialists" value="no" onclick="toggleSpecialistListInput(this)" {% if PIS_details.multipleSpecialists == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>When was your last physical/medical examination?</label>
+                                                    <input type="text" class="form-control" name="lastExamination" placeholder="Last physical/medical examination" value="{% if PIS_details.lastExamination %}{{ PIS_details.lastExamination|date:'Y-m-d' }}{% endif %}" disabled required>
+                                                </div>                                
+                                                <div class="form-group">
+                                                    <label>Please list any persistent physical symptoms or health concerns:</label>
+                                                    <input type="text" class="form-control" name="persistentSymptoms" placeholder="Health concerns" value="{{ PIS_details.persistentSymptoms | default:'' }}" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Are you currently on medication to manage a physical health concern?</label>
+                                                    <input type="text" class="form-control" name="physicalMedication" placeholder="Please list" value="{{ PIS_details.physicalMedication | default:'' }}" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>What time do you sleep?</label>
+                                                    <input type="text" class="form-control" name="sleepTime" placeholder="Sleep time (HH:MM:ss)" value="{{ PIS_details.sleepTime | time:'H:i:s' }}" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)(?::(?:[0-5]\d))?" title="Enter a valid time in HH:MM:ss format" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Wake up? </label>
+                                                    <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time" value="{{ PIS_details.wakeUpTime | time:'H:i:s' }}" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Are you having any problems with your sleep habits?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="sleepProblems" value="yes" onclick="toggleSleepProblemInput(this)" {% if PIS_details.sleepProblems == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="sleepProblems" value="no" onclick="toggleSleepProblemInput(this)" {% if PIS_details.sleepProblems == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="sleepProblemsDetails" {% if PIS_details.sleepProblems != "yes" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>If yes, check where applicable:</label>
+                                                    <div>
+                                                        <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too little" {% if "Sleeping too little" in PIS_details.sleepProblemsType %} disabled checked {% endif %} disabled> Sleeping too little</label><br>
+                                                        <label><input type="checkbox" name="sleepProblemsType" value="Sleeping too much" {% if "Sleeping too much" in PIS_details.sleepProblemsType %} disabled checked {% endif %} disabled> Sleeping too much</label><br>
+                                                        <label><input type="checkbox" name="sleepProblemsType" value="Disturbing dreams" {% if "Disturbing dreams" in PIS_details.sleepProblemsType %} disabled checked {% endif %} disabled> Disturbing dreams</label><br>
+                                                        <label><input type="checkbox" name="sleepProblemsType" value="Poor quality sleep" {% if "Poor quality sleep" in PIS_details.sleepProblemsType %} disabled checked {% endif %} disabled> Poor quality sleep</label><br>
+                                                        <label><input type="checkbox" name="sleepProblemsType" value="Others" {% if "Others" in PIS_details.sleepProblemsType %} disabled checked {% endif %} disabled> Others, please indicate</label><br>
+                                                        <input type="text" class="form-control" name="otherSleepProblems" placeholder="Other sleep problems" {% if "Others" in PIS_details.sleepProblemsType %} value="{{ PIS_details.otherSleepProblems }}" readonly="readonly" {% else %} style="display: none;" {% endif %}>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>How many times per week do you exercise?</label>
+                                                    <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value="{{ PIS_details.exerciseFrequency | default:'' }}" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Approximately how long each time?</label>
+                                                    <input type="text" class="form-control" name="exerciseDuration" placeholder="# of days/weeks/months, HH:MM:ss" value="{{ PIS_details.exerciseDuration | default:'' }}" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Are you having any difficulty with appetite or eating habits?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="eatingHabits" value="yes" onclick="toggleEatingHabitsInput(this)" {% if PIS_details.eatingHabits == "yes" %}  checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="eatingHabits" value="no" onclick="toggleEatingHabitsInput(this)" {% if PIS_details.eatingHabits == "no" %}  checked {% endif %} disabled required> No</label>   
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="eatingHabitsDetails" {% if PIS_details.eatingHabits != "yes" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>If yes, check where applicable:</label>
+                                                    <div>
+                                                        <label><input type="checkbox" name="eatingHabitsType" value="Eating less" {% if "Eating less" in PIS_details.eatingHabitsType %} disabled checked {% endif %} disabled> Eating less</label><br>
+                                                        <label><input type="checkbox" name="eatingHabitsType" value="Eating more" {% if "Eating more" in PIS_details.eatingHabitsType %} disabled checked {% endif %} disabled> Eating more</label><br>
+                                                        <label><input type="checkbox" name="eatingHabitsType" value="Bingeing" {% if "Bingeing" in PIS_details.eatingHabitsType %} disabled checked {% endif %} disabled> Bingeing</label><br>
+                                                        <label><input type="checkbox" name="eatingHabitsType" value="Restricting" {% if "Restricting" in PIS_details.eatingHabitsType %} disabled checked {% endif %} disabled> Restricting</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Have you experienced significant weight change in the last 2 months?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="weightChange" value="yes" {% if PIS_details.weightChange == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="weightChange" value="no" {% if PIS_details.weightChange == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Do you regularly use alcohol?</label>
+                                                    <div>        
+                                                        <label><input type="radio" name="alcoholUse" value="yes" {% if PIS_details.alcoholUse == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="alcoholUse" value="no" {% if PIS_details.alcoholUse == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>In a typical month, how often do you have 4 or more alcohol/liquor intakes in a 24 hour period?</label>
+                                                    <input type="text" class="form-control" name="alcoholFrequency" placeholder="Frequency" value="{{ PIS_details.alcoholFrequency | default:'' }}" disabled required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Are you drinking (alcohol/liquor) alone? Or with the group?</label>
+                                                    <input type="text" class="form-control" name="drinkingAloneOrGroup" placeholder="Alone or with group" value="{{ PIS_details.drinkingAloneOrGroup | default:'' }}" disabled required>
+                                                </div>     
+                                                
+                                                <div class="form-group">
+                                                    <label>How often do you engage in recreational drug use?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="drugUseFrequency" value="daily" {% if PIS_details.drugUseFrequency == "daily" %} checked {% endif %} disabled required> Daily</label>
+                                                        <label><input type="radio" name="drugUseFrequency" value="weekly" {% if PIS_details.drugUseFrequency == "weekly" %} checked {% endif %} disabled required> Weekly</label>
+                                                        <label><input type="radio" name="drugUseFrequency" value="monthly" {% if PIS_details.drugUseFrequency == "monthly" %} checked {% endif %} disabled required> Monthly</label>
+                                                        <label><input type="radio" name="drugUseFrequency" value="rarely" {% if PIS_details.drugUseFrequency == "rarely" %} checked {% endif %} disabled required> Rarely</label>
+                                                        <label><input type="radio" name="drugUseFrequency" value="never" {% if PIS_details.drugUseFrequency == "never" %} checked {% endif %} disabled required> Never</label>
+                                                    </div>
+                                                </div>  
+                                                <div class="form-group">
+                                                    <label>Do you smoke cigarettes or use other tobacco products?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="tobaccoUse" value="yes" onclick="toggleCigaretteInput(this)" {% if PIS_details.tobaccoUse == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="tobaccoUse" value="no" onclick="toggleCigaretteInput(this)" {% if PIS_details.tobaccoUse == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="cigaretteInput" {% if PIS_details.tobaccoUse != "yes" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>How many sticks of cigarettes a day?</label>
+                                                    <input type="text" class="form-control" name="cigarettesPerDay" placeholder="Sticks per day" value="{{ PIS_details.cigarettesPerDay | default:'' }}" readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Have you had them in the past?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="tobaccoPastUse" value="frequently" {% if PIS_details.tobaccoPastUse == "frequently" %} checked {% endif %} disabled required> Frequently</label>
+                                                        <label><input type="radio" name="tobaccoPastUse" value="sometimes" {% if PIS_details.tobaccoPastUse == "sometimes" %} checked {% endif %} disabled required> Sometimes</label>
+                                                        <label><input type="radio" name="tobaccoPastUse" value="rarely" {% if PIS_details.tobaccoPastUse == "rarely" %} checked {% endif %} disabled required> Rarely</label>
+                                                        <label><input type="radio" name="tobaccoPastUse" value="never" {% if PIS_details.tobaccoPastUse == "never" %} checked {% endif %} disabled required> Never</label>
+                                                    </div>
+                                                </div>        
+                                                
+                                            </div>
+                
+                                            <div class="col-md-6">
+                                                                  
+                                                <div class="form-group">
+                                                    <label>Are you currently in a romantic relationship?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="romanticRelationship" value="yes" {% if PIS_details.romanticRelationship == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                        <label><input type="radio" name="romanticRelationship" value="no" {% if PIS_details.romanticRelationship == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="relationshipDetails" {% if PIS_details.romanticRelationship != "yes" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>How long have you been in this relationship?</label>
+                                                    <input type="text" class="form-control" name="relationshipDuration" placeholder="# of days/weeks/months, HH:MM:ss" value="{{ PIS_details.relationshipDuration | default:'' }}" readonly="readonly">
+                                                </div>
+                                                
+                                                <div class="form-group" id="relationshipRating" {% if PIS_details.romanticRelationship != "yes" %} style="display: none;" {% endif %} disabled required>
+                                                    <label>On a scale of 1-10 (10 being the highest quality), how would you rate your current relationship?</label>
+                                                    <input type="number" class="form-control" name="relationshipRating" placeholder="Rating" min="1" max="10" value="{{ PIS_details.relationshipRating | default:'' }}"  readonly="readonly" required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="lifeChanges">In the last year, have you experienced any significant life changes or stressors? If yes, please explain:</label>
+                                                    <textarea class="form-control" id="lifeChanges" name="lifeChanges" rows="3" readonly="readonly" required>{{ PIS_details.lifeChanges | default:'' }} </textarea>
+                                                </div>                                
+                                                <div class="form-group">
+                                                    <label>Have you ever experienced any of the following? (Encircle “Yes” if it applies to you otherwise encircle “No”)</label>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Extreme depressed mood <br><input type="radio" name="extremeDepressedMood" value="yes" {% if PIS_details.extremeDepressedMood == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="extremeDepressedMood" value="no" {% if PIS_details.extremeDepressedMood == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Dramatic mood swings<br> <input type="radio" name="dramaticMoodSwings" value="yes" {% if PIS_details.dramaticMoodSwings == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="dramaticMoodSwings" value="no" {% if PIS_details.dramaticMoodSwings == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Rapid speech <br><input type="radio" name="rapidSpeech" value="yes" {% if PIS_details.rapidSpeech == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="rapidSpeech" value="no" {% if PIS_details.rapidSpeech == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Extreme anxiety <br><input type="radio" name="extremeAnxiety" value="yes" {% if PIS_details.extremeAnxiety == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="extremeAnxiety" value="no" {% if PIS_details.extremeAnxiety == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Panic attacks <br><input type="radio" name="panicAttacks" value="yes" {% if PIS_details.panicAttacks == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="panicAttacks" value="no" {% if PIS_details.panicAttacks == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Phobias <br><input type="radio" name="phobias" value="yes" {% if PIS_details.phobias == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="phobias" value="no" {% if PIS_details.phobias == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Sleep disturbances <br><input type="radio" name="sleepDisturbances" value="yes" {% if PIS_details.sleepDisturbances == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="sleepDisturbances" value="no" {% if PIS_details.sleepDisturbances == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Hallucinations <br><input type="radio" name="hallucinations" value="yes" {% if PIS_details.hallucinations == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="hallucinations" value="no" {% if PIS_details.hallucinations == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Unexplained losses of time <br><input type="radio" name="unexplainedLossesOfTime" value="yes" {% if PIS_details.unexplainedLossesOfTime == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="unexplainedLossesOfTime" value="no" {% if PIS_details.unexplainedLossesOfTime == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Unexplained memory lapses <br><input type="radio" name="unexplainedMemoryLapses" value="yes" {% if PIS_details.unexplainedMemoryLapses == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="unexplainedMemoryLapses" value="no" {% if PIS_details.unexplainedMemoryLapses == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Alcohol/substance abuse<br> <input type="radio" name="alcoholSubstanceAbuse" value="yes" {% if PIS_details.alcoholSubstanceAbuse == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="alcoholSubstanceAbuse" value="no" {% if PIS_details.alcoholSubstanceAbuse == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Frequent body complaints <br><input type="radio" name="frequentBodyComplaints" value="yes" {% if PIS_details.frequentBodyComplaints == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="frequentBodyComplaints" value="no" {% if PIS_details.frequentBodyComplaints == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Eating disorder <br><input type="radio" name="eatingDisorder" value="yes" {% if PIS_details.eatingDisorder == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="eatingDisorder" value="no" {% if PIS_details.eatingDisorder == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Body image problems <br><input type="radio" name="bodyImageProblems" value="yes" {% if PIS_details.bodyImageProblems == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="bodyImageProblems" value="no" {% if PIS_details.bodyImageProblems == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Repetitive thoughts (e.g., worries, obsessions) <br><input type="radio" name="repetitiveThoughts" value="yes" {% if PIS_details.repetitiveThoughts == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="repetitiveThoughts" value="no" {% if PIS_details.repetitiveThoughts == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Repetitive behaviors (e.g., frequent checking, hand washing) <br><input type="radio" name="repetitiveBehaviors" value="yes" {% if PIS_details.repetitiveBehaviors == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="repetitiveBehaviors" value="no" {% if PIS_details.repetitiveBehaviors == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Homicidal thoughts <br><input type="radio" name="homicidalThoughts" value="yes" {% if PIS_details.homicidalThoughts == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="homicidalThoughts" value="no" {% if PIS_details.homicidalThoughts == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">Suicidal thoughts<br> <input type="radio" name="suicidalThoughts" value="yes" {% if PIS_details.suicidalThoughts == "yes" %} checked {% endif %} disabled required> Yes <input type="radio" name="suicidalThoughts" value="no" {% if PIS_details.suicidalThoughts == "no" %} checked {% endif %} disabled required> No</label>
+                                                    </div><br>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label" style="display: inline-block;">Have you had suicidal attempts?</label><br>
+                                                        <label class="form-check-label" style="display: inline-block;">
+                                                            <input type="radio" name="suicidalAttempts" value="yes" {% if PIS_details.suicidalAttempts == "yes" %} checked {% endif %} onclick="toggleSuicidalAttempts(this)" disabled required> Yes 
+                                                        </label>
+                                                        <div id="suicidalAttemptsWhenContainer" style="display: {% if PIS_details.suicidalAttempts == "yes" %} block {% else %} none {% endif %}">
+                                                            <textarea class="form-control" id="suicidalAttemptsWhen" name="suicidalAttemptsWhen" rows="2" placeholder="When?" readonly="readonly">{{ PIS_details.suicidalAttemptsWhen | default:'' }}</textarea>
+                                                        </div>
+                                                        <label class="form-check-label" style="display: inline-block;">
+                                                            <input type="radio" name="suicidalAttempts" value="no" {% if PIS_details.suicidalAttempts == "no" %} checked {% endif %} onclick="toggleSuicidalAttempts(this)" disabled required> No
+                                                        </label>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Occupational Information</h3>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Are you currently employed?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="employed" value="yes" {% if PIS_details.employed == "yes" %} checked {% endif %} onclick="toggleEmploymentDetails(this)" disabled required> Yes</label>
+                                                        <label><input type="radio" name="employed" value="no" {% if PIS_details.employed == "no" %} checked {% endif %} onclick="toggleEmploymentDetails(this)" disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div id="employmentDetails" style="display: {% if PIS_details.employed == "yes" %} block {% else %} none {% endif %};" disabled required>
+                                                    <div class="form-group">
+                                                        <label>Who is your current employer/office assignment?</label>
+                                                        <input type="text" class="form-control" name="employer" placeholder="Your current employer/office assignment" value="{{ PIS_details.employer | default:'' }}"  readonly="readonly">
+                                                    </div>
+                                                
+                                                    <div class="form-group">
+                                                        <label>Are you happy with your current position/designation?</label>
+                                                        <input type="text" class="form-control" name="position_happiness" placeholder="Your current position/designation" value="{{ PIS_details.position_happiness | default:'' }}"  readonly="readonly">
+                                                    </div>
+                                                
+                                                    <div class="form-group">
+                                                        <label>How many years have you been in the service?</label>
+                                                        <input type="number" class="form-control" name="years_in_service" placeholder="Number of years in service" value="{{ PIS_details.years_in_service | default:'' }}" readonly="readonly">
+                                                    </div>
+                                                
+                                                    <div class="form-group">
+                                                        <label>How many years have you been in your current position?</label>
+                                                        <input type="number" class="form-control" name="years_in_position" placeholder="Number of years in current position" value="{{ PIS_details.years_in_position | default:'' }}" readonly="readonly">
+                                                    </div>
+                                                
+                                                    <div class="form-group">
+                                                        <label>Please list any work-related stressors, if there's any</label>
+                                                        <textarea class="form-control" name="work_stressors" rows="3" placeholder="Work-related stressors"  readonly="readonly">{{ PIS_details.work_stressors | default:'' }}</textarea>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Religious/Spiritual Information</h3>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Do you consider yourself to be religious?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="religious" value="yes" {% if PIS_details.religious == "yes" %} checked {% endif %} onclick="toggleReligiousDetails(true)" disabled required> Yes</label>
+                                                        <label><input type="radio" name="religious" value="no" {% if PIS_details.religious == "no" %} checked {% endif %} onclick="toggleReligiousDetails(false)" disabled required> No</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div id="religiousDetails" style="display: {% if PIS_details.religious == "yes" %} block {% else %} none {% endif %};">
+                                                    <div class="form-group">
+                                                        <label>What is your faith?</label>
+                                                        <input type="text" class="form-control" name="faith" placeholder="Your faith" value="{{ PIS_details.faith | default:'' }}" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div id="religiousDetailsNo" style="display: {% if PIS_details.religious == "no" %} block {% else %} none {% endif %};">
+                                                    <label>Do you consider yourself to be spiritual?</label>
+                                                    <div>
+                                                        <label><input type="radio" name="spiritual" value="yes" {% if PIS_details.spiritual == "yes" %} checked {% endif %} disabled> Yes</label>
+                                                        <label><input type="radio" name="spiritual" value="no" {% if PIS_details.spiritual == "no" %} checked {% endif %} disabled> No</label>
+                                                    </div>
+                                                </div>                                
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Family Mental Health History</h3>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Has anyone in your family (either immediate family members or relatives) experienced difficulties with the following?</label>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Difficulty</th>
+                                                                <th>Yes / No</th>
+                                                                <th>Family Member</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Depression</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Depression" value="yes" {% if PIS_details.depression == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Depression" value="no" {% if PIS_details.depression == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="DepressionMember" value="{{ PIS_details.depression_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Bipolar disorder</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Bipolar" value="yes" {% if PIS_details.bipolar == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Bipolar" value="no" {% if PIS_details.bipolar == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="BipolarMember" value="{{ PIS_details.bipolar_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Anxiety disorder</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Anxiety" value="yes" {% if PIS_details.anxiety == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Anxiety" value="no" {% if PIS_details.anxiety == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="AnxietyMember" value="{{ PIS_details.anxiety_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Panic attacks</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Panic" value="yes" {% if PIS_details.panic == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Panic" value="no" {% if PIS_details.panic == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="PanicMember" value="{{ PIS_details.panic_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Schizophrenia</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Schizophrenia" value="yes" {% if PIS_details.schizophrenia == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Schizophrenia" value="no" {% if PIS_details.schizophrenia == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="SchizophreniaMember" value="{{ PIS_details.schizophrenia_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Alcohol/substance abuse</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Alcohol" value="yes" {% if PIS_details.alcohol == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Alcohol" value="no" {% if PIS_details.alcohol == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="AlcoholMember" value="{{ PIS_details.alcohol_member | default:'' }}"  readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Eating disorders</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Eating" value="yes" {% if PIS_details.eating == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Eating" value="no" {% if PIS_details.eating == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="EatingMember" value="{{ PIS_details.eating_member | default:'' }}"  readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Learning disabilities</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Learning" value="yes" {% if PIS_details.learning == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Learning" value="no" {% if PIS_details.learning == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="LearningMember" value="{{ PIS_details.learning_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Trauma history</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Trauma" value="yes" {% if PIS_details.trauma == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Trauma" value="no" {% if PIS_details.trauma == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="TraumaMember" value="{{ PIS_details.trauma_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Suicide attempts</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Suicide" value="yes" {% if PIS_details.suicide == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Suicide" value="no" {% if PIS_details.suicide == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="SuicideMember" value="{{ PIS_details.suicide_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Chronic illness</td>
+                                                                <td>
+                                                                    <label><input type="radio" name="Chronic" value="yes" {% if PIS_details.chronic == "yes" %} checked {% endif %} disabled required> Yes</label>
+                                                                    <label><input type="radio" name="Chronic" value="no" {% if PIS_details.chronic == "no" %} checked {% endif %} disabled required> No</label>
+                                                                </td>
+                                                                <td><input type="text" class="form-control" name="ChronicMember" value="{{ PIS_details.chronic_member | default:'' }}" readonly="readonly"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Other Information</h3>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="strengths">What do you consider to be your strengths?</label>
+                                                    <textarea class="form-control" id="strengths" name="strengths" rows="4" readonly="readonly">{{ PIS_details.strengths | default:'' }}</textarea>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="likeYourself">What do you like most about yourself?</label>
+                                                    <textarea class="form-control" id="likeYourself" name="likeYourself" rows="4" readonly="readonly">{{ PIS_details.like_yourself | default:'' }}</textarea>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="copingStrategies">What are effective coping strategies that you have learned?</label>
+                                                    <textarea class="form-control" id="copingStrategies" name="copingStrategies" rows="4" readonly="readonly">{{ PIS_details.coping_strategies | default:'' }}</textarea>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label>Do you think you will be needing help/assistance from our Psychological Service?</label><br>
+                                                    <label><input type="radio" name="needAssistance" value="yes" {% if PIS_details.need_assistance == "yes" %} checked {% endif %} onclick="toggleAssistanceDetails(this)" disabled required> Yes</label>
+                                                    <label><input type="radio" name="needAssistance" value="no" {% if PIS_details.need_assistance == "no" %} checked {% endif %} onclick="toggleAssistanceDetails(this)" disabled required> No</label>
+                                                </div>
+                                                
+                                                <div id="assistanceDetails" style="display: {% if PIS_details.need_assistance == "yes" %} block {% else %} none {% endif %};">
+                                                    <div class="form-group">
+                                                        <label for="areaConcern">At what area or concern?</label>
+                                                        <textarea class="form-control" id="areaConcern" name="areaConcern" rows="4" readonly="readonly">{{ PIS_details.area_concern | default:'' }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                            <!-- <div id="signature" style="border: 1px solid black; width: 400px; height: 100px;"></div>
+                                            <button id="saveSignature">Save Signature</button>
+                                            <button id="clearSignature">Clear Signature</button>
+                                            <div id="signatureImage"></div> -->
+                                            
+                                            <!-- <div class="col-md-12">
+                                                <input type="submit" class="btnRegister" value="Register"/>
+                                            </div>
+                 -->
+                                        </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+    
                 {% endif %}
             </div>
             <div id="Prescriptions" data-tab-content>
@@ -668,6 +915,164 @@
             target.classList.add('activeDiv');
         });
     });
+
+    function isPregnant() {
+        var val = document.getElementById('preg').value;
+        if(val=="Yes"){
+            document.getElementById('pregDate').style.display = "block";
+        }
+        else{
+            document.getElementById('pregDate').style.display = "none";
+        }
+    }
+
+    function togglePrimaryPhysicianInput(input) {
+    var primaryPhysicianInput = document.getElementById("primaryPhysicianName");
+    if (input.value === "yes") {
+        primaryPhysicianInput.style.display = "block";
+    } else {
+        primaryPhysicianInput.style.display = "none";
+    }
+    }
+
+    function togglePsychiatricMedicationInput(selectedRadioButton) {
+        var psychiatricMedicationDetails = document.getElementById("psychiatricMedicationDetails");
+        var prescribedByDetails = document.getElementById("prescribedByDetails");
+        
+        if (selectedRadioButton.value === "yes") {
+            psychiatricMedicationDetails.style.display = "block";
+            prescribedByDetails.style.display = "block";
+        } else if (selectedRadioButton.value === "no") {
+            psychiatricMedicationDetails.style.display = "none";
+            prescribedByDetails.style.display = "none";
+        }
+    }
+
+    // Hide details initially
+    window.onload = function() {
+        var psychiatricMedication = document.querySelector('input[name="psychiatricMedication"]:checked');
+        if (!psychiatricMedication) {
+            var psychiatricMedicationDetails = document.getElementById("psychiatricMedicationDetails");
+            var prescribedByDetails = document.getElementById("prescribedByDetails");
+            psychiatricMedicationDetails.style.display = "none";
+            prescribedByDetails.style.display = "none";
+        }
+    };
+
+
+    function toggleSpecialistListInput(input) {
+        var specialistListInput = document.getElementById("specialistList");
+        if (input.value === "yes") {
+            specialistListInput.style.display = "block";
+        } else {
+            specialistListInput.style.display = "none";
+        }
+    }
+
+    function toggleSleepProblemInput(input) {
+    var sleepProblemsDetails = document.getElementById("sleepProblemsDetails");
+    if (input.value === "yes") {
+        sleepProblemsDetails.style.display = "block";
+    } else {
+        sleepProblemsDetails.style.display = "none";
+    }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var otherSleepProblemsInput = document.querySelector('input[name="sleepProblemsType"][value="Others"]');
+        var otherSleepProblemsTextInput = document.querySelector('input[name="otherSleepProblems"]');
+        otherSleepProblemsInput.addEventListener('change', function() {
+            if (this.checked) {
+                otherSleepProblemsTextInput.style.display = 'block';
+            } else {
+                otherSleepProblemsTextInput.style.display = 'none';
+            }
+        });
+    });
+
+    function toggleEatingHabitsInput(input) {
+    var eatingHabitsDetails = document.getElementById("eatingHabitsDetails");
+    if (input.value === "yes") {
+        eatingHabitsDetails.style.display = "block";
+    } else {
+        eatingHabitsDetails.style.display = "none";
+    }
+    }
+
+    function toggleCigaretteInput(input) {
+        var cigaretteInput = document.getElementById("cigaretteInput");
+        if (input.value === "yes") {
+            cigaretteInput.style.display = "block";
+        } else {
+            cigaretteInput.style.display = "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var relationshipInput = document.querySelectorAll('input[name="romanticRelationship"]');
+    relationshipInput.forEach(function(input) {
+        input.addEventListener("change", function() {
+            var relationshipDetails = document.getElementById("relationshipDetails");
+            var relationshipRating = document.getElementById("relationshipRating");
+            if (this.value === "yes") {
+                relationshipDetails.style.display = "block";
+                relationshipRating.style.display = "block";
+            } else {
+                relationshipDetails.style.display = "none";
+                relationshipRating.style.display = "none";
+            }
+        });
+    });
+});
+
+function toggleSuicidalAttempts(input) {
+    var suicidalAttemptsWhenContainer = document.getElementById("suicidalAttemptsWhenContainer");
+    if (input.value === "yes") {
+        suicidalAttemptsWhenContainer.style.display = "block";
+    } else {
+        suicidalAttemptsWhenContainer.style.display = "none";
+    }
+}
+
+
+function toggleEmploymentDetails(input) {
+        var employmentDetails = document.getElementById("employmentDetails");
+        if (input.value === "yes") {
+            employmentDetails.style.display = "block";
+        } else {
+            employmentDetails.style.display = "none";
+        }
+}
+
+function toggleReligiousDetails(isReligious) {
+        var religiousDetails = document.getElementById("religiousDetails");
+        var religiousDetailsNo = document.getElementById("religiousDetailsNo");
+        if (isReligious) {
+            religiousDetails.style.display = "block";
+            religiousDetailsNo.style.display = "none";
+        } else {
+            religiousDetails.style.display = "none";
+            religiousDetailsNo.style.display = "block";
+        }
+    }
+    
+    function toggleAssistanceDetails(input) {
+        var assistanceDetails = document.getElementById("assistanceDetails");
+        if (input.value === "yes") {
+            assistanceDetails.style.display = "block";
+        } else {
+            assistanceDetails.style.display = "none";
+        }
+    }
+
+    function togglePreviousPsychotherapyInput(selectedRadioButton) {
+        var previousTherapistInput = document.getElementById("previousTherapist");
+        if (selectedRadioButton.value === "yes") {
+            previousTherapistInput.style.display = "block";
+        } else {
+            previousTherapistInput.style.display = "none";
+        }
+    }
 
 
 </script>

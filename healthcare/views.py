@@ -49,8 +49,8 @@ def newPatient(request):
                     subject='Registered to Mend',
                     message='',
                     html_message=f'''Hi {name}, <br><br>
-                Thank you for being part of Mend<br> Use the following Registration ID to view you prescription history<br>
-                <b>{registrationNumber}</b><br><br>Regards<br>
+                Thank you for being part of Mend.<br> Use the following Registration ID to view your Mental Health Records.<br>
+                <b>{registrationNumber}</b><br><br>Regards,<br>
                 Mend''',
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=[email]
@@ -121,7 +121,10 @@ def patientRecord(request, patientId):
             sleepTime = request.POST.get('sleepTime')
             wakeUpTime = request.POST.get('wakeUpTime')
             exerciseDuration = request.POST.get('exerciseDuration')
+            relationshipRating = request.POST.get('relationshipRating')
             relationshipDuration = request.POST.get('relationshipDuration')
+            cigarettesPerDay = request.POST.get('cigarettesPerDay')
+            
 
             # Check if lastExamination, sleepTime, wakeUpTime, exerciseDuration, and relationshipDuration are empty or not provided
             if lastExamination is None or lastExamination.strip() == '':
@@ -138,6 +141,12 @@ def patientRecord(request, patientId):
 
             if relationshipDuration is None or relationshipDuration.strip() == '':
                 relationshipDuration = None
+
+            if relationshipRating is None or relationshipRating.strip() == '':
+                relationshipRating = 1
+
+            if cigarettesPerDay is None or cigarettesPerDay.strip() == '':
+                cigarettesPerDay = 1
 
 
 
@@ -170,11 +179,11 @@ def patientRecord(request, patientId):
                 'drinkingAloneOrGroup': request.POST.get('drinkingAloneOrGroup'),
                 'drugUseFrequency': request.POST.get('drugUseFrequency'),
                 'tobaccoUse': request.POST.get('tobaccoUse'),
-                'cigarettesPerDay': request.POST.get('cigarettesPerDay'),
+                'cigarettesPerDay': cigarettesPerDay,
                 'tobaccoPastUse': request.POST.get('tobaccoPastUse'),
                 'romanticRelationship': request.POST.get('romanticRelationship'),
                 'relationshipDuration': relationshipDuration,
-                'relationshipRating': request.POST.get('relationshipRating'),
+                'relationshipRating': relationshipRating,
                 'lifeChanges': request.POST.get('lifeChanges'),
                 'extremeDepressedMood': request.POST.get('extremeDepressedMood'),
                 'dramaticMoodSwings': request.POST.get('dramaticMoodSwings'),
@@ -293,6 +302,8 @@ def updatePatientRecord(request, patientId):
         wakeUpTime = request.POST.get('wakeUpTime')
         exerciseDuration = request.POST.get('exerciseDuration')
         relationshipDuration = request.POST.get('relationshipDuration')
+        relationshipRating = request.POST.get('relationshipRating')
+        cigarettesPerDay = request.POST.get('cigarettesPerDay')
 
         # Check if lastExamination, sleepTime, wakeUpTime, exerciseDuration, and relationshipDuration are empty or not provided
         if lastExamination is None or lastExamination.strip() == '':
@@ -309,6 +320,13 @@ def updatePatientRecord(request, patientId):
 
         if relationshipDuration is None or relationshipDuration.strip() == '':
             relationshipDuration = None
+
+        if relationshipRating is None or relationshipRating.strip() == '':
+            relationshipRating = 1
+
+        if cigarettesPerDay is None or cigarettesPerDay.strip() == '':
+            cigarettesPerDay = 1
+            
         
         patient_record = patient.first()
         if request.method == 'POST':
@@ -341,11 +359,11 @@ def updatePatientRecord(request, patientId):
             patient_record.drinkingAloneOrGroup = request.POST.get('drinkingAloneOrGroup')
             patient_record.drugUseFrequency = request.POST.get('drugUseFrequency')
             patient_record.tobaccoUse = request.POST.get('tobaccoUse')
-            patient_record.cigarettesPerDay = request.POST.get('cigarettesPerDay')
+            patient_record.cigarettesPerDay = cigarettesPerDay
             patient_record.tobaccoPastUse = request.POST.get('tobaccoPastUse')
             patient_record.romanticRelationship = request.POST.get('romanticRelationship')
             patient_record.relationshipDuration = relationshipDuration
-            patient_record.relationshipRating = request.POST.get('relationshipRating')
+            patient_record.relationshipRating = relationshipRating
             patient_record.lifeChanges = request.POST.get('lifeChanges')
             patient_record.extremeDepressedMood = request.POST.get('extremeDepressedMood')
             patient_record.dramaticMoodSwings = request.POST.get('dramaticMoodSwings')
