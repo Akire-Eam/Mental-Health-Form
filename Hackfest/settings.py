@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'Hackfest.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'medical',        # DB_DATABASE
+        'NAME': 'medical2',        # DB_DATABASE
         'USER': 'postgres',         # DB_USERNAME
         'PASSWORD': '248650', # DB_PASSWORD
         'HOST': '127.0.0.1',        # DB_HOST

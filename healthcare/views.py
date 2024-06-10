@@ -3,7 +3,7 @@ import json
 from urllib import response
 from django.shortcuts import render, HttpResponse, redirect
 import random
-from healthcare.models import Patient, PatientRecord, ConsentForm
+from healthcare.models import Patient, PatientRecord, ConsentForm, TreatmentPlan, TreatmentStrategy
 from django.core.mail import send_mail
 import uuid
 from django.conf import settings
@@ -266,7 +266,7 @@ def patientRecord(request, patientId):
 
             patient_record.save()
             # return redirect('/doctor/patient-list')
-            return render(request, 'patientRecord.html')
+            return redirect('/doctor/patient-list')
         
         else:
             return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId})
@@ -592,149 +592,6 @@ def counselling(request, patientId):
         return HttpResponse("<h1>Something went wrong!!!</h1>")
     
 @nursedata_middleware
-def treatmentPlan(request, patientId):
-    try:
-        # if request.session['role'] != "Nurse":
-        #     return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
-
-    
-        
-        # your existing code...
-        
-        if request.method == 'POST':
-            logging.debug('Form submitted: %s' % request.POST)
-
-        patientP = Patient.objects.filter(id=patientId).first()
-        patient = PatientRecord.objects.filter(patientId=patientId)
-        if len(patient) == 0:
-            return render(request, 'patientRecord.html', {'message': 'Patient does not exist!'})
-        
-        lastExamination = request.POST.get('lastExamination')
-        sleepTime = request.POST.get('sleepTime')
-        wakeUpTime = request.POST.get('wakeUpTime')
-        exerciseDuration = request.POST.get('exerciseDuration')
-        relationshipDuration = request.POST.get('relationshipDuration')
-
-        # Check if lastExamination, sleepTime, wakeUpTime, exerciseDuration, and relationshipDuration are empty or not provided
-        if lastExamination is None or lastExamination.strip() == '':
-            lastExamination = None
-
-        if sleepTime is None or sleepTime.strip() == '':
-            sleepTime = None
-
-        if wakeUpTime is None or wakeUpTime.strip() == '':
-            wakeUpTime = None
-
-        if exerciseDuration is None or exerciseDuration.strip() == '':
-            exerciseDuration = None
-
-        if relationshipDuration is None or relationshipDuration.strip() == '':
-            relationshipDuration = None
-        
-        patient_record = patient.first()
-        if request.method == 'POST':
-            patient_record.patientId = patientP  # Fix patient variable assignment
-            patient_record.psychiatricServices = request.POST.get('psychiatricServices')
-            patient_record.previousPsychotherapy = request.POST.get('previousPsychotherapy')
-            patient_record.previousTherapist = request.POST.get('previousTherapist')
-            patient_record.psychiatricMedication = request.POST.get('psychiatricMedication')
-            patient_record.medicationList = request.POST.get('medicationList')
-            patient_record.prescribedBy = request.POST.get('prescribedBy')
-            patient_record.primaryPhysician = request.POST.get('primaryPhysician')
-            patient_record.primaryPhysicianName = request.POST.get('primaryPhysicianName')
-            patient_record.multipleSpecialists = request.POST.get('multipleSpecialists')
-            patient_record.specialistList = request.POST.get('specialistList')
-            patient_record.lastExamination = lastExamination
-            patient_record.persistentSymptoms = request.POST.get('persistentSymptoms')
-            patient_record.physicalMedication = request.POST.get('physicalMedication')
-            patient_record.sleepTime = sleepTime
-            patient_record.wakeUpTime = wakeUpTime
-            patient_record.sleepProblems = request.POST.get('sleepProblems')
-            patient_record.sleepProblemsType = ','.join(request.POST.getlist('sleepProblemsType'))
-            patient_record.otherSleepProblems = request.POST.get('otherSleepProblems')
-            patient_record.exerciseFrequency = request.POST.get('exerciseFrequency')
-            patient_record.exerciseDuration = exerciseDuration
-            patient_record.eatingHabits = request.POST.get('eatingHabits')
-            patient_record.eatingHabitsType = ','.join(request.POST.getlist('eatingHabitsType'))
-            patient_record.weightChange = request.POST.get('weightChange')
-            patient_record.alcoholUse = request.POST.get('alcoholUse')
-            patient_record.alcoholFrequency = request.POST.get('alcoholFrequency')
-            patient_record.drinkingAloneOrGroup = request.POST.get('drinkingAloneOrGroup')
-            patient_record.drugUseFrequency = request.POST.get('drugUseFrequency')
-            patient_record.tobaccoUse = request.POST.get('tobaccoUse')
-            patient_record.cigarettesPerDay = request.POST.get('cigarettesPerDay')
-            patient_record.tobaccoPastUse = request.POST.get('tobaccoPastUse')
-            patient_record.romanticRelationship = request.POST.get('romanticRelationship')
-            patient_record.relationshipDuration = relationshipDuration
-            patient_record.relationshipRating = request.POST.get('relationshipRating')
-            patient_record.lifeChanges = request.POST.get('lifeChanges')
-            patient_record.extremeDepressedMood = request.POST.get('extremeDepressedMood')
-            patient_record.dramaticMoodSwings = request.POST.get('dramaticMoodSwings')
-            patient_record.rapidSpeech = request.POST.get('rapidSpeech')
-            patient_record.extremeAnxiety = request.POST.get('extremeAnxiety')
-            patient_record.panicAttacks = request.POST.get('panicAttacks')
-            patient_record.phobias = request.POST.get('phobias')
-            patient_record.sleepDisturbances = request.POST.get('sleepDisturbances')
-            patient_record.hallucinations = request.POST.get('hallucinations')
-            patient_record.unexplainedLossesOfTime = request.POST.get('unexplainedLossesOfTime')
-            patient_record.unexplainedMemoryLapses = request.POST.get('unexplainedMemoryLapses')
-            patient_record.alcoholSubstanceAbuse = request.POST.get('alcoholSubstanceAbuse')
-            patient_record.frequentBodyComplaints = request.POST.get('frequentBodyComplaints')
-            patient_record.eatingDisorder = request.POST.get('eatingDisorder')
-            patient_record.bodyImageProblems = request.POST.get('bodyImageProblems')
-            patient_record.repetitiveThoughts = request.POST.get('repetitiveThoughts')
-            patient_record.repetitiveBehaviors = request.POST.get('repetitiveBehaviors')
-            patient_record.homicidalThoughts = request.POST.get('homicidalThoughts')
-            patient_record.suicidalThoughts = request.POST.get('suicidalThoughts')
-            patient_record.suicidalAttempts = request.POST.get('suicidalAttempts')
-            patient_record.suicidalAttemptsWhen = request.POST.get('suicidalAttemptsWhen')
-            patient_record.employed = request.POST.get('employed')
-            patient_record.employer = request.POST.get('employer')
-            patient_record.position_happiness = request.POST.get('position_happiness')
-            patient_record.years_in_service = to_none_if_empty(request.POST.get('years_in_service', None))
-            patient_record.years_in_position = to_none_if_empty(request.POST.get('years_in_position', None))
-            patient_record.work_stressors = request.POST.get('work_stressors')
-            patient_record.religious = request.POST.get('religious')
-            patient_record.faith = request.POST.get('faith')
-            patient_record.spiritual = request.POST.get('spiritual')
-            patient_record.depression = request.POST.get('Depression')
-            patient_record.depression_member = request.POST.get('DepressionMember')
-            patient_record.bipolar = request.POST.get('Bipolar')
-            patient_record.bipolar_member = request.POST.get('BipolarMember')
-            patient_record.anxiety = request.POST.get('Anxiety')
-            patient_record.anxiety_member = request.POST.get('AnxietyMember')
-            patient_record.panic = request.POST.get('Panic')
-            patient_record.panic_member = request.POST.get('PanicMember')
-            patient_record.schizophrenia = request.POST.get('Schizophrenia')
-            patient_record.schizophrenia_member = request.POST.get('SchizophreniaMember')
-            patient_record.alcohol = request.POST.get('Alcohol')
-            patient_record.alcohol_member = request.POST.get('AlcoholMember')
-            patient_record.eating = request.POST.get('Eating')
-            patient_record.eating_member = request.POST.get('EatingMember')
-            patient_record.learning = request.POST.get('Learning')
-            patient_record.learning_member = request.POST.get('LearningMember')
-            patient_record.trauma = request.POST.get('Trauma')
-            patient_record.trauma_member = request.POST.get('TraumaMember')
-            patient_record.suicide = request.POST.get('Suicide')
-            patient_record.suicide_member = request.POST.get('SuicideMember')
-            patient_record.chronic = request.POST.get('Chronic')
-            patient_record.chronic_member = request.POST.get('ChronicMember')
-            patient_record.strengths = request.POST.get('strengths')
-            patient_record.like_yourself = request.POST.get('likeYourself')
-            patient_record.coping_strategies = request.POST.get('copingStrategies')
-            patient_record.need_assistance = request.POST.get('needAssistance')
-            patient_record.area_concern = request.POST.get('areaConcern')
-
-            patient_record.save()
-
-            return render(request, 'treatmentPlan.html', {'patient': patient_record, 'success': True, 'profile': patientP})
-        else:
-            return render(request, 'treatmentPlan.html', {'patient': patient_record, 'profile': patientP})
-    except Exception as e:
-        logging.exception('Exception occurred: %s' % e)
-        return HttpResponse("<h1>Something went wrong!!!</h1>")
-    
-@nursedata_middleware
 def consentForm(request, patientId):
     try:
         patient = Patient.objects.filter(id=patientId).first()
@@ -795,6 +652,114 @@ def updateConsentForm(request, patientId):
             return render(request, 'updateConsentForm.html', {'consent': consent, 'success': True, 'profile': patientP})
         else:
             return render(request, 'updateConsentForm.html', {'consent': consent, 'profile': patientP})
+    except Exception as e:
+        logging.exception('Exception occurred: %s' % e)
+        return HttpResponse("<h1>Something went wrong!!!</h1>")
+    
+@nursedata_middleware
+def treatmentPlan(request, patientId):
+    try:
+        patient = Patient.objects.filter(id=patientId).first()
+        
+        if request.method == 'POST':
+            # Check if a record for this patient already exists
+            treatment_plan = TreatmentPlan.objects.filter(patientId=patientId).first()
+            if treatment_plan:
+                return render(request, 'treatmentPlan.html', {'message': 'Treatment Plan already exists', 'patient': patient, 'patientId': patientId})
+
+            # Create a new TreatmentPlan
+            treatment_plan = TreatmentPlan()
+            treatment_plan.patientId = patient
+            treatment_plan.treatmentGoal = request.POST.get('treatmentGoal')
+            treatment_plan.changeTreatmentCriteria = request.POST.get('changeTreatmentCriteria')
+            treatment_plan.treatmentCriteria = request.POST.get('treatmentCriteria')
+            treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
+            treatment_plan.clientConcurred = request.POST.get('clientConcurred')
+            treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.save()
+
+            # Update or create associated TreatmentStrategy objects
+            specificProblems = request.POST.getlist('specificProblem')
+            approaches = request.POST.getlist('approaches')
+            timeFrames = request.POST.getlist('timeFrame')
+            personalResponsibilities = request.POST.getlist('personalResponsibilities')
+            remarks = request.POST.getlist('remarks')
+
+            TreatmentStrategy.objects.filter(treatmentPlan=treatment_plan).delete()
+
+            for specificProblem, approach, timeFrame, personalResponsibility, remark in zip(specificProblems, approaches, timeFrames, personalResponsibilities, remarks):
+                TreatmentStrategy.objects.create(
+                    treatmentPlan=treatment_plan,
+                    specificProblem=specificProblem,
+                    approaches=approach,
+                    timeFrame=timeFrame,
+                    personalResponsibilities=personalResponsibility,
+                    remarks=remark
+                )
+
+            return redirect('/doctor/patient-list')
+        
+        else:
+            return render(request, 'treatmentPlan.html', {'patient': patient, 'patientId': patientId})
+    
+    except KeyError as e:
+        logger.error(f"Missing key: {e}")
+        return render(request, 'treatmentPlan.html', {'message': 'Missing required fields', 'patient': patient, 'patientId': patientId})
+    
+
+@nursedata_middleware
+def updateTreatmentPlan(request, patientId):
+    try:
+        if request.session['role']!= "Doctor" and request.session['role']!="Nurse":
+            return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
+
+    
+        # your existing code...
+        
+        if request.method == 'POST':
+            logging.debug('Form submitted: %s' % request.POST)
+
+        patientP = Patient.objects.filter(id=patientId).first()
+        patient = TreatmentPlan.objects.filter(patientId=patientId)
+        if len(patient) == 0:
+            return render(request, 'treatmentPlan.html', {'message': 'Treatment Plan does not exist!'})
+        
+        treatment_plan = patient.first()
+        treatment_strategies = TreatmentStrategy.objects.filter(treatmentPlan=treatment_plan) if treatment_plan else []
+        if request.method == 'POST':
+            treatment_plan.patientId = patientP  # Fix patient variable assignment
+            treatment_plan.treatmentGoal = request.POST.get('treatmentGoal')
+            treatment_plan.changeTreatmentCriteria = request.POST.get('changeTreatmentCriteria')
+            treatment_plan.treatmentCriteria = request.POST.get('treatmentCriteria')
+            treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
+            treatment_plan.clientConcurred = request.POST.get('clientConcurred')
+            treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.save()
+
+            treatment_plan.save()
+
+            # Update or create associated TreatmentStrategy objects
+            specificProblems = request.POST.getlist('specificProblem')
+            approaches = request.POST.getlist('approaches')
+            timeFrames = request.POST.getlist('timeFrame')
+            personalResponsibilities = request.POST.getlist('personalResponsibilities')
+            remarks = request.POST.getlist('remarks')
+
+            TreatmentStrategy.objects.filter(treatmentPlan=treatment_plan).delete()
+
+            for specificProblem, approach, timeFrame, personalResponsibility, remark in zip(specificProblems, approaches, timeFrames, personalResponsibilities, remarks):
+                TreatmentStrategy.objects.create(
+                    treatmentPlan=treatment_plan,
+                    specificProblem=specificProblem,
+                    approaches=approach,
+                    timeFrame=timeFrame,
+                    personalResponsibilities=personalResponsibility,
+                    remarks=remark
+                )
+
+            return render(request, 'updateTreatmentPlan.html', {'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'success': True, 'profile': patientP})
+        else:
+            return render(request, 'updateTreatmentPlan.html', {'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'profile': patientP})
     except Exception as e:
         logging.exception('Exception occurred: %s' % e)
         return HttpResponse("<h1>Something went wrong!!!</h1>")
