@@ -169,7 +169,72 @@ class ConsentForm(models.Model):
     informant_name = models.CharField(max_length=100, null=True, blank=True)
     createdDate = models.DateField(default=datetime.datetime.now)
     updatedDate = models.DateField(default=datetime.datetime.now)
-    
+
+class TreatmentPlan(models.Model):
+    createdDate = models.DateField(default=datetime.datetime.now)
+    updatedDate = models.DateField(default=datetime.datetime.now)
+    patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    treatmentGoal = models.TextField(blank=True, null=True)
+    changeTreatmentCriteria = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], blank=True, null=True)
+    treatmentCriteria = models.TextField(blank=True, null=True)
+    sessionsPerMonth = models.IntegerField(blank=True, null=True)
+    clientConcurred = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], blank=True, null=True)
+    treatmentRemarks = models.TextField(blank=True, null=True)
+
+class TreatmentStrategy(models.Model):
+    treatmentPlan = models.ForeignKey(TreatmentPlan, on_delete=models.CASCADE, related_name='strategies')
+    specificProblem = models.TextField(blank=True, null=True)
+    approaches = models.TextField(blank=True, null=True)
+    timeFrame = models.TextField(blank=True, null=True)
+    personalResponsibilities = models.TextField(blank=True, null=True)
+    remarks = models.TextField(blank=True, null=True)
+
+class Counselling(models.Model):
+    diagnosticImpression = models.TextField(null=True, blank=True)
+    decreaseInEnergy = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    panicAttacks = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    anxiety = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    poorConcentration = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    legalProblems = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    impulsivity = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    substanceAbuse = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    restlessness = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    cruelty = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    sleepDisturbance = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    indecisive = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    irritability = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    worrying = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    ritualisticBehavior = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    hopelessness = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    lossOfPleasure = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    withdrawn = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    moodSwings = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    helplessness = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    agression = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    lowSelfEsteem = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    excessiveGuilt = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    depressedMood = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    oppositional = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    violationOfRules = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    eatingDisturbance = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    tearfulness = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    lowMotivation = models.IntegerField(choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
+    changesInDistress = models.CharField(
+        max_length=10,
+        choices=(
+            ('Greater', 'Greater'),
+            ('Less', 'Less'),
+            ('None', 'None')
+        )
+    )
+    changePhysicalStatus = models.TextField(null=True, blank=True)
+    reportsReceived = models.TextField(null=True, blank=True)
+    sessionFocus = models.TextField(null=True, blank=True)
+    therapeuticIntervention = models.TextField(null=True, blank=True)
+    plannedIntervention = models.TextField(null=True, blank=True)
+    createdDate = models.DateField(default=datetime.datetime.now)
+    updatedDate = models.DateField(default=datetime.datetime.now)
+    patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
    
     
 

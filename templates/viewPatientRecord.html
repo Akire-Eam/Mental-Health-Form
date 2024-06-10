@@ -956,7 +956,7 @@
                 
                                                 <div class="form-group">
                                                     <label>Patient Name:</label>
-                                                    <input type="text" name="patient_name" value="{{ consentForm.patient_name }}" class="form-control" readonly />
+                                                    <input type="text" name="patient_name" value="{{ consentForm.patient_name }}" class="form-control" disabled readonly />
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Patient Signature:</label>
@@ -968,7 +968,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Informant Name:</label>
-                                                    <input type="text" name="informant_name" value="{{ consentForm.informant_name }}" class="form-control" />
+                                                    <input type="text" name="informant_name" value="{{ consentForm.informant_name }}" class="form-control" disabled/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Informant Signature:</label>
@@ -1058,37 +1058,124 @@
             </div>
             <div id="TreatmentPlan" data-tab-content>
                 <h1>Treatment Plan</h1>
-                <div class="card-body pt-0" id="table1">
-                    <table class="table table-bordered" style="margin: 2px; text-align: left; padding: 2px; background: #F9FAFA">
-                      <tr>
-                        <th width="20%">Patient Name</th>
-                        <td>{{details.name}}</td>
-                      </tr>
-                      <tr>
-                        <th width="20%">Date of birth	</th>
-                        <td>{{details.dateOfBirth}}</td>
-                      </tr>
-                      
-                      <tr>
-                        <th width="20%">Gender</th>
-                        <td>{{details.gender}}</td>
-                      </tr>
-                      
-                      <tr>
-                        <th width="20%">Mobile Number </th>
-                        <td>{{details.mobile}}</td>
-                      </tr>
-                      <tr>
-                        <th width="20%">Email</th>
-                        <td>{{details.email}}</td>
-                      </tr>
-                    </table>
-                  </div>
-
+                {% if noTreatment %}
+                <h1>
+                    <a href="/healthcare/treatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Informed Consent</a>
+                </h1>
+                {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                <a href="/healthcare/treatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-bottom: 2%; margin-top: .5%;">Add Treatment Plan</a>
+                <a href="/healthcare/updateTreatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Informed Consent</a>
                 {% endif %}
-
+                <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
+                    <div class="row">
+                        <div class="col-md-12 register-right">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <h3 class="register-heading">{{ profile.name }}</h3>
+                                    <form action="/healthcare/updateTreatmentPlan/{{ patient.id }}" method="post">{% csrf_token %}
+                                        <div class="row register-form">
+                                            <div class="col-md-12">
+                                                {% if success %}
+                                                <div class="alert alert-success" role="alert">
+                                                    Treatment Plan Successfully Updated
+                                                </div>
+                                                {% endif %}
+                                                {% if message %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{message}}
+                                                    </div>
+                                                {% endif %}
+                                      
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Treatment Process</h3>
+                                                </div>
+                                            </div>
+                
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label><h5>Summary of Treatment Goal (Specification of Treatment Plan):</h5></label>
+                                                    <input type="text" class="form-control" name="treatmentGoal" placeholder="Summary" value="{{ treatmentPlan.treatmentGoal | default:'' }}" disabled>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label><h5>Detailed Treatment Plan</h5></label> 
+                                                    <div>
+                                                        <label>Treatment Strategy/Interventions</label>
+                                                        <div>
+                                                            <table style="font-size: 15; border-size: 1px; margin-bottom: 8px">
+                                                                <tr>
+                                                                    <th><label>Specific Problems/Concerns</label></th>
+                                                                    <th><label>Approaches</label></th>
+                                                                    <th><label>Time Frame</label></th>
+                                                                    <th><label>Person Responsible</label></th>
+                                                                    <th><label>Remarks</label></th>
+                                                                </tr>
+                                                                {% for strategy in treatment_strategies %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="specificProblem" placeholder="" value="{{ strategy.specificProblem }}" disabled>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="approaches" placeholder="" value="{{ strategy.approaches }}" disabled>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="timeFrame" placeholder="" value="{{ strategy.timeFrame }}" disabled>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="personalResponsibilities" placeholder="" value="{{ strategy.personalResponsibilities }}" disabled>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control" name="remarks" placeholder="" value="{{ strategy.remarks }}" disabled>
+                                                                    </td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </table>
+                                                        </div>
+                                                    </div> 
+                
+                                                    <div class="form-group">
+                                                        <label>Changes in Treatment Criteria:</label>
+                                                        <div>
+                                                            <label><input type="radio" name="changeTreatmentCriteria" value="yes" onclick="toggleChangeTreatmentCriteria(this)" {% if treatmentPlan.changeTreatmentCriteria == "yes" %} checked {% endif %} disabled> Yes</label>
+                                                            <label><input type="radio" name="changeTreatmentCriteria" value="no" onclick="toggleChangeTreatmentCriteria(this)" {% if treatmentPlan.changeTreatmentCriteria == "no" %} checked {% endif %} disabled> No</label>
+                                                        </div>
+                                                        <div>
+                                                            <textarea class="form-control" id="treatmentCriteria" name="treatmentCriteria" rows="4" disabled>{{ treatmentPlan.treatmentCriteria | default:'' }}</textarea>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div class="form-group" style="padding: 5px">
+                                                        <label><h5>Frequency of Treatmnent:</h5></label>
+                                                        <div>
+                                                            <label>Sessions per month:</label>
+                                                            <input type="text" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month" value="{{ treatmentPlan.sessionsPerMonth | default:'' }}" disabled>
+                                                        </div>
+                                                        <div style="padding: 5px">
+                                                            <label>Client concurred:</label>
+                                                            <div>
+                                                                <label><input type="radio" name="clientConcurred" value="yes" onclick="toggleClientConcurred(this)" {% if treatmentPlan.clientConcurred == "yes" %} checked {% endif %} disabled> Yes</label>
+                                                                <label><input type="radio" name="clientConcurred" value="no" onclick="toggleClientConcurred(this)" {% if treatmentPlan.clientConcurred == "no" %} checked {% endif %} disabled> No</label>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label>Remarks:</label>
+                                                            <input type="text" class="form-control" name="treatmentRemarks" placeholder="Remarks" value="{{ treatmentPlan.treatmentRemarks | default:'' }}" disabled>
+                                                        </div>
+                                                    </div>
+                
+                                                </div>                    
+                                                                    
+                                            
+                                        </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
        </div>

@@ -13,6 +13,7 @@ urlpatterns = [
     path('updatePatientRecord/<patientId>', views.updatePatientRecord, name='updatePatientRecord'),
     path('updateConsentForm/<patientId>', views.updateConsentForm, name='updateConsentForm'),
     path('treatmentPlan/<patientId>', views.treatmentPlan, name='treatmentPlan'),
+    path('updateTreatmentPlan/<patientId>', views.updateTreatmentPlan, name='updateTreatmentPlan'),
     path('counselling/<patientId>', views.counselling, name='counselling')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
