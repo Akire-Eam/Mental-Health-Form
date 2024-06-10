@@ -35,8 +35,6 @@ def nurse_middleware(get_response):
 
 
 
-
-
 def both_middleware(get_response):
     def both(request):
         if request.session.get("role") !=  "Doctor" and request.session.get("role") !="Nurse":
@@ -46,17 +44,11 @@ def both_middleware(get_response):
     return both
 
 
-
-
-
-
-
- 
-def nursedata_middleware(get_response):
-    def nurse(request, patientId):
+def _middleware(get_response):
+    def nurse(request, patientId, formId=None):
         if request.session.get("role") !=  "Doctor" and request.session.get("role") !="Nurse":
             return redirect('/accounts/loginpage')
-        response = get_response(request, patientId)
+        response = get_response(request, patientId, formId)
         return response
     return nurse
  

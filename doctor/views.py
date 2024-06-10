@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth import authenticate
 from .models import Prescription, Medicine, Diagnosis,MedicalDevice,LaboratoryTest,MedicineDirection,MedicineDirPrescriptionMap
-from healthcare.models import Patient, PatientRecord, ConsentForm
+from healthcare.models import Patient, PatientRecord, ConsentForm, Counselling
 from accounts.middleware import  doctor_middleware , both_middleware,doctordata_middleware, doctordata1_middleware
 from django.db import transaction
 
@@ -121,11 +121,13 @@ def patientRecord(request, patientId):
         patientDetails = Patient.objects.get(pk=patientId)
         patientRecordDetails = PatientRecord.objects.filter(patientId=patientId).first()
         consentForm = ConsentForm.objects.filter(patientId=patientDetails).first()
+        counselling = Counselling.objects.filter(patientId=patientId)
+        counselling_forms = Counselling.objects.filter(patientId=patientId)
         
         if patientRecordDetails:
-            return render(request, "viewPatientRecord.html", {'details': patientDetails, 'PIS_details': patientRecordDetails, 'consentForm': consentForm, 'noConsent': consentForm is None})
+            return render(request, "viewPatientRecord.html", {'details': patientDetails, 'PIS_details': patientRecordDetails, 'consentForm': consentForm, 'noConsent': consentForm is None, 'counselling': counselling, 'noCounselling': counselling is None, 'counselling_forms': counselling_forms})
         else:
-            return render(request, "viewPatientRecord.html", {'noRecord': True, 'details': patientDetails, 'PIS_details': None, 'consentForm': consentForm, 'noConsent': consentForm is None})
+            return render(request, "viewPatientRecord.html", {'noRecord': True, 'details': patientDetails, 'PIS_details': None, 'consentForm': consentForm, 'noConsent': consentForm is None, 'counselling': counselling, 'noCounselling': counselling is None, 'counselling_forms': counselling_forms})
     
     except Patient.DoesNotExist:
         messages.add_message(request, messages.ERROR, "Patient not found.")
