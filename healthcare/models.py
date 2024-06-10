@@ -21,6 +21,7 @@ class Patient(models.Model):
     nrOfSiblings = models.IntegerField(null=True, blank=True)
     birthOrder = models.CharField(max_length=50, null=True, blank=True)
     educationalAttainment = models.TextField(null=True, blank=True)
+    is_active = models.BooleanField(default=True) 
 
 class PatientRecord(models.Model):
     patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)

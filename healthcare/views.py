@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 import uuid
 from django.conf import settings
 import logging
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -41,6 +43,7 @@ def newPatient(request):
                 uuidNo = str(uuid.uuid4()).replace("-","")[0:10]
                 registrationNumber = name.replace(' ','')+uuidNo+str(random.randint(2345678909800, 9923456789000))[0:5]
                 patientData = Patient.objects.create(name=name,mobile=mobile,email=email,gender=gender,dateOfBirth=dateOfBirth,registrationNumber=registrationNumber,age=age,address =address,civilStatus =civilStatus,nrOfChildren =nrOfChildren,nrOfSiblings =nrOfSiblings,birthOrder =birthOrder,educationalAttainment =educationalAttainment)
+                is_active = True
                 patientData.save()
             except:
                 return render(request, 'newPatient.html',{'message':'Something went Wrong'})
@@ -71,6 +74,17 @@ def updatePatient(request, patientId):
     # print(patient.id) 
 
     if request.method == 'POST':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            try:
+                is_active = request.POST.get('is_active') == 'true'
+                patient.is_active = is_active
+                patient.save()
+                return JsonResponse({'is_active': patient.is_active})
+            except Patient.DoesNotExist:
+                return JsonResponse({'error': 'Patient not found'}, status=404)
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+            
         try:
             patient.name = request.POST['name']
             patient.mobile = request.POST['mobile']
@@ -84,6 +98,8 @@ def updatePatient(request, patientId):
             patient.nrOfSiblings = request.POST['nrOfSiblings']
             patient.birthOrder = request.POST['birthOrder']
             patient.educationalAttainment = request.POST['educationalAttainment']
+            if 'is_active' in request.POST:
+                patient.is_active = not patient.is_active 
 
             patient.save()
 
