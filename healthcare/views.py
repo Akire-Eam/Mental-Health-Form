@@ -3,7 +3,7 @@ import json
 from urllib import response
 from django.shortcuts import render, HttpResponse, redirect
 import random
-from healthcare.models import Patient, PatientRecord
+from healthcare.models import Patient, PatientRecord, ConsentForm
 from django.core.mail import send_mail
 import uuid
 from django.conf import settings
@@ -240,7 +240,8 @@ def patientRecord(request, patientId):
                 setattr(patient_record, field, value)
 
             patient_record.save()
-            return redirect('/doctor/patient-list')
+            # return redirect('/doctor/patient-list')
+            return render(request, 'patientRecord.html')
         
         else:
             return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId})
@@ -273,8 +274,8 @@ def patientRecord(request, patientId):
 @nursedata_middleware
 def updatePatientRecord(request, patientId):
     try:
-        # if request.session['role'] != "Nurse":
-        #     return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
+        if request.session['role']!= "Doctor" and request.session['role']!="Nurse":
+            return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
 
     
         
@@ -409,6 +410,71 @@ def updatePatientRecord(request, patientId):
             return render(request, 'updatePatientRecord.html', {'patient': patient_record, 'success': True, 'profile': patientP})
         else:
             return render(request, 'updatePatientRecord.html', {'patient': patient_record, 'profile': patientP})
+    except Exception as e:
+        logging.exception('Exception occurred: %s' % e)
+        return HttpResponse("<h1>Something went wrong!!!</h1>")
+    
+@nursedata_middleware
+def consentForm(request, patientId):
+    try:
+        patient = Patient.objects.filter(id=patientId).first()
+        
+        if request.method == 'POST':
+            # Check if a record for this patient already exists
+            consent = ConsentForm.objects.filter(patientId=patientId).first()
+            if consent:
+                return render(request, 'consentForm.html', {'message': 'Consent Form already exists', 'patient': patient, 'patientId': patientId})
+
+            # Create a new ConsentForm
+            consent = ConsentForm()
+            consent.patientId = patient
+            consent.patient_signature = request.POST.get('patient_signature')
+            consent.informant_signature = request.POST.get('informant_signature')
+            consent.patient_name = request.POST.get('patient_name')
+            consent.informant_name = request.POST.get('informant_name')
+
+            consent.save()
+            return redirect('/doctor/patient-list')
+        
+        else:
+            return render(request, 'consentForm.html', {'patient': patient, 'patientId': patientId})
+    
+    except KeyError as e:
+        logger.error(f"Missing key: {e}")
+        return render(request, 'consentForm.html', {'message': 'Missing required fields'})
+
+
+# update patient record
+@nursedata_middleware
+def updateConsentForm(request, patientId):
+    try:
+        if request.session['role']!= "Doctor" and request.session['role']!="Nurse":
+            return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
+
+    
+        # your existing code...
+        
+        if request.method == 'POST':
+            logging.debug('Form submitted: %s' % request.POST)
+
+        patientP = Patient.objects.filter(id=patientId).first()
+        patient = ConsentForm.objects.filter(patientId=patientId)
+        if len(patient) == 0:
+            return render(request, 'consentForm.html', {'message': 'Consent Form does not exist!'})
+        
+        consent = patient.first()
+        if request.method == 'POST':
+            consent.patientId = patientP  # Fix patient variable assignment
+            consent.patient_signature = request.POST.get('patient_signature')
+            consent.informant_signature = request.POST.get('informant_signature')
+            consent.patient_name = request.POST.get('patient_name')
+            consent.informant_name = request.POST.get('informant_name')
+
+            consent.save()
+
+            return render(request, 'updateConsentForm.html', {'consent': consent, 'success': True, 'profile': patientP})
+        else:
+            return render(request, 'updateConsentForm.html', {'consent': consent, 'profile': patientP})
     except Exception as e:
         logging.exception('Exception occurred: %s' % e)
         return HttpResponse("<h1>Something went wrong!!!</h1>")

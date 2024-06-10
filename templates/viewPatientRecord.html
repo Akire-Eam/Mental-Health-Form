@@ -612,6 +612,52 @@
                   </div>
                 {% endif %}
             </div>
+            <div id="ConsentForm" data-tab-content>
+                <h1>Informed Consent for Psychological Counseling</h1>
+                {% if noConsent %}
+                <h1>
+                    <a href="/healthcare/consentForm/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Informed Consent</a>
+                </h1>
+                {% else %}
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                <a href="/healthcare/updateConsentForm/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Informed Consent</a>
+                {% endif %}
+                <div class="card-body pt-0" id="table2">
+                    <table class="table table-bordered" style="background: #F9FAFA">
+                        <tr>  
+                            <th width="20%">Patient Name</th>
+                            <!--<td width="2%">:</td>-->
+                            <td>{{consentForm.patient_name}}</td>
+                        </tr>
+                        <tr>
+                            <th width="20%">Patient Signature</th>
+                            <td>
+                                {% if consentForm.patient_signature %}
+                                    <img src="data:image/svg+xml;base64,{{ consentForm.patient_signature }}" alt="Patient Signature" style="width: 400px; height: 100px;"/>
+                                {% else %}
+                                    No Signature Provided
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>  
+                            <th width="20%">Informant Name</th>
+                            <!--<td width="2%">:</td>-->
+                            <td>{{consentForm.informant_name}}</td>
+                        </tr>
+                        <tr>
+                            <th width="20%">Informant Signature</th>
+                            <td>
+                                {% if consentForm.informant_signature %}
+                                    <img src="data:image/svg+xml;base64,{{ consentForm.informant_signature }}" alt="Informant Signature" style="width: 400px; height: 100px;"/>
+                                {% else %}
+                                    No Signature Provided
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>                
+                {% endif %}
+            </div>
             <div id="Prescriptions" data-tab-content>
                 <h1>Prescriptions 
                     {% if request.session.role == "Doctor" %}

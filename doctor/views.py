@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth import authenticate
 from .models import Prescription, Medicine, Diagnosis,MedicalDevice,LaboratoryTest,MedicineDirection,MedicineDirPrescriptionMap
-from healthcare.models import Patient, PatientRecord
+from healthcare.models import Patient, PatientRecord, ConsentForm
 from accounts.middleware import  doctor_middleware , both_middleware,doctordata_middleware, doctordata1_middleware
 from django.db import transaction
 
@@ -120,8 +120,11 @@ def patientRecord(request, patientId):
     try:
         patientDetails = Patient.objects.get(pk=patientId)
         his = PatientRecord.objects.filter(patientId=patientDetails)
-        if(len(his)!=0):
-            history=his.first()
+
+        consentForm = ConsentForm.objects.filter(patientId=patientDetails).first()
+
+        if len(his) != 0:
+            history = his.first()
             allPrescription = Prescription.objects.filter(patientId=patientDetails)
             prescriptionListData = []
             for prep in allPrescription:
@@ -129,11 +132,22 @@ def patientRecord(request, patientId):
                 prescriptionListData.append({
                     'diagnosisCreatedDate': diagnosis.createdDate,
                     'diagnosisName': diagnosis.diagnosisName,
-                    'prescriptionId':prep.id
+                    'prescriptionId': prep.id
                 })
-            return render(request, "viewPatientRecord.html", {'history':history, 'details':patientDetails,'prescriptionList':prescriptionListData}) 
+            return render(request, "viewPatientRecord.html", {
+                'history': history,
+                'details': patientDetails,
+                'prescriptionList': prescriptionListData,
+                'consentForm': consentForm,
+                'noConsent': consentForm is None
+            })
         else:
-            return render(request, "viewPatientRecord.html", {'noRecord':True, 'details':patientDetails})
+            return render(request, "viewPatientRecord.html", {
+                'noRecord': True,
+                'details': patientDetails,
+                'consentForm': consentForm,
+                'noConsent': consentForm is None
+            })
     except Exception as e:
         print(e)
         messages.add_message(request, messages.ERROR, "Please Add Valid Details !")

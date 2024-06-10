@@ -313,7 +313,7 @@ function toggleReligiousDetails(isReligious) {
                                         <div class="col-md-12">
                                             {% if success %}
                                             <div class="alert alert-success" role="alert">
-                                                Patient Information Sheet Successfully Created
+                                                Patient Information Sheet Successfully Created <a href="/healthcare/consentForm/{{patientId}}" class="alert-link">Click here</a> to add an Informed Consent for Psychological Counseling.
                                             </div>
                                             {% endif %}
                                             {% if message %}
@@ -322,11 +322,15 @@ function toggleReligiousDetails(isReligious) {
                                                 </div>
                                             {% endif %}
                                   
-                                        <div class="form-group">
-                                            <h3>Treatment History</h3>
                                         </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Treatment History</h3>
+                                            </div>
                                         </div>
-                                        
+                                    
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Are you currently receiving psychiatric services, professional counseling or psychotherapy elsewhere?</label>

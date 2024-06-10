@@ -133,4 +133,17 @@ class Migration(migrations.Migration):
                 ('patientId', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='healthcare.Patient')),
             ],
         ),
+        migrations.CreateModel(
+            name='ConsentForm',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('createdDate', models.DateField(default=datetime.datetime.now)),
+                ('updatedDate', models.DateField(default=datetime.datetime.now)),
+                ('patientId', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='healthcare.Patient')),
+                ('patient_signature', models.TextField(null=True, blank=True)),
+                ('informant_signature', models.TextField(null=True, blank=True)),
+                ('patient_name', models.CharField(max_length=100, null=True, blank=True)),
+                ('informant_name', models.CharField(max_length=100, null=True, blank=True)),
+            ],
+        ),
     ]
