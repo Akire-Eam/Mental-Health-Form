@@ -175,11 +175,19 @@ class TreatmentPlan(models.Model):
     updatedDate = models.DateField(default=datetime.datetime.now)
     patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
     treatmentGoal = models.TextField(blank=True, null=True)
+    specificProblem = models.TextField(blank=True, null=True)
+    approaches = models.TextField(blank=True, null=True)
+    timeFrame = models.TextField(blank=True, null=True)
+    personalResponsibilities = models.TextField(blank=True, null=True)
+    remarks = models.TextField(blank=True, null=True)
     changeTreatmentCriteria = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], blank=True, null=True)
     treatmentCriteria = models.TextField(blank=True, null=True)
     sessionsPerMonth = models.IntegerField(blank=True, null=True)
     clientConcurred = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], blank=True, null=True)
     treatmentRemarks = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Treatment Plan for {self.patient.name} created on {self.createdDate}"
 
 class TreatmentStrategy(models.Model):
     treatmentPlan = models.ForeignKey(TreatmentPlan, on_delete=models.CASCADE, related_name='strategies')
@@ -235,25 +243,7 @@ class Counselling(models.Model):
     createdDate = models.DateField(default=datetime.datetime.now)
     updatedDate = models.DateField(default=datetime.datetime.now)
     patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
-   
-class TreatmentPlan(models.Model):
-    createdDate = models.DateField(default=datetime.datetime.now)
-    updatedDate = models.DateField(default=datetime.datetime.now)
-    patientId = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    treatmentGoal = models.TextField(blank=True, null=True)
-    specificProblem = models.TextField(blank=True, null=True)
-    approaches = models.TextField(blank=True, null=True)
-    timeFrame = models.TextField(blank=True, null=True)
-    personalResponsibilities = models.TextField(blank=True, null=True)
-    remarks = models.TextField(blank=True, null=True)
-    changeTreatmentCriteria = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], blank=True, null=True)
-    treatmentCriteria = models.TextField(blank=True, null=True)
-    sessionsPerMonth = models.IntegerField(blank=True, null=True)
-    clientConcurred = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], blank=True, null=True)
-    treatmentRemarks = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return f"Treatment Plan for {self.patient.name} created on {self.createdDate}"
 
 class Counselling(models.Model):
     diagnosticImpression = models.TextField(null=True, blank=True)
