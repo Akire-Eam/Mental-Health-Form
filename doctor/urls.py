@@ -12,7 +12,8 @@ urlpatterns = [
     path('searchpage/', views.searchPatient, name='searchlist'),
     path('medicineFile/<int:prescriptionId>', views.medicineFile, name='medicineFile'),
     path('laboratoryTest/<int:prescriptionId>', views.laboratoryTest, name='laboratoryTest'),
-    path('viewMedicine/<int:medicineId>/<int:prescriptionId>',views.viewMedicine, name='viewMedicine')
+    path('viewMedicine/<int:medicineId>/<int:prescriptionId>',views.viewMedicine, name='viewMedicine'),
+    #path('searchlist/', views.search_list, name='searchlist'),
 
 
 ]

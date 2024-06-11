@@ -178,8 +178,8 @@
          <br>
          {% if request.session.role %}
             {% if request.session.role == 'Admin' %}
-              <a href="/accounts/createdoctor/" class="btn btn-primary btn-lg zoomOut" id="button1">Create Doctor </a>
-              <a href="/accounts/createnurse/" class="btn btn-primary btn-lg zoomOut" id="button1">Create Nurse </a>
+              <a href="/accounts/createpsychiatrist/" class="btn btn-primary btn-lg zoomOut" id="button1">Create Psychiatrist </a>
+              <a href="/accounts/createpsychologist/" class="btn btn-primary btn-lg zoomOut" id="button1">Create Psychologist </a>
               {% elif request.session.role == 'Doctor' %}
                 <a href="/doctor/patient-list/" class="btn btn-primary btn-lg zoomOut" id="button1">View Patients </a>
                 <a href="/healthcare/newPatient" class="btn btn-primary btn-lg zoomOut" id="button1">Register Patient</a>

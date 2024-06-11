@@ -45,14 +45,14 @@ def doctor_register(request, roledata):
                     print(role_name.id)
                     userRole= UserroleMap.objects.create(user_id=user_obj, role_id=role_name)
                     userRole.save()
-                    messages.add_message(request, messages.SUCCESS, "Doctor is created")
+                    messages.add_message(request, messages.SUCCESS, "Psychiatrist is created")
                     return redirect('')
                 else:
                     role_name = Role.objects.filter(role='Nurse').first()
             
                     userRole= UserroleMap.objects.create(user_id=user_obj, role_id=role_name)
                     userRole.save()
-                    messages.add_message(request, messages.SUCCESS, "Nurse is created")
+                    messages.add_message(request, messages.SUCCESS, "Psychologist is created")
 
                     return redirect('')
         messages.add_message(request, messages.ERROR, "Please Add Valid Details !")
@@ -68,7 +68,7 @@ def addNurse(request):
         if request.session['role']!= "Admin":
             messages.add_message(request, messages.ERROR, "You Are Not Authenticated")
             return render(request, 'index.html')
-        data={'roledata': 'Nurse' , 'message': "Register Nurse"}
+        data={'roledata': 'Nurse' , 'message': "Register Psychologist"}
         return  render(request, 'ragister.html', context= data )
     except:
         messages.add_message(request, messages.ERROR, "Something Went Wrong!")  
@@ -80,7 +80,7 @@ def addDoctor(request):
         if request.session['role']!= "Admin":
             messages.add_message(request, messages.ERROR, "You Are Not Authenticated")            
             return render(request, 'index.html')
-        data={'roledata': 'Doctor' , 'message': "Register Doctor"}
+        data={'roledata': 'Doctor' , 'message': "Register Psychiatrist"}
         return  render(request, 'ragister.html', context= data )
     except:
         print("nurse2")
