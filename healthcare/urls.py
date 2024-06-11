@@ -14,8 +14,8 @@ urlpatterns = [
     path('updateConsentForm/<patientId>', views.updateConsentForm, name='updateConsentForm'),
     path('treatmentPlan/<patientId>', views.treatmentPlan, name='treatmentPlan'),
     path('updateTreatmentPlan/<patientId>', views.updateTreatmentPlan, name='updateTreatmentPlan'),
-    path('counselling/<patientId>', views.counselling, name='counselling')
     path('counselling/<patientId>', views.counselling, name='counselling'),
+    # path('counselling/<patientId>', views.counselling, name='counselling'),
     # path('updateCounselling/<patientId>/<formId>', views.updateCounselling, name='updateCounselling')
     path('updateCounselling/<int:patientId>/<int:formId>/', views.updateCounselling, name='updateCounselling')
 

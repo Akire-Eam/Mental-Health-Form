@@ -600,7 +600,7 @@ def updateConsentForm(request, patientId):
         logging.exception('Exception occurred: %s' % e)
         return HttpResponse("<h1>Something went wrong!!!</h1>")
     
-@nursedata_middleware
+# @nursedata_middleware
 def treatmentPlan(request, patientId):
     try:
         patient = Patient.objects.filter(id=patientId).first()
@@ -651,7 +651,7 @@ def treatmentPlan(request, patientId):
         return render(request, 'treatmentPlan.html', {'message': 'Missing required fields', 'patient': patient, 'patientId': patientId})
     
 
-@nursedata_middleware
+# @nursedata_middleware
 def updateTreatmentPlan(request, patientId):
     try:
         if request.session['role']!= "Doctor" and request.session['role']!="Nurse":
