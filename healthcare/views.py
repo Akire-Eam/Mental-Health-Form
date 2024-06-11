@@ -659,6 +659,10 @@ def treatmentPlan(request, patientId):
             treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
             treatment_plan.clientConcurred = request.POST.get('clientConcurred')
             treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.patient_signature = request.POST.get('patient_signature')
+            treatment_plan.therapist_signature = request.POST.get('therapist_signature')
+            treatment_plan.patient_name = request.POST.get('patient_name')
+            treatment_plan.therapist_name = request.POST.get('therapist_name')
             treatment_plan.save()
 
             # Update or create associated TreatmentStrategy objects
@@ -717,6 +721,10 @@ def updateTreatmentPlan(request, patientId):
             treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
             treatment_plan.clientConcurred = request.POST.get('clientConcurred')
             treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.patient_signature = request.POST.get('patient_signature')
+            treatment_plan.therapist_signature = request.POST.get('therapist_signature')
+            treatment_plan.patient_name = request.POST.get('patient_name')
+            treatment_plan.therapist_name = request.POST.get('therapist_name')
             treatment_plan.save()
 
             treatment_plan.save()
