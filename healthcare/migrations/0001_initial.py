@@ -146,6 +146,7 @@ class Migration(migrations.Migration):
                 ('informant_name', models.CharField(max_length=100, null=True, blank=True)),
             ],
         ),
+
         migrations.CreateModel(
             name='TreatmentPlan',
             fields=[
@@ -171,6 +172,12 @@ class Migration(migrations.Migration):
                 ('personalResponsibilities', models.TextField(blank=True, null=True)),
                 ('remarks', models.TextField(blank=True, null=True)),
                 ('treatmentPlan', models.ForeignKey(on_delete=models.CASCADE, to='healthcare.TreatmentPlan', related_name='strategies')),
+                ('changeTreatmentCriteria', models.CharField(blank=True, null=True, choices=[('yes', 'Yes'), ('no', 'No')], max_length=3)),
+                ('treatmentCriteria', models.TextField(blank=True, null=True)),
+                ('sessionsPerMonth', models.IntegerField(blank=True, null=True)),
+                ('clientConcurred', models.CharField(blank=True, null=True, choices=[('yes', 'Yes'), ('no', 'No')], max_length=3)),
+                ('treatmentRemarks', models.TextField(blank=True, null=True)),
+                ('patientId', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='healthcare.Patient')),
             ],
         ),
         migrations.CreateModel(
