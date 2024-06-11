@@ -133,147 +133,268 @@ th {
         <div class="col-md-3 register-left">
             <h3>Add Treatment Plan</h3>
             <p>Nurturing Mental Health, One Mend at a Time</p>
-            <input type="submit" name="" value="Cancel" onClick="cancel()"/><br/>
+            <input type="submit" name="" value="Cancel" onClick="cancel()" /><br />
         </div>
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading">{{ profile.name }}</h3>
-                    <form action="/healthcare/updatePatientRecord/{{profile.id}}" method="post">{% csrf_token %}
+                    <form action="/healthcare/treatmentPlan/{{ patient.id }}" method="post">{% csrf_token %}
                         <div class="row register-form">
                             <div class="col-md-12">
                                 {% if success %}
                                 <div class="alert alert-success" role="alert">
-                                    Treatment Plan Successfully Updated
+                                    Treatment Plan Successfully Created
                                 </div>
                                 {% endif %}
                                 {% if message %}
-                                    <div class="alert alert-danger" role="alert">
-                                        {{message}}
-                                    </div>
+                                <div class="alert alert-danger" role="alert">
+                                    {{message}}
+                                </div>
                                 {% endif %}
-                      
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <h3>Treatment Process</h3>
-                                </div>
-                            </div>
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label><h5>Summary of Treatment Goal (Specification of Treatment Plan):</h5></label>
-                                    <input type="text" class="form-control" name="treatmentGoal" placeholder="Summary" value="{{ patient.treatmentGoal | default:'' }}" required>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h3>Treatment Process</h3>
+                                    </div>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label><h5>Detailed Treatment Plan</h5></label> 
-                                    <div>
-                                        <label>Treatment Strategy/Interventions</label>
-                                        <div>
-                                            <table style="font-size: 15; border-size: 1px; margin-bottom: 8px">
-                                                <tr>
-                                                <th><label>Specific Problems/Concerns</label></th>
-                                                <th><label>Approaches</label></th>
-                                                <th><label>Time Frame</label></th>
-                                                <th><label>Person Responsible</label></th>
-                                                <th><label>Remarks</label></th>
-                                                </tr>
-                                                <tr>
-                                                <td>
-                                                    <input type="text" class="form-control" name="specificProblem" placeholder="" value="{{ patient.specificProblem | default:'' }}" required>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="approaches" placeholder="" value="{{ patient.approaches | default:'' }}" required>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="timeFrame" placeholder="" value="{{ patient.timeFrame | default:'' }}" required>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="personalResponsibilities" placeholder="" value="{{ patient.personalResponsibilities | default:'' }}" required>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="remarks" placeholder="" value="{{ patient.remarks | default:'' }}" required>
-                                                </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="specificProblem" placeholder="" value="{{ patient.specificProblem | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="approaches" placeholder="" value="{{ patient.approaches | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="timeFrame" placeholder="" value="{{ patient.timeFrame | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="personalResponsibilities" placeholder="" value="{{ patient.personalResponsibilities | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="remarks" placeholder="" value="{{ patient.remarks | default:'' }}" required>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="specificProblem" placeholder="" value="{{ patient.specificProblem | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="approaches" placeholder="" value="{{ patient.approaches | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="timeFrame" placeholder="" value="{{ patient.timeFrame | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="personalResponsibilities" placeholder="" value="{{ patient.personalResponsibilities | default:'' }}" required>
-                                                    </td>
-                                                    <td>
-                                                    <input type="text" class="form-control" name="remarks" placeholder="" value="{{ patient.remarks | default:'' }}" required>
-                                                    </td>
-                                                </tr>
-                                            </table>                                          
-                                        </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>
+                                            <h5>Summary of Treatment Goal (Specification of Treatment Plan):</h5>
+                                        </label>
+                                        <input type="text" class="form-control" name="treatmentGoal" placeholder="Summary">
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Changes in Treatment Criteria:</label>
+                                        <label>
+                                            <h5>Detailed Treatment Plan</h5>
+                                        </label>
                                         <div>
-                                            <label><input type="radio" name="changeTreatmentCriteria" value="yes" onclick="toggleChangeTreatmentCriteria(this)" {% if patient.changeTreatmentCriteria == "yes" %} checked {% endif %} required> Yes</label>
-                                            <label><input type="radio" name="changeTreatmentCriteria" value="no" onclick="toggleChangeTreatmentCriteria(this)" {% if patient.changeTreatmentCriteria == "no" %} checked {% endif %} required> No</label>
-                                        </div>
-                                        <div>
-                                            <textarea class="form-control" id="treatmentCriteria" name="treatmentCriteria" rows="4">{{ patient.treatmentCriteria | default:'' }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group" style="padding: 5px">
-                                        <label><h5>Frequency of Treatmnent:</h5></label>
-                                        <div>
-                                            <label>Sessions per month:</label>
-                                            <input type="text" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month" value="{{ patient.sessionsPerMonth | default:'' }}" required>
-                                        </div>
-                                        <div style="padding: 5px">
-                                            <label>Client concurred:</label>
+                                            <label>Treatment Strategy/Interventions</label>
                                             <div>
-                                                <label><input type="radio" name="clientConcurred" value="yes" onclick="toggleClientConcurred(this)" {% if patient.clientConcurred == "yes" %} checked {% endif %} required> Yes</label>
-                                                <label><input type="radio" name="clientConcurred" value="no" onclick="toggleClientConcurred(this)" {% if patient.clientConcurred == "no" %} checked {% endif %} required> No</label>
+                                                <table style="font-size: 15; border-size: 1px; margin-bottom: 8px">
+                                                    <tr>
+                                                        <th><label>Specific Problems/Concerns</label></th>
+                                                        <th><label>Approaches</label></th>
+                                                        <th><label>Time Frame</label></th>
+                                                        <th><label>Person Responsible</label></th>
+                                                        <th><label>Remarks</label></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="specificProblem" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="approaches" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="timeFrame" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="personalResponsibilities" placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="remarks" placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </div>
-                                        <div>
-                                            <label>Remarks:</label>
-                                            <input type="text" class="form-control" name="treatmentRemarks" placeholder="Remarks" value="{{ patient.treatmentRemarks | default:'' }}" required>
+
+                                        <div class="form-group">
+                                            <label>Changes in Treatment Criteria:</label>
+                                            <div>
+                                                <label><input type="radio" name="changeTreatmentCriteria" value="yes" onclick="toggleChangeTreatmentCriteria(this)"> Yes</label>
+                                                <label><input type="radio" name="changeTreatmentCriteria" value="no" onclick="toggleChangeTreatmentCriteria(this)"> No</label>
+                                            </div>
+                                            <div>
+                                                <textarea class="form-control" id="treatmentCriteria" name="treatmentCriteria" rows="4"></textarea>
+                                            </div>
                                         </div>
+
+                                        <div class="form-group" style="padding: 5px">
+                                            <label>
+                                                <h5>Frequency of Treatment:</h5>
+                                            </label>
+                                            <div>
+                                                <label>Sessions per month:</label>
+                                                <input type="number" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month">
+                                            </div>
+                                            <div style="padding: 5px">
+                                                <label>Client concurred:</label>
+                                                <div>
+                                                    <label><input type="radio" name="clientConcurred" value="yes" onclick="toggleClientConcurred(this)"> Yes</label>
+                                                    <label><input type="radio" name="clientConcurred" value="no" onclick="toggleClientConcurred(this)"> No</label>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label>Remarks:</label>
+                                                <input type="text" class="form-control" name="treatmentRemarks" placeholder="Remarks">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btnRegister">Submit</button>
+                                        </div>
+
                                     </div>
-
-                                </div>                    
-                                                    
-                            
-
-                            <!-- <div id="signature" style="border: 1px solid black; width: 400px; height: 100px;"></div>
-                            <button id="saveSignature">Save Signature</button>
-                            <button id="clearSignature">Clear Signature</button>
-                            <div id="signatureImage"></div> -->
-                            
-                            
-                        </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -281,3 +402,4 @@ th {
         </div>
     </div>
 </div>
+

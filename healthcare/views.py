@@ -3,7 +3,7 @@ import json
 from urllib import response
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 import random
-from healthcare.models import Patient, PatientRecord, ConsentForm, Counselling
+from healthcare.models import Patient, PatientRecord, ConsentForm, Counselling, TreatmentPlan, TreatmentStrategy
 from django.core.mail import send_mail
 import uuid
 from django.conf import settings
@@ -266,7 +266,7 @@ def patientRecord(request, patientId):
 
             patient_record.save()
             # return redirect('/doctor/patient-list')
-            return render(request, 'patientRecord.html')
+            return redirect('/doctor/patient-list')
         
         else:
             return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId})
@@ -498,7 +498,7 @@ def counselling(request, patientId):
         
         else:
             return render(request, 'counselling.html', {'patient': patient, 'patientId': patientId})
-    
+   
     except KeyError as e:
         logger.error(f"Missing key: {e}")
         return render(request, 'counselling.html', {'message': 'Missing required fields'})
@@ -596,6 +596,114 @@ def updateConsentForm(request, patientId):
             return render(request, 'updateConsentForm.html', {'consent': consent, 'success': True, 'profile': patientP})
         else:
             return render(request, 'updateConsentForm.html', {'consent': consent, 'profile': patientP})
+    except Exception as e:
+        logging.exception('Exception occurred: %s' % e)
+        return HttpResponse("<h1>Something went wrong!!!</h1>")
+    
+@nursedata_middleware
+def treatmentPlan(request, patientId):
+    try:
+        patient = Patient.objects.filter(id=patientId).first()
+        
+        if request.method == 'POST':
+            # Check if a record for this patient already exists
+            treatment_plan = TreatmentPlan.objects.filter(patientId=patientId).first()
+            if treatment_plan:
+                return render(request, 'treatmentPlan.html', {'message': 'Treatment Plan already exists', 'patient': patient, 'patientId': patientId})
+
+            # Create a new TreatmentPlan
+            treatment_plan = TreatmentPlan()
+            treatment_plan.patientId = patient
+            treatment_plan.treatmentGoal = request.POST.get('treatmentGoal')
+            treatment_plan.changeTreatmentCriteria = request.POST.get('changeTreatmentCriteria')
+            treatment_plan.treatmentCriteria = request.POST.get('treatmentCriteria')
+            treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
+            treatment_plan.clientConcurred = request.POST.get('clientConcurred')
+            treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.save()
+
+            # Update or create associated TreatmentStrategy objects
+            specificProblems = request.POST.getlist('specificProblem')
+            approaches = request.POST.getlist('approaches')
+            timeFrames = request.POST.getlist('timeFrame')
+            personalResponsibilities = request.POST.getlist('personalResponsibilities')
+            remarks = request.POST.getlist('remarks')
+
+            TreatmentStrategy.objects.filter(treatmentPlan=treatment_plan).delete()
+
+            for specificProblem, approach, timeFrame, personalResponsibility, remark in zip(specificProblems, approaches, timeFrames, personalResponsibilities, remarks):
+                TreatmentStrategy.objects.create(
+                    treatmentPlan=treatment_plan,
+                    specificProblem=specificProblem,
+                    approaches=approach,
+                    timeFrame=timeFrame,
+                    personalResponsibilities=personalResponsibility,
+                    remarks=remark
+                )
+
+            return redirect('/doctor/patient-list')
+        
+        else:
+            return render(request, 'treatmentPlan.html', {'patient': patient, 'patientId': patientId})
+    
+    except KeyError as e:
+        logger.error(f"Missing key: {e}")
+        return render(request, 'treatmentPlan.html', {'message': 'Missing required fields', 'patient': patient, 'patientId': patientId})
+    
+
+@nursedata_middleware
+def updateTreatmentPlan(request, patientId):
+    try:
+        if request.session['role']!= "Doctor" and request.session['role']!="Nurse":
+            return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
+
+    
+        # your existing code...
+        
+        if request.method == 'POST':
+            logging.debug('Form submitted: %s' % request.POST)
+
+        patientP = Patient.objects.filter(id=patientId).first()
+        patient = TreatmentPlan.objects.filter(patientId=patientId)
+        if len(patient) == 0:
+            return render(request, 'treatmentPlan.html', {'message': 'Treatment Plan does not exist!'})
+        
+        treatment_plan = patient.first()
+        treatment_strategies = TreatmentStrategy.objects.filter(treatmentPlan=treatment_plan) if treatment_plan else []
+        if request.method == 'POST':
+            treatment_plan.patientId = patientP  # Fix patient variable assignment
+            treatment_plan.treatmentGoal = request.POST.get('treatmentGoal')
+            treatment_plan.changeTreatmentCriteria = request.POST.get('changeTreatmentCriteria')
+            treatment_plan.treatmentCriteria = request.POST.get('treatmentCriteria')
+            treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
+            treatment_plan.clientConcurred = request.POST.get('clientConcurred')
+            treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.save()
+
+            treatment_plan.save()
+
+            # Update or create associated TreatmentStrategy objects
+            specificProblems = request.POST.getlist('specificProblem')
+            approaches = request.POST.getlist('approaches')
+            timeFrames = request.POST.getlist('timeFrame')
+            personalResponsibilities = request.POST.getlist('personalResponsibilities')
+            remarks = request.POST.getlist('remarks')
+
+            TreatmentStrategy.objects.filter(treatmentPlan=treatment_plan).delete()
+
+            for specificProblem, approach, timeFrame, personalResponsibility, remark in zip(specificProblems, approaches, timeFrames, personalResponsibilities, remarks):
+                TreatmentStrategy.objects.create(
+                    treatmentPlan=treatment_plan,
+                    specificProblem=specificProblem,
+                    approaches=approach,
+                    timeFrame=timeFrame,
+                    personalResponsibilities=personalResponsibility,
+                    remarks=remark
+                )
+
+            return render(request, 'updateTreatmentPlan.html', {'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'success': True, 'profile': patientP})
+        else:
+            return render(request, 'updateTreatmentPlan.html', {'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'profile': patientP})
     except Exception as e:
         logging.exception('Exception occurred: %s' % e)
         return HttpResponse("<h1>Something went wrong!!!</h1>")

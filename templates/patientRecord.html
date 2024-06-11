@@ -311,6 +311,7 @@ function toggleReligiousDetails(isReligious) {
                                 <form action="/healthcare/patientRecord/{{patientId}}" method="post">{% csrf_token %}
                                     <div class="row register-form">
                                         <div class="col-md-12">
+                                            <div class="form-group">
                                             {% if success %}
                                             <div class="alert alert-success" role="alert">
                                                 Patient Information Sheet Successfully Created <a href="/healthcare/consentForm/{{patientId}}" class="alert-link">Click here</a> to add an Informed Consent for Psychological Counseling.
@@ -321,6 +322,7 @@ function toggleReligiousDetails(isReligious) {
                                                     {{message}}
                                                 </div>
                                             {% endif %}
+                                            </div>
                                   
                                         </div>
 
