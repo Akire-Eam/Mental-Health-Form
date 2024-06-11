@@ -204,13 +204,16 @@
                         <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#ConsentForm">Consent Form</button>
                         <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Counseling">Counseling</button>
                         <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#TreatmentPlan">Treatment Plan</button>
-                        <button class="nav-item btn {% if details.is_active %}btn-success{% else %}btn-danger{% endif %} toggle-status" data-id="{{ details.id }}" style="float: right; position:absolute; right: 5%;">
-                            {% if details.is_active %}
-                                Active
-                            {% else %}
-                                Inactive
-                            {% endif %}
-                        </button>
+                        <button class="nav-item btn {% if details.is_active %}btn-success{% else %}btn-danger{% endif %} toggle-status" data-id="{{ details.id }}" style="float: right; position: absolute; right: 5%;"
+                        {% if not request.session.role == "Nurse" and not request.session.role == "Doctor" %}disabled{% endif %}>
+                    {% if details.is_active %}
+                        Active
+                    {% else %}
+                        Inactive
+                    {% endif %}
+                </button>
+                
+                    
                         
                         <h3>
                             <a class="nav-link" href="/doctor/patient-list" style="float: right; position: absolute; right:1%">
@@ -425,12 +428,12 @@
                                                 
                                                 <div class="form-group">
                                                     <label>What time do you sleep?</label>
-                                                    <input type="text" class="form-control" name="sleepTime" placeholder="Sleep time (HH:MM:ss)" value="{{ PIS_details.sleepTime | time:'H:i:s' }}" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)(?::(?:[0-5]\d))?" title="Enter a valid time in HH:MM:ss format" disabled required>
+                                                    <input type="text" class="form-control" name="sleepTime" placeholder="Military time (HH:MM:ss)" value="{{ PIS_details.sleepTime | time:'H:i:s' }}" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)(?::(?:[0-5]\d))?" title="Enter a valid time in HH:MM:ss format" disabled required>
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                     <label>Wake up? </label>
-                                                    <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time" value="{{ PIS_details.wakeUpTime | time:'H:i:s' }}" disabled required>
+                                                    <input type="text" class="form-control" name="wakeUpTime" placeholder="Military time" value="{{ PIS_details.wakeUpTime | time:'H:i:s' }}" disabled required>
                                                 </div>
                                                 
                                                 <div class="form-group">
@@ -454,12 +457,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>How many times per week do you exercise?</label>
-                                                    <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value="{{ PIS_details.exerciseFrequency | default:'' }}" disabled required>
+                                                    <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week (# only)" value="{{ PIS_details.exerciseFrequency | default:'' }}" disabled required>
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                     <label>Approximately how long each time?</label>
-                                                    <input type="text" class="form-control" name="exerciseDuration" placeholder="# of days/weeks/months, HH:MM:ss" value="{{ PIS_details.exerciseDuration | default:'' }}" disabled required>
+                                                    <input type="text" class="form-control" name="exerciseDuration" placeholder="HH:MM:ss" value="{{ PIS_details.exerciseDuration | default:'' }}" disabled required>
                                                 </div>
                                                 
                                                 <div class="form-group">
@@ -497,7 +500,7 @@
                                                 
                                                 <div class="form-group">
                                                     <label>In a typical month, how often do you have 4 or more alcohol/liquor intakes in a 24 hour period?</label>
-                                                    <input type="text" class="form-control" name="alcoholFrequency" placeholder="Frequency" value="{{ PIS_details.alcoholFrequency | default:'' }}" disabled required>
+                                                    <input type="text" class="form-control" name="alcoholFrequency" placeholder="e.g. Once a Month" value="{{ PIS_details.alcoholFrequency | default:'' }}" disabled required>
                                                 </div>
                                                 
                                                 <div class="form-group">
