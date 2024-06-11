@@ -391,12 +391,12 @@ function toggleReligiousDetails(isReligious) {
                                 
                                 <div class="form-group">
                                     <label>What time do you sleep?</label>
-                                    <input type="text" class="form-control" name="sleepTime" placeholder="Sleep time (HH:MM:ss)" value="{{ patient.sleepTime |time:'H:i:s' }}" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)(?::(?:[0-5]\d))?" title="Enter a valid time in HH:MM:ss format" required>
+                                    <input type="text" class="form-control" name="sleepTime" placeholder="Military time (HH:MM:ss)" value="{{ patient.sleepTime |time:'H:i:s' }}" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)(?::(?:[0-5]\d))?" title="Enter a valid time in HH:MM:ss format" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Wake up? </label>
-                                    <input type="text" class="form-control" name="wakeUpTime" placeholder="Wake up time (HH:MM:ss)" value="{{ patient.wakeUpTime | time:'H:i:s' }}" required>
+                                    <input type="text" class="form-control" name="wakeUpTime" placeholder="Military time (HH:MM:ss)" value="{{ patient.wakeUpTime | time:'H:i:s' }}" required>
                                 </div>
                                 
                                 <div class="form-group">
@@ -420,12 +420,12 @@ function toggleReligiousDetails(isReligious) {
                                 </div>
                                 <div class="form-group">
                                     <label>How many times per week do you exercise?</label>
-                                    <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week" value="{{ patient.exerciseFrequency | default:'' }}" required>
+                                    <input type="text" class="form-control" name="exerciseFrequency" placeholder="Times per week (# only)" value="{{ patient.exerciseFrequency | default:'' }}" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Approximately how long each time?</label>
-                                    <input type="text" class="form-control" name="exerciseDuration" placeholder="# of days/weeks/months, HH:MM:ss" value="{{ patient.exerciseDuration | default:'' }}" required>
+                                    <input type="text" class="form-control" name="exerciseDuration" placeholder="HH:MM:ss" value="{{ patient.exerciseDuration | default:'' }}" required>
                                 </div>
                                 
                                 <div class="form-group">
@@ -463,7 +463,7 @@ function toggleReligiousDetails(isReligious) {
                                 
                                 <div class="form-group">
                                     <label>In a typical month, how often do you have 4 or more alcohol/liquor intakes in a 24 hour period?</label>
-                                    <input type="text" class="form-control" name="alcoholFrequency" placeholder="Frequency" value="{{ patient.alcoholFrequency | default:'' }}" required>
+                                    <input type="text" class="form-control" name="alcoholFrequency" placeholder="e.g. Once a Month" value="{{ patient.alcoholFrequency | default:'' }}" required>
                                 </div>
                                 
                                 <div class="form-group">
