@@ -24,13 +24,15 @@ logger = logging.getLogger(__name__)
 def newPatient(request):
     try:
         if request.method == 'POST':
+            # Check if a record for this patient already exists
+            patient_record = Patient.objects.filter(email=request.POST['email']).first()
+            if patient_record:
+                return render(request, 'newPatient.html', {'message': 'Patient already exists', 'patient': patient_record})
             try:
                 name = request.POST['name']
                 mobile = request.POST['mobile']
                 email = request.POST['email']
                 patient = Patient.objects.filter(email=email)
-                if len(patient) != 0:
-                    return render(request, 'newPatient.html',{'message':'Patient already exists'})
                 gender = request.POST['gender']
                 dateOfBirth = request.POST['dateOfBirth']
                 age = request.POST['age']

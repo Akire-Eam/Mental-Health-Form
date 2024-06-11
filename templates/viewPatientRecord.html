@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery (required by Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+
 
     <style>
         [data-tab-content] {
@@ -179,6 +189,12 @@
         }          
 
     </style>
+    <script>
+        $('#heading{{ form.id }}').collapse({
+            toggle: true
+        })
+        
+    </script>
    
 </head>
 <body>
@@ -1008,344 +1024,358 @@
                 {% endif %}  
                 <input type="hidden" name="form_id" value="{{ form.id }}">
                 {% for form in counselling_forms %}
-                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                    <a href="/healthcare/updateCounselling/{{details.id}}/{{ form.id }}" class="btn btn-info btm-sm" style="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Counselling</a>
-                {% endif %}                
-                <div class="container register">
-                    <div class="row">
-                        <!-- <div class="col-md-3 register-left">
-                            <h3>Counselling Sheet</h3>
-                            <p>Nurturing Mental Health, One Mend at a Time</p>
-                            <input type="submit" name="" value="Cancel" onClick="cancel()"/><br/>
-                        </div> -->
-                        <div class="col-md-12 register-right">
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <h3 class="register-heading">{{ profile.name }}</h3>
-                                        
-                                        <form action="/healthcare/counselling/{{ patient.id }}" method="post">{% csrf_token %}
-                                        <div class="row register-form">
-                                            <div class="col-md-12">
-                                                {% if success %}
-                                                <div class="alert alert-success" role="alert">
-                                                   Counselling Successfully Updated
-                                                </div>
-                                                {% endif %}
-                                                {% if message %}
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {{message}}
-                                                    </div>
-                                                {% endif %}
-                                      
-                                            <div class="form-group">
-                                                <h3>Diagnostic Impression</h3>
-                                            </div>
-                                            </div>
+                <div class="card">
+                    <div class="card-header text-white" id="heading{{ form.id }}" style="background-color: #587892;">
+                        <h5 class="mb-0 text-center">
+                            <button class="btn btn-link text-decoration-none text-white" data-bs-toggle="collapse" data-bs-target="#collapse{{form.id}}" aria-expanded="true" aria-controls="collapse{{form.id}}">
+                                Session No. {{form.id}}
+                            </button>
+                        </h5>
+                    </div>                    
+              
+                    <div id="collapse{{form.id}}" class="collapse" aria-labelledby="heading{{form.id}}">
+                       <div class="card-body">
+                        {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                            <a href="/healthcare/updateCounselling/{{details.id}}/{{ form.id }}" class="btn btn-info btm-sm" style="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Counselling</a>
+                        {% endif %}                
+                        <div class="container register">
+                            <div class="row">
+                                <!-- <div class="col-md-3 register-left">
+                                    <h3>Counselling Sheet</h3>
+                                    <p>Nurturing Mental Health, One Mend at a Time</p>
+                                    <input type="submit" name="" value="Cancel" onClick="cancel()"/><br/>
+                                </div> -->
+                                <div class="col-md-12 register-right">
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            <h3 class="register-heading">{{ profile.name }}</h3>
+                                                
+                                                <form action="/healthcare/counselling/{{ patient.id }}" method="post">{% csrf_token %}
+                                                <div class="row register-form">
+                                                    <div class="col-md-12">
+                                                        {% if success %}
+                                                        <div class="alert alert-success" role="alert">
+                                                        Counselling Successfully Updated
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if message %}
+                                                            <div class="alert alert-danger" role="alert">
+                                                                {{message}}
+                                                            </div>
+                                                        {% endif %}
                                             
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <textarea class="form-control" id="diagnosticImpression_{{ form.id }}" name="diagnosticImpression_{{ form.id }}" rows="4" required>{{ form.diagnosticImpression | default:'' }}</textarea>
-                                                </div>
-                                            </div>
-                
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <h3>Presenting Problems</h3>
-                                                </div>
-                                            </div>
-                
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Change in the level of functioning (1-mild, 3-moderate, 5-severe)</label>
-                                                    <div>
-                                                        <table style="text-align: center">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th style="width: 200px">Level of functioning</th>
-                                                                    <th style="width: 100px">1</th>
-                                                                    <th style="width: 100px">2</th>
-                                                                    <th style="width: 100px">3</th>
-                                                                    <th style="width: 100px">4</th>
-                                                                    <th style="width: 100px">5</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Decrease in Energy</td>
-                                                                    <td><input type="radio" value="1" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 5 %}checked{% endif %} disabled required /></td>
-                
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Panic Attacks</td>
-                                                                    <td><input type="radio" value="1" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Anxiety</td>
-                                                                    <td><input type="radio" value="1" name="anxiety_{{ form.id }}" {% if form.anxiety == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="anxiety_{{ form.id }}" {% if form.anxiety == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="anxiety_{{ form.id }}" {% if form.anxiety == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="anxiety_{{ form.id }}" {% if form.anxiety == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="anxiety_{{ form.id }}" {% if form.anxiety == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Poor Concentration</td>
-                                                                    <td><input type="radio" value="2" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>                                                                                           
-                                                                <tr>
-                                                                    <td>Legal Problems</td>
-                                                                    <td><input type="radio" value="1" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Impulsivity</td>
-                                                                    <td><input type="radio" value="1" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Substance Abuse</td>
-                                                                    <td><input type="radio" value="1" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Restlessness</td>
-                                                                    <td><input type="radio" value="1" name="restlessness_{{ form.id }}" {% if form.restlessness == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="restlessness_{{ form.id }}" {% if form.restlessness == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="restlessness_{{ form.id }}" {% if form.restlessness == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="restlessness_{{ form.id }}" {% if form.restlessness == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="restlessness_{{ form.id }}" {% if form.restlessness == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Cruelty</td>
-                                                                    <td><input type="radio" value="1" name="cruelty_{{ form.id }}" {% if form.cruelty == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="cruelty_{{ form.id }}" {% if form.cruelty == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="cruelty_{{ form.id }}" {% if form.cruelty == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="cruelty_{{ form.id }}" {% if form.cruelty == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="cruelty_{{ form.id }}" {% if form.cruelty == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>                                                
-                                                                <tr>
-                                                                    <td>Sleep Disturbance</td>
-                                                                    <td><input type="radio" value="1" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Indecisive</td>
-                                                                    <td><input type="radio" value="1" name="indecisive_{{ form.id }}" {% if form.indecisive == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="indecisive_{{ form.id }}" {% if form.indecisive == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="indecisive_{{ form.id }}" {% if form.indecisive == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="indecisive_{{ form.id }}" {% if form.indecisive == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="indecisive_{{ form.id }}" {% if form.indecisive == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Irritability</td>
-                                                                    <td><input type="radio" value="1" name="irritability_{{ form.id }}" {% if form.irritability == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="irritability_{{ form.id }}" {% if form.irritability == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="irritability_{{ form.id }}" {% if form.irritability == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="irritability_{{ form.id }}" {% if form.irritability == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="irritability_{{ form.id }}" {% if form.irritability == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Worrying</td>
-                                                                    <td><input type="radio" value="1" name="worrying_{{ form.id }}" {% if form.worrying == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="worrying_{{ form.id }}" {% if form.worrying == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="worrying_{{ form.id }}" {% if form.worrying == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="worrying_{{ form.id }}" {% if form.worrying == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="worrying_{{ form.id }}" {% if form.worrying == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Ritualistic Behavior</td>
-                                                                    <td><input type="radio" value="1" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Hopelessness</td>
-                                                                    <td><input type="radio" value="1" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Loss of Pleasure</td>
-                                                                    <td><input type="radio" value="1" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Withdrawn</td>
-                                                                    <td><input type="radio" value="1" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Mood Swings</td>
-                                                                    <td><input type="radio" value="1" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>                                                
-                                                                <tr>
-                                                                    <td>Helplessness</td>
-                                                                    <td><input type="radio" value="1" name="helplessness_{{ form.id }}" {% if form.helplessness == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="helplessness_{{ form.id }}" {% if form.helplessness == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="helplessness_{{ form.id }}" {% if form.helplessness == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="helplessness_{{ form.id }}" {% if form.helplessness == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="helplessness_{{ form.id }}" {% if form.helplessness == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Aggression/Rage</td>
-                                                                    <td><input type="radio" value="1" name="aggression_{{ form.id }}" {% if form.aggression == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="aggression_{{ form.id }}" {% if form.aggression == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="aggression_{{ form.id }}" {% if form.aggression == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="aggression_{{ form.id }}" {% if form.aggression == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="aggression_{{ form.id }}" {% if form.aggression == 5 %}checked{% endif %} disabled required /></td>
-                                                                <tr>
-                                                                    <td>Low Self-Esteem</td>
-                                                                    <td><input type="radio" value="1" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Excessive Guilt</td>
-                                                                    <td><input type="radio" value="1" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Depressed Mood</td>
-                                                                    <td><input type="radio" value="1" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>                                                
-                                                                <tr>
-                                                                    <td>Oppositional</td>
-                                                                    <td><input type="radio" value="1" name="oppositional_{{ form.id }}" {% if form.oppositional == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="oppositional_{{ form.id }}" {% if form.oppositional == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="oppositional_{{ form.id }}" {% if form.oppositional == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="oppositional_{{ form.id }}" {% if form.oppositional == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="oppositional_{{ form.id }}" {% if form.oppositional == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Violation of Rules</td>
-                                                                    <td><input type="radio" value="1" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Eating Disturbance</td>
-                                                                    <td><input type="radio" value="1" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Tearfulness</td>
-                                                                    <td><input type="radio" value="1" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Low Motivation</td>
-                                                                    <td><input type="radio" value="1" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 1 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="2" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 2 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="3" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 3 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="4" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 4 %}checked{% endif %} disabled required /></td>
-                                                                    <td><input type="radio" value="5" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 5 %}checked{% endif %} disabled required /></td>
-                                                                </tr>
-                                                                
-                                                            </tbody>
-                                                          </table>                                          
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Changes in Psychosocial/ Psychological level of distress:</label>
-                                                    <div>
-                                                        <label><input type="radio" name="changesInDistress" value="Greater" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "Greater" %} checked {% endif %} disabled required> Greater </label>
-                                                        <label><input type="radio" name="changesInDistress" value="Less" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "Less" %} checked {% endif %} disabled required> Less </label>
-                                                        <label><input type="radio" name="changesInDistress" value="None" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "None" %} checked {% endif %} disabled required> None </label>
-                                                    </div>                                    
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Changes in physical status:</label>
-                                                    <input type="text" class="form-control" name="changePhysicalStatus" placeholder="Changes" value="{{ form.changePhysicalStatus | default:'' }}" required>
-                                                </div>                                
-                                                <div class="form-group">
-                                                    <label>Reports received/ Ancillary services documented:</label>
-                                                    <input type="text" class="form-control" name="reportsReceived" placeholder="Reports received" value="{{ form.reportsReceived | default:'' }}" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <h3>Psychotherapy Progress Note</h3>
-                                                </div>
-                                                </div>
-                                                
-                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Session Focus:</label>
-                                                        <textarea class="form-control" id="sessionFocus" name="sessionFocus" rows="4" required>{{ form.sessionFocus | default:'' }}</textarea>
+                                                        <h3>Diagnostic Impression</h3>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label>Therapeutic Intervention:</label>
-                                                        <textarea class="form-control" id="therapeuticIntervention" name="therapeuticIntervention" rows="4" required>{{ form.therapeuticIntervention | default:'' }}</textarea>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label>Planned Intervention:</label>
-                                                        <textarea class="form-control" id="plannedIntervention" name="plannedIntervention" rows="4" required>{{ form.plannedIntervention | default:'' }}</textarea>
+                                                    
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" id="diagnosticImpression_{{ form.id }}" name="diagnosticImpression_{{ form.id }}" rows="4" required>{{ form.diagnosticImpression | default:'' }}</textarea>
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <h3>Presenting Problems</h3>
+                                                        </div>
+                                                    </div>
+                        
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Change in the level of functioning (1-mild, 3-moderate, 5-severe)</label>
+                                                            <div>
+                                                                <table style="text-align: center">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 200px">Level of functioning</th>
+                                                                            <th style="width: 100px">1</th>
+                                                                            <th style="width: 100px">2</th>
+                                                                            <th style="width: 100px">3</th>
+                                                                            <th style="width: 100px">4</th>
+                                                                            <th style="width: 100px">5</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Decrease in Energy</td>
+                                                                            <td><input type="radio" value="1" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="decreaseInEnergy_{{ form.id }}" {% if form.decreaseInEnergy == 5 %}checked{% endif %} disabled required /></td>
+                        
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Panic Attacks</td>
+                                                                            <td><input type="radio" value="1" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="panicAttacks_{{ form.id }}" {% if form.panicAttacks == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Anxiety</td>
+                                                                            <td><input type="radio" value="1" name="anxiety_{{ form.id }}" {% if form.anxiety == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="anxiety_{{ form.id }}" {% if form.anxiety == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="anxiety_{{ form.id }}" {% if form.anxiety == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="anxiety_{{ form.id }}" {% if form.anxiety == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="anxiety_{{ form.id }}" {% if form.anxiety == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Poor Concentration</td>
+                                                                            <td><input type="radio" value="2" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="poorConcentration_{{ form.id }}" {% if form.poorConcentration == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>                                                                                           
+                                                                        <tr>
+                                                                            <td>Legal Problems</td>
+                                                                            <td><input type="radio" value="1" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="legalProblems_{{ form.id }}" {% if form.legalProblems == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Impulsivity</td>
+                                                                            <td><input type="radio" value="1" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="impulsivity_{{ form.id }}" {% if form.impulsivity == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Substance Abuse</td>
+                                                                            <td><input type="radio" value="1" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="substanceAbuse_{{ form.id }}" {% if form.substanceAbuse == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Restlessness</td>
+                                                                            <td><input type="radio" value="1" name="restlessness_{{ form.id }}" {% if form.restlessness == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="restlessness_{{ form.id }}" {% if form.restlessness == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="restlessness_{{ form.id }}" {% if form.restlessness == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="restlessness_{{ form.id }}" {% if form.restlessness == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="restlessness_{{ form.id }}" {% if form.restlessness == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Cruelty</td>
+                                                                            <td><input type="radio" value="1" name="cruelty_{{ form.id }}" {% if form.cruelty == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="cruelty_{{ form.id }}" {% if form.cruelty == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="cruelty_{{ form.id }}" {% if form.cruelty == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="cruelty_{{ form.id }}" {% if form.cruelty == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="cruelty_{{ form.id }}" {% if form.cruelty == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>                                                
+                                                                        <tr>
+                                                                            <td>Sleep Disturbance</td>
+                                                                            <td><input type="radio" value="1" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="sleepDisturbance_{{ form.id }}" {% if form.sleepDisturbance == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Indecisive</td>
+                                                                            <td><input type="radio" value="1" name="indecisive_{{ form.id }}" {% if form.indecisive == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="indecisive_{{ form.id }}" {% if form.indecisive == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="indecisive_{{ form.id }}" {% if form.indecisive == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="indecisive_{{ form.id }}" {% if form.indecisive == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="indecisive_{{ form.id }}" {% if form.indecisive == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Irritability</td>
+                                                                            <td><input type="radio" value="1" name="irritability_{{ form.id }}" {% if form.irritability == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="irritability_{{ form.id }}" {% if form.irritability == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="irritability_{{ form.id }}" {% if form.irritability == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="irritability_{{ form.id }}" {% if form.irritability == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="irritability_{{ form.id }}" {% if form.irritability == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Worrying</td>
+                                                                            <td><input type="radio" value="1" name="worrying_{{ form.id }}" {% if form.worrying == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="worrying_{{ form.id }}" {% if form.worrying == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="worrying_{{ form.id }}" {% if form.worrying == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="worrying_{{ form.id }}" {% if form.worrying == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="worrying_{{ form.id }}" {% if form.worrying == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Ritualistic Behavior</td>
+                                                                            <td><input type="radio" value="1" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="ritualisticBehavior_{{ form.id }}" {% if form.ritualisticBehavior == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Hopelessness</td>
+                                                                            <td><input type="radio" value="1" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="hopelessness_{{ form.id }}" {% if form.hopelessness == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Loss of Pleasure</td>
+                                                                            <td><input type="radio" value="1" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="lossOfPleasure_{{ form.id }}" {% if form.lossOfPleasure == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Withdrawn</td>
+                                                                            <td><input type="radio" value="1" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="withdrawn_{{ form.id }}" {% if form.withdrawn == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Mood Swings</td>
+                                                                            <td><input type="radio" value="1" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="moodSwings_{{ form.id }}" {% if form.moodSwings == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>                                                
+                                                                        <tr>
+                                                                            <td>Helplessness</td>
+                                                                            <td><input type="radio" value="1" name="helplessness_{{ form.id }}" {% if form.helplessness == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="helplessness_{{ form.id }}" {% if form.helplessness == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="helplessness_{{ form.id }}" {% if form.helplessness == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="helplessness_{{ form.id }}" {% if form.helplessness == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="helplessness_{{ form.id }}" {% if form.helplessness == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Aggression/Rage</td>
+                                                                            <td><input type="radio" value="1" name="aggression_{{ form.id }}" {% if form.aggression == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="aggression_{{ form.id }}" {% if form.aggression == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="aggression_{{ form.id }}" {% if form.aggression == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="aggression_{{ form.id }}" {% if form.aggression == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="aggression_{{ form.id }}" {% if form.aggression == 5 %}checked{% endif %} disabled required /></td>
+                                                                        <tr>
+                                                                            <td>Low Self-Esteem</td>
+                                                                            <td><input type="radio" value="1" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="lowSelfEsteem_{{ form.id }}" {% if form.lowSelfEsteem == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Excessive Guilt</td>
+                                                                            <td><input type="radio" value="1" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="excessiveGuilt_{{ form.id }}" {% if form.excessiveGuilt == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Depressed Mood</td>
+                                                                            <td><input type="radio" value="1" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="depressedMood_{{ form.id }}" {% if form.depressedMood == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>                                                
+                                                                        <tr>
+                                                                            <td>Oppositional</td>
+                                                                            <td><input type="radio" value="1" name="oppositional_{{ form.id }}" {% if form.oppositional == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="oppositional_{{ form.id }}" {% if form.oppositional == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="oppositional_{{ form.id }}" {% if form.oppositional == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="oppositional_{{ form.id }}" {% if form.oppositional == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="oppositional_{{ form.id }}" {% if form.oppositional == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Violation of Rules</td>
+                                                                            <td><input type="radio" value="1" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="violationOfRules_{{ form.id }}" {% if form.violationOfRules == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Eating Disturbance</td>
+                                                                            <td><input type="radio" value="1" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="eatingDisturbance_{{ form.id }}" {% if form.eatingDisturbance == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Tearfulness</td>
+                                                                            <td><input type="radio" value="1" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="tearfulness_{{ form.id }}" {% if form.tearfulness == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Low Motivation</td>
+                                                                            <td><input type="radio" value="1" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 1 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="2" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 2 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="3" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 3 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="4" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 4 %}checked{% endif %} disabled required /></td>
+                                                                            <td><input type="radio" value="5" name="lowMotivation_{{ form.id }}" {% if form.lowMotivation == 5 %}checked{% endif %} disabled required /></td>
+                                                                        </tr>
+                                                                        
+                                                                    </tbody>
+                                                                </table>                                          
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Changes in Psychosocial/ Psychological level of distress:</label>
+                                                            <div>
+                                                                <label><input type="radio" name="changesInDistress" value="Greater" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "Greater" %} checked {% endif %} disabled required> Greater </label>
+                                                                <label><input type="radio" name="changesInDistress" value="Less" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "Less" %} checked {% endif %} disabled required> Less </label>
+                                                                <label><input type="radio" name="changesInDistress" value="None" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "None" %} checked {% endif %} disabled required> None </label>
+                                                            </div>                                    
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Changes in physical status:</label>
+                                                            <input type="text" class="form-control" name="changePhysicalStatus" placeholder="Changes" value="{{ form.changePhysicalStatus | default:'' }}" required>
+                                                        </div>                                
+                                                        <div class="form-group">
+                                                            <label>Reports received/ Ancillary services documented:</label>
+                                                            <input type="text" class="form-control" name="reportsReceived" placeholder="Reports received" value="{{ form.reportsReceived | default:'' }}" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <h3>Psychotherapy Progress Note</h3>
+                                                        </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Session Focus:</label>
+                                                                <textarea class="form-control" id="sessionFocus" name="sessionFocus" rows="4" required>{{ form.sessionFocus | default:'' }}</textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Therapeutic Intervention:</label>
+                                                                <textarea class="form-control" id="therapeuticIntervention" name="therapeuticIntervention" rows="4" required>{{ form.therapeuticIntervention | default:'' }}</textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Planned Intervention:</label>
+                                                                <textarea class="form-control" id="plannedIntervention" name="plannedIntervention" rows="4" required>{{ form.plannedIntervention | default:'' }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- <div class="col-md-12">
+                                                            <button type="submit" class="btnRegister">Submit</button>
+                                                        </div> -->
+                                                        
                                                     </div>
                                                 </div>
-                                                
-                                                <!-- <div class="col-md-12">
-                                                    <button type="submit" class="btnRegister">Submit</button>
-                                                </div> -->
-                                                
-                                            </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                     {% endfor %}
                 </div>
             </div>
