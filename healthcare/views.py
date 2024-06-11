@@ -269,7 +269,7 @@ def patientRecord(request, patientId):
             return redirect('/doctor/patient-list')
         
         else:
-            return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId})
+            return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId, 'success':True})
     
     except Exception as e:
     # Get the field name causing the error
@@ -494,7 +494,7 @@ def counselling(request, patientId):
             counselling.plannedIntervention = request.POST.get('plannedIntervention')
 
             counselling.save()
-            return redirect('/doctor/patient-list')
+            return redirect('/doctor/patient-list/')
         
         else:
             return render(request, 'counselling.html', {'patient': patient, 'patientId': patientId})
@@ -506,6 +506,10 @@ def counselling(request, patientId):
 # @nursedata_middleware
 def updateCounselling(request, patientId, formId=None):
     try:
+        if request.session['role']!= "Doctor" and request.session['role']!="Nurse":
+            return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
+
+        patientP = Patient.objects.filter(id=patientId).first()
         patient = get_object_or_404(Patient, id=patientId)
         logger.debug('Patient ID: %s', patientId)
         
@@ -528,7 +532,7 @@ def updateCounselling(request, patientId, formId=None):
             return redirect('/healthcare/updateCounselling/%s/%s' % (patientId, formId))
         
         # Render the form prepopulated with existing data
-        return render(request, 'updateCounselling.html', {'patient': patient, 'form': counselling})
+        return render(request, 'updateCounselling.html', {'success':True, 'patient': patient, 'form': counselling, 'profile': patientP})
     
     except Exception as e:
         logger.exception('Exception occurred: %s', e)
@@ -701,7 +705,7 @@ def updateTreatmentPlan(request, patientId):
                     remarks=remark
                 )
 
-            return render(request, 'updateTreatmentPlan.html', {'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'success': True, 'profile': patientP})
+            return render(request, 'updateTreatmentPlan.html', {'success':True, 'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'success': True, 'profile': patientP})
         else:
             return render(request, 'updateTreatmentPlan.html', {'patient': treatment_plan, 'treatment_strategies': treatment_strategies, 'profile': patientP})
     except Exception as e:

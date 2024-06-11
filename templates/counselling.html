@@ -121,7 +121,7 @@ th {
 </style>
 <script>
     function cancel(){
-        window.location.href="/doctor/patient-list/patient/{{ profile.id }}";  
+        window.location.href="/doctor/patient-list/patient/{{ patient.id }}";  
     }
 
     
@@ -137,7 +137,7 @@ th {
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">{{ profile.name }}</h3>
+                    <h3 class="register-heading">{{ patient.name }}</h3>
                     <form action="/healthcare/counselling/{{ patient.id }}" method="post">{% csrf_token %}
                         <div class="row register-form">
                             <div class="col-md-12">
@@ -187,227 +187,227 @@ th {
                                             <tbody>
                                                 <tr>
                                                     <td>Decrease in Energy</td>
-                                                    <td><input type="radio" value="1" name="decreaseInEnergy"/></td>
-                                                    <td><input type="radio" value="2" name="decreaseInEnergy"/></td>
-                                                    <td><input type="radio" value="3" name="decreaseInEnergy"/></td>
-                                                    <td><input type="radio" value="4" name="decreaseInEnergy"/></td>
-                                                    <td><input type="radio" value="5" name="decreaseInEnergy"/></td>
+                                                    <td><input type="radio" value="1" name="decreaseInEnergy" required/></td>
+                                                    <td><input type="radio" value="2" name="decreaseInEnergy" required/></td>
+                                                    <td><input type="radio" value="3" name="decreaseInEnergy" required/></td>
+                                                    <td><input type="radio" value="4" name="decreaseInEnergy" required/></td>
+                                                    <td><input type="radio" value="5" name="decreaseInEnergy" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Panic Attacks</td>
-                                                    <td><input type="radio" value="1" name="panicAttacks"/></td>
-                                                    <td><input type="radio" value="2" name="panicAttacks"/></td>
-                                                    <td><input type="radio" value="3" name="panicAttacks"/></td>
-                                                    <td><input type="radio" value="4" name="panicAttacks"/></td>
-                                                    <td><input type="radio" value="5" name="panicAttacks"/></td>
+                                                    <td><input type="radio" value="1" name="panicAttacks" required/></td>
+                                                    <td><input type="radio" value="2" name="panicAttacks" required/></td>
+                                                    <td><input type="radio" value="3" name="panicAttacks" required/></td>
+                                                    <td><input type="radio" value="4" name="panicAttacks" required/></td>
+                                                    <td><input type="radio" value="5" name="panicAttacks" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Anxiety</td>
-                                                    <td><input type="radio" value="1" name="anxiety"/></td>
-                                                    <td><input type="radio" value="2" name="anxiety"/></td>
-                                                    <td><input type="radio" value="3" name="anxiety"/></td>
-                                                    <td><input type="radio" value="4" name="anxiety"/></td>
-                                                    <td><input type="radio" value="5" name="anxiety"/></td>
+                                                    <td><input type="radio" value="1" name="anxiety" required/></td>
+                                                    <td><input type="radio" value="2" name="anxiety" required/></td>
+                                                    <td><input type="radio" value="3" name="anxiety" required/></td>
+                                                    <td><input type="radio" value="4" name="anxiety" required/></td>
+                                                    <td><input type="radio" value="5" name="anxiety" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Poor Concentration</td>
-                                                    <td><input type="radio" value="1" name="poorConcentration"/></td>
-                                                    <td><input type="radio" value="2" name="poorConcentration"/></td>
-                                                    <td><input type="radio" value="3" name="poorConcentration"/></td>
-                                                    <td><input type="radio" value="4" name="poorConcentration"/></td>
-                                                    <td><input type="radio" value="5" name="poorConcentration"/></td>
+                                                    <td><input type="radio" value="1" name="poorConcentration" required/></td>
+                                                    <td><input type="radio" value="2" name="poorConcentration" required/></td>
+                                                    <td><input type="radio" value="3" name="poorConcentration" required/></td>
+                                                    <td><input type="radio" value="4" name="poorConcentration" required/></td>
+                                                    <td><input type="radio" value="5" name="poorConcentration" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Legal Problems</td>
-                                                    <td><input type="radio" value="1" name="legalProblems"/></td>
-                                                    <td><input type="radio" value="2" name="legalProblems"/></td>
-                                                    <td><input type="radio" value="3" name="legalProblems"/></td>
-                                                    <td><input type="radio" value="4" name="legalProblems"/></td>
-                                                    <td><input type="radio" value="5" name="legalProblems"/></td>
+                                                    <td><input type="radio" value="1" name="legalProblems" required/></td>
+                                                    <td><input type="radio" value="2" name="legalProblems" required/></td>
+                                                    <td><input type="radio" value="3" name="legalProblems" required/></td>
+                                                    <td><input type="radio" value="4" name="legalProblems" required/></td>
+                                                    <td><input type="radio" value="5" name="legalProblems" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Impulsivity</td>
-                                                    <td><input type="radio" value="1" name="impulsivity"/></td>
-                                                    <td><input type="radio" value="2" name="impulsivity"/></td>
-                                                    <td><input type="radio" value="3" name="impulsivity"/></td>
-                                                    <td><input type="radio" value="4" name="impulsivity"/></td>
-                                                    <td><input type="radio" value="5" name="impulsivity"/></td>
+                                                    <td><input type="radio" value="1" name="impulsivity" required/></td>
+                                                    <td><input type="radio" value="2" name="impulsivity" required/></td>
+                                                    <td><input type="radio" value="3" name="impulsivity" required/></td>
+                                                    <td><input type="radio" value="4" name="impulsivity" required/></td>
+                                                    <td><input type="radio" value="5" name="impulsivity" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Substance Abuse</td>
-                                                    <td><input type="radio" value="1" name="substanceAbuse"/></td>
-                                                    <td><input type="radio" value="2" name="substanceAbuse"/></td>
-                                                    <td><input type="radio" value="3" name="substanceAbuse"/></td>
-                                                    <td><input type="radio" value="4" name="substanceAbuse"/></td>
-                                                    <td><input type="radio" value="5" name="substanceAbuse"/></td>
+                                                    <td><input type="radio" value="1" name="substanceAbuse" required/></td>
+                                                    <td><input type="radio" value="2" name="substanceAbuse" required/></td>
+                                                    <td><input type="radio" value="3" name="substanceAbuse" required/></td>
+                                                    <td><input type="radio" value="4" name="substanceAbuse" required/></td>
+                                                    <td><input type="radio" value="5" name="substanceAbuse" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Restlessness</td>
-                                                    <td><input type="radio" value="1" name="restlessness"/></td>
-                                                    <td><input type="radio" value="2" name="restlessness"/></td>
-                                                    <td><input type="radio" value="3" name="restlessness"/></td>
-                                                    <td><input type="radio" value="4" name="restlessness"/></td>
-                                                    <td><input type="radio" value="5" name="restlessness"/></td>
+                                                    <td><input type="radio" value="1" name="restlessness" required/></td>
+                                                    <td><input type="radio" value="2" name="restlessness" required/></td>
+                                                    <td><input type="radio" value="3" name="restlessness" required/></td>
+                                                    <td><input type="radio" value="4" name="restlessness" required/></td>
+                                                    <td><input type="radio" value="5" name="restlessness" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Cruelty</td>
-                                                    <td><input type="radio" value="1" name="cruelty"/></td>
-                                                    <td><input type="radio" value="2" name="cruelty"/></td>
-                                                    <td><input type="radio" value="3" name="cruelty"/></td>
-                                                    <td><input type="radio" value="4" name="cruelty"/></td>
-                                                    <td><input type="radio" value="5" name="cruelty"/></td>
+                                                    <td><input type="radio" value="1" name="cruelty" required/></td>
+                                                    <td><input type="radio" value="2" name="cruelty" required/></td>
+                                                    <td><input type="radio" value="3" name="cruelty" required/></td>
+                                                    <td><input type="radio" value="4" name="cruelty" required/></td>
+                                                    <td><input type="radio" value="5" name="cruelty" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Sleep Disturbance</td>
-                                                    <td><input type="radio" value="1" name="sleepDisturbance"/></td>
-                                                    <td><input type="radio" value="2" name="sleepDisturbance"/></td>
-                                                    <td><input type="radio" value="3" name="sleepDisturbance"/></td>
-                                                    <td><input type="radio" value="4" name="sleepDisturbance"/></td>
-                                                    <td><input type="radio" value="5" name="sleepDisturbance"/></td>
+                                                    <td><input type="radio" value="1" name="sleepDisturbance" required/></td>
+                                                    <td><input type="radio" value="2" name="sleepDisturbance" required/></td>
+                                                    <td><input type="radio" value="3" name="sleepDisturbance" required/></td>
+                                                    <td><input type="radio" value="4" name="sleepDisturbance" required/></td>
+                                                    <td><input type="radio" value="5" name="sleepDisturbance" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Indecisive</td>
-                                                    <td><input type="radio" value="1" name="indecisive"/></td>
-                                                    <td><input type="radio" value="2" name="indecisive"/></td>
-                                                    <td><input type="radio" value="3" name="indecisive"/></td>
-                                                    <td><input type="radio" value="4" name="indecisive"/></td>
-                                                    <td><input type="radio" value="5" name="indecisive"/></td>
+                                                    <td><input type="radio" value="1" name="indecisive" required/></td>
+                                                    <td><input type="radio" value="2" name="indecisive" required/></td>
+                                                    <td><input type="radio" value="3" name="indecisive" required/></td>
+                                                    <td><input type="radio" value="4" name="indecisive" required/></td>
+                                                    <td><input type="radio" value="5" name="indecisive" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Irritability</td>
-                                                    <td><input type="radio" value="1" name="irritability"/></td>
-                                                    <td><input type="radio" value="2" name="irritability"/></td>
-                                                    <td><input type="radio" value="3" name="irritability"/></td>
-                                                    <td><input type="radio" value="4" name="irritability"/></td>
-                                                    <td><input type="radio" value="5" name="irritability"/></td>
+                                                    <td><input type="radio" value="1" name="irritability" required/></td>
+                                                    <td><input type="radio" value="2" name="irritability" required/></td>
+                                                    <td><input type="radio" value="3" name="irritability" required/></td>
+                                                    <td><input type="radio" value="4" name="irritability" required/></td>
+                                                    <td><input type="radio" value="5" name="irritability" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Worrying</td>
-                                                    <td><input type="radio" value="1" name="worrying"/></td>
-                                                    <td><input type="radio" value="2" name="worrying"/></td>
-                                                    <td><input type="radio" value="3" name="worrying"/></td>
-                                                    <td><input type="radio" value="4" name="worrying"/></td>
-                                                    <td><input type="radio" value="5" name="worrying"/></td>
+                                                    <td><input type="radio" value="1" name="worrying" required/></td>
+                                                    <td><input type="radio" value="2" name="worrying" required/></td>
+                                                    <td><input type="radio" value="3" name="worrying" required/></td>
+                                                    <td><input type="radio" value="4" name="worrying" required/></td>
+                                                    <td><input type="radio" value="5" name="worrying" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Ritualistic Behavior</td>
-                                                    <td><input type="radio" value="1" name="ritualisticBehavior"/></td>
-                                                    <td><input type="radio" value="2" name="ritualisticBehavior"/></td>
-                                                    <td><input type="radio" value="3" name="ritualisticBehavior"/></td>
-                                                    <td><input type="radio" value="4" name="ritualisticBehavior"/></td>
-                                                    <td><input type="radio" value="5" name="ritualisticBehavior"/></td>
+                                                    <td><input type="radio" value="1" name="ritualisticBehavior" required/></td>
+                                                    <td><input type="radio" value="2" name="ritualisticBehavior" required/></td>
+                                                    <td><input type="radio" value="3" name="ritualisticBehavior" required/></td>
+                                                    <td><input type="radio" value="4" name="ritualisticBehavior" required/></td>
+                                                    <td><input type="radio" value="5" name="ritualisticBehavior" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Hopelessness</td>
-                                                    <td><input type="radio" value="1" name="hopelessness"/></td>
-                                                    <td><input type="radio" value="2" name="hopelessness"/></td>
-                                                    <td><input type="radio" value="3" name="hopelessness"/></td>
-                                                    <td><input type="radio" value="4" name="hopelessness"/></td>
-                                                    <td><input type="radio" value="5" name="hopelessness"/></td>
+                                                    <td><input type="radio" value="1" name="hopelessness" required/></td>
+                                                    <td><input type="radio" value="2" name="hopelessness" required/></td>
+                                                    <td><input type="radio" value="3" name="hopelessness" required/></td>
+                                                    <td><input type="radio" value="4" name="hopelessness" required/></td>
+                                                    <td><input type="radio" value="5" name="hopelessness" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Loss of Pleasure</td>
-                                                    <td><input type="radio" value="1" name="lossOfPleasure"/></td>
-                                                    <td><input type="radio" value="2" name="lossOfPleasure"/></td>
-                                                    <td><input type="radio" value="3" name="lossOfPleasure"/></td>
-                                                    <td><input type="radio" value="4" name="lossOfPleasure"/></td>
-                                                    <td><input type="radio" value="5" name="lossOfPleasure"/></td>
+                                                    <td><input type="radio" value="1" name="lossOfPleasure" required/></td>
+                                                    <td><input type="radio" value="2" name="lossOfPleasure" required/></td>
+                                                    <td><input type="radio" value="3" name="lossOfPleasure" required/></td>
+                                                    <td><input type="radio" value="4" name="lossOfPleasure" required/></td>
+                                                    <td><input type="radio" value="5" name="lossOfPleasure" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Withdrawn</td>
-                                                    <td><input type="radio" value="1" name="withdrawn"/></td>
-                                                    <td><input type="radio" value="2" name="withdrawn"/></td>
-                                                    <td><input type="radio" value="3" name="withdrawn"/></td>
-                                                    <td><input type="radio" value="4" name="withdrawn"/></td>
-                                                    <td><input type="radio" value="5" name="withdrawn"/></td>
+                                                    <td><input type="radio" value="1" name="withdrawn" required/></td>
+                                                    <td><input type="radio" value="2" name="withdrawn" required/></td>
+                                                    <td><input type="radio" value="3" name="withdrawn" required/></td>
+                                                    <td><input type="radio" value="4" name="withdrawn" required/></td>
+                                                    <td><input type="radio" value="5" name="withdrawn" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Mood Swings</td>
-                                                    <td><input type="radio" value="1" name="moodSwings"/></td>
-                                                    <td><input type="radio" value="2" name="moodSwings"/></td>
-                                                    <td><input type="radio" value="3" name="moodSwings"/></td>
-                                                    <td><input type="radio" value="4" name="moodSwings"/></td>
-                                                    <td><input type="radio" value="5" name="moodSwings"/></td>
+                                                    <td><input type="radio" value="1" name="moodSwings" required/></td>
+                                                    <td><input type="radio" value="2" name="moodSwings" required/></td>
+                                                    <td><input type="radio" value="3" name="moodSwings" required/></td>
+                                                    <td><input type="radio" value="4" name="moodSwings" required/></td>
+                                                    <td><input type="radio" value="5" name="moodSwings" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Helplessness</td>
-                                                    <td><input type="radio" value="1" name="helplessness"/></td>
-                                                    <td><input type="radio" value="2" name="helplessness"/></td>
-                                                    <td><input type="radio" value="3" name="helplessness"/></td>
-                                                    <td><input type="radio" value="4" name="helplessness"/></td>
-                                                    <td><input type="radio" value="5" name="helplessness"/></td>
+                                                    <td><input type="radio" value="1" name="helplessness" required/></td>
+                                                    <td><input type="radio" value="2" name="helplessness" required/></td>
+                                                    <td><input type="radio" value="3" name="helplessness" required/></td>
+                                                    <td><input type="radio" value="4" name="helplessness" required/></td>
+                                                    <td><input type="radio" value="5" name="helplessness" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Aggression/Rage</td>
-                                                    <td><input type="radio" value="1" name="aggression"/></td>
-                                                    <td><input type="radio" value="2" name="aggression"/></td>
-                                                    <td><input type="radio" value="3" name="aggression"/></td>
-                                                    <td><input type="radio" value="4" name="aggression"/></td>
-                                                    <td><input type="radio" value="5" name="aggression"/></td>
+                                                    <td><input type="radio" value="1" name="aggression" required/></td>
+                                                    <td><input type="radio" value="2" name="aggression" required/></td>
+                                                    <td><input type="radio" value="3" name="aggression" required/></td>
+                                                    <td><input type="radio" value="4" name="aggression" required/></td>
+                                                    <td><input type="radio" value="5" name="aggression" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Low Self-Esteem</td>
-                                                    <td><input type="radio" value="1" name="lowSelfEsteem"/></td>
-                                                    <td><input type="radio" value="2" name="lowSelfEsteem"/></td>
-                                                    <td><input type="radio" value="3" name="lowSelfEsteem"/></td>
-                                                    <td><input type="radio" value="4" name="lowSelfEsteem"/></td>
-                                                    <td><input type="radio" value="5" name="lowSelfEsteem"/></td>
+                                                    <td><input type="radio" value="1" name="lowSelfEsteem" required/></td>
+                                                    <td><input type="radio" value="2" name="lowSelfEsteem" required/></td>
+                                                    <td><input type="radio" value="3" name="lowSelfEsteem" required/></td>
+                                                    <td><input type="radio" value="4" name="lowSelfEsteem" required/></td>
+                                                    <td><input type="radio" value="5" name="lowSelfEsteem" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Excessive Guilt</td>
-                                                    <td><input type="radio" value="1" name="excessiveGuilt"/></td>
-                                                    <td><input type="radio" value="2" name="excessiveGuilt"/></td>
-                                                    <td><input type="radio" value="3" name="excessiveGuilt"/></td>
-                                                    <td><input type="radio" value="4" name="excessiveGuilt"/></td>
-                                                    <td><input type="radio" value="5" name="excessiveGuilt"/></td>
+                                                    <td><input type="radio" value="1" name="excessiveGuilt" required/></td>
+                                                    <td><input type="radio" value="2" name="excessiveGuilt" required/></td>
+                                                    <td><input type="radio" value="3" name="excessiveGuilt" required/></td>
+                                                    <td><input type="radio" value="4" name="excessiveGuilt" required/></td>
+                                                    <td><input type="radio" value="5" name="excessiveGuilt" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Depressed Mood</td>
-                                                    <td><input type="radio" value="1" name="depressedMood"/></td>
-                                                    <td><input type="radio" value="2" name="depressedMood"/></td>
-                                                    <td><input type="radio" value="3" name="depressedMood"/></td>
-                                                    <td><input type="radio" value="4" name="depressedMood"/></td>
-                                                    <td><input type="radio" value="5" name="depressedMood"/></td>
+                                                    <td><input type="radio" value="1" name="depressedMood" required/></td>
+                                                    <td><input type="radio" value="2" name="depressedMood" required/></td>
+                                                    <td><input type="radio" value="3" name="depressedMood" required/></td>
+                                                    <td><input type="radio" value="4" name="depressedMood" required/></td>
+                                                    <td><input type="radio" value="5" name="depressedMood" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Oppositional</td>
-                                                    <td><input type="radio" value="1" name="oppositional"/></td>
-                                                    <td><input type="radio" value="2" name="oppositional"/></td>
-                                                    <td><input type="radio" value="3" name="oppositional"/></td>
-                                                    <td><input type="radio" value="4" name="oppositional"/></td>
-                                                    <td><input type="radio" value="5" name="oppositional"/></td>
+                                                    <td><input type="radio" value="1" name="oppositional" required/></td>
+                                                    <td><input type="radio" value="2" name="oppositional" required/></td>
+                                                    <td><input type="radio" value="3" name="oppositional" required/></td>
+                                                    <td><input type="radio" value="4" name="oppositional" required/></td>
+                                                    <td><input type="radio" value="5" name="oppositional" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Violation of Rules</td>
-                                                    <td><input type="radio" value="1" name="violationOfRules"/></td>
-                                                    <td><input type="radio" value="2" name="violationOfRules"/></td>
-                                                    <td><input type="radio" value="3" name="violationOfRules"/></td>
-                                                    <td><input type="radio" value="4" name="violationOfRules"/></td>
-                                                    <td><input type="radio" value="5" name="violationOfRules"/></td>
+                                                    <td><input type="radio" value="1" name="violationOfRules" required/></td>
+                                                    <td><input type="radio" value="2" name="violationOfRules" required/></td>
+                                                    <td><input type="radio" value="3" name="violationOfRules" required/></td>
+                                                    <td><input type="radio" value="4" name="violationOfRules" required/></td>
+                                                    <td><input type="radio" value="5" name="violationOfRules" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Eating Disturbance</td>
-                                                    <td><input type="radio" value="1" name="eatingDisturbance"/></td>
-                                                    <td><input type="radio" value="2" name="eatingDisturbance"/></td>
-                                                    <td><input type="radio" value="3" name="eatingDisturbance"/></td>
-                                                    <td><input type="radio" value="4" name="eatingDisturbance"/></td>
-                                                    <td><input type="radio" value="5" name="eatingDisturbance"/></td>
+                                                    <td><input type="radio" value="1" name="eatingDisturbance" required/></td>
+                                                    <td><input type="radio" value="2" name="eatingDisturbance" required/></td>
+                                                    <td><input type="radio" value="3" name="eatingDisturbance" required/></td>
+                                                    <td><input type="radio" value="4" name="eatingDisturbance" required/></td>
+                                                    <td><input type="radio" value="5" name="eatingDisturbance" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Tearfulness</td>
-                                                    <td><input type="radio" value="1" name="tearfulness"/></td>
-                                                    <td><input type="radio" value="2" name="tearfulness"/></td>
-                                                    <td><input type="radio" value="3" name="tearfulness"/></td>
-                                                    <td><input type="radio" value="4" name="tearfulness"/></td>
-                                                    <td><input type="radio" value="5" name="tearfulness"/></td>
+                                                    <td><input type="radio" value="1" name="tearfulness" required/></td>
+                                                    <td><input type="radio" value="2" name="tearfulness" required/></td>
+                                                    <td><input type="radio" value="3" name="tearfulness" required/></td>
+                                                    <td><input type="radio" value="4" name="tearfulness" required/></td>
+                                                    <td><input type="radio" value="5" name="tearfulness" required/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Low Motivation</td>
-                                                    <td><input type="radio" value="1" name="lowMotivation"/></td>
-                                                    <td><input type="radio" value="2" name="lowMotivation"/></td>
-                                                    <td><input type="radio" value="3" name="lowMotivation"/></td>
-                                                    <td><input type="radio" value="4" name="lowMotivation"/></td>
-                                                    <td><input type="radio" value="5" name="lowMotivation"/></td>
+                                                    <td><input type="radio" value="1" name="lowMotivation" required/></td>
+                                                    <td><input type="radio" value="2" name="lowMotivation" required/></td>
+                                                    <td><input type="radio" value="3" name="lowMotivation" required/></td>
+                                                    <td><input type="radio" value="4" name="lowMotivation" required/></td>
+                                                    <td><input type="radio" value="5" name="lowMotivation" required/></td>
                                                 </tr>
                                             </tbody>
                                           </table>                                          

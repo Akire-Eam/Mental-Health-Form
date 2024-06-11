@@ -313,9 +313,11 @@
             <div id="PersonalInformationSheet" data-tab-content>
                 <h1>Personal Information Sheet</h1>
                 {% if noRecord %}
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <h1>
                     <a href="/healthcare/patientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Personal Information Sheet</a>
                 </h1>
+                {% endif %}
                 {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <a href="/healthcare/updatePatientRecord/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Update Personal Information Sheet</a>
@@ -876,9 +878,11 @@
             <div id="ConsentForm" data-tab-content>
                 <h1>Informed Consent for Psychological Counseling</h1>
                 {% if noConsent %}
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <h1>
                     <a href="/healthcare/consentForm/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Informed Consent</a>
                 </h1>
+                {% endif %}
                 {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <a href="/healthcare/updateConsentForm/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Update Informed Consent</a>
@@ -994,11 +998,11 @@
             <div id="Counseling" data-tab-content>
                 <h1>Counselling</h1>
 
-               
-                <h1>
-                    <a href="/healthcare/counselling/{{details.id}}" class="btn btn-info btm-sm" style="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Counselling</a>
-                </h1>
-           
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
+                    <h1>
+                        <a href="/healthcare/counselling/{{details.id}}" class="btn btn-info btm-sm" style="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Counselling</a>
+                    </h1>
+                {% endif %}  
                 <input type="hidden" name="form_id" value="{{ form.id }}">
                 {% for form in counselling_forms %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
@@ -1341,17 +1345,18 @@
                     </div>
                     {% endfor %}
                 </div>
-              
             </div>
             <div id="TreatmentPlan" data-tab-content>
                 <h1>Treatment Plan</h1>
                 {% if noTreatment %}
+                {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                 <h1>
-                    <a href="/healthcare/treatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Informed Consent</a>
+                    <a href="/healthcare/treatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Add Treatment Plan</a>
                 </h1>
+                {% endif %}
                 {% else %}
                 {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
-                <a href="/healthcare/updateTreatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Informed Consent</a>
+                <a href="/healthcare/updateTreatmentPlan/{{details.id}}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Treatment Plan</a>
                 {% endif %}
                 <div class="container register" style="margin-top: 7%; margin-bottom: 7%;">
                     <div class="row">

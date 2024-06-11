@@ -122,7 +122,7 @@ th {
 </style>
 <script>
     function cancel(){
-        window.location.href="/doctor/patient-list/patient/{{ profile.id }}";  
+        window.location.href="/doctor/patient-list/patient/{{ patient.id }}";  
     }
 
     
@@ -138,7 +138,7 @@ th {
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">{{ profile.name }}</h3>
+                    <h3 class="register-heading">{{ patient.name }}</h3>
                     <form action="/healthcare/treatmentPlan/{{ patient.id }}" method="post">{% csrf_token %}
                         <div class="row register-form">
                             <div class="col-md-12">
@@ -373,7 +373,7 @@ th {
                                             </label>
                                             <div>
                                                 <label>Sessions per month:</label>
-                                                <input type="number" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month">
+                                                <input type="number" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month" required>
                                             </div>
                                             <div style="padding: 5px">
                                                 <label>Client concurred:</label>

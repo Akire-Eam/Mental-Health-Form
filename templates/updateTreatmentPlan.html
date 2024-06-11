@@ -216,7 +216,7 @@ th {
                                         <label><h5>Frequency of Treatmnent:</h5></label>
                                         <div>
                                             <label>Sessions per month:</label>
-                                            <input type="text" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month" value="{{ patient.sessionsPerMonth | default:'' }}">
+                                            <input type="text" class="form-control" name="sessionsPerMonth" placeholder="Sessions per Month" value="{{ patient.sessionsPerMonth | default:'' }}" required>
                                         </div>
                                         <div style="padding: 5px">
                                             <label>Client concurred:</label>
