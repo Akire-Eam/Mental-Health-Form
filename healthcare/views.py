@@ -24,13 +24,15 @@ logger = logging.getLogger(__name__)
 def newPatient(request):
     try:
         if request.method == 'POST':
+            # Check if a record for this patient already exists
+            patient_record = Patient.objects.filter(email=request.POST['email']).first()
+            if patient_record:
+                return render(request, 'newPatient.html', {'message': 'Patient already exists', 'patient': patient_record})
             try:
                 name = request.POST['name']
                 mobile = request.POST['mobile']
                 email = request.POST['email']
                 patient = Patient.objects.filter(email=email)
-                if len(patient) != 0:
-                    return render(request, 'newPatient.html',{'message':'Patient already exists'})
                 gender = request.POST['gender']
                 dateOfBirth = request.POST['dateOfBirth']
                 age = request.POST['age']
@@ -269,7 +271,7 @@ def patientRecord(request, patientId):
             return redirect('/doctor/patient-list')
         
         else:
-            return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId, 'success':True})
+            return render(request, 'patientRecord.html', {'patient': patient, 'patientId': patientId})
     
     except Exception as e:
     # Get the field name causing the error
@@ -526,13 +528,48 @@ def updateCounselling(request, patientId, formId=None):
         if request.method == 'POST':
             counselling.diagnosticImpression = request.POST.get(f'diagnosticImpression_{formId}')
             counselling.decreaseInEnergy = request.POST.get(f'decreaseInEnergy_{formId}')
+            counselling.panicAttacks = request.POST.get(f'panicAttacks_{formId}')
+            counselling.anxiety = request.POST.get(f'anxiety_{formId}')
+            counselling.poorConcentration = request.POST.get(f'poorConcentration_{formId}')
+            counselling.legalProblems = request.POST.get(f'legalProblems_{formId}')
+            counselling.impulsivity = request.POST.get(f'impulsivity_{formId}')
+            counselling.substanceAbuse = request.POST.get(f'substanceAbuse_{formId}')
+            counselling.restlessness = request.POST.get(f'restlessness_{formId}')
+            counselling.cruelty = request.POST.get(f'cruelty_{formId}')
+            counselling.sleepDisturbance = request.POST.get(f'sleepDisturbance_{formId}')
+            counselling.indecisive = request.POST.get(f'indecisive_{formId}')
+            counselling.irritability = request.POST.get(f'irritability_{formId}')
+            counselling.worrying = request.POST.get(f'worrying_{formId}')
+            counselling.ritualisticBehavior = request.POST.get(f'ritualisticBehavior_{formId}')
+            counselling.hopelessness = request.POST.get(f'hopelessness_{formId}')
+            counselling.lossOfPleasure = request.POST.get(f'lossOfPleasure_{formId}')
+            counselling.withdrawn = request.POST.get(f'withdrawn_{formId}')
+            counselling.moodSwings = request.POST.get(f'moodSwings_{formId}')
+            counselling.helplessness = request.POST.get(f'helplessness_{formId}')
+            counselling.aggression = request.POST.get(f'aggression_{formId}')
+            counselling.lowSelfEsteem = request.POST.get(f'lowSelfEsteem_{formId}')
+            counselling.excessiveGuilt = request.POST.get(f'excessiveGuilt_{formId}')
+            counselling.depressedMood = request.POST.get(f'depressedMood_{formId}')
+            counselling.oppositional = request.POST.get(f'oppositional_{formId}')
+            counselling.violationOfRules = request.POST.get(f'violationOfRules_{formId}')
+            counselling.eatingDisturbance = request.POST.get(f'eatingDisturbance_{formId}')
+            counselling.tearfulness = request.POST.get(f'tearfulness_{formId}')
+            counselling.lowMotivation = request.POST.get(f'lowMotivation_{formId}')
+            counselling.changesInDistress = request.POST.get(f'changesInDistress_{formId}')
+            counselling.changePhysicalStatus = request.POST.get(f'changePhysicalStatus_{formId}')
+            counselling.reportsReceived = request.POST.get(f'reportsReceived_{formId}')
+            counselling.sessionFocus = request.POST.get(f'sessionFocus_{formId}')
+            counselling.therapeuticIntervention = request.POST.get(f'therapeuticIntervention_{formId}')
+            counselling.plannedIntervention = request.POST.get(f'plannedIntervention_{formId}')
+
             # Update other fields
             counselling.save()
+            return render(request, 'updateCounselling.html', {'success':True, 'patient': patient, 'form': counselling, 'profile': patientP})
             logger.debug('Successfully updated counselling form ID: %s', formId)
             return redirect('/healthcare/updateCounselling/%s/%s' % (patientId, formId))
         
         # Render the form prepopulated with existing data
-        return render(request, 'updateCounselling.html', {'success':True, 'patient': patient, 'form': counselling, 'profile': patientP})
+        return render(request, 'updateCounselling.html', {'patient': patient, 'form': counselling, 'profile': patientP})
     
     except Exception as e:
         logger.exception('Exception occurred: %s', e)
@@ -624,6 +661,10 @@ def treatmentPlan(request, patientId):
             treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
             treatment_plan.clientConcurred = request.POST.get('clientConcurred')
             treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.patient_signature = request.POST.get('patient_signature')
+            treatment_plan.therapist_signature = request.POST.get('therapist_signature')
+            treatment_plan.patient_name = request.POST.get('patient_name')
+            treatment_plan.therapist_name = request.POST.get('therapist_name')
             treatment_plan.save()
 
             # Update or create associated TreatmentStrategy objects
@@ -682,6 +723,10 @@ def updateTreatmentPlan(request, patientId):
             treatment_plan.sessionsPerMonth = request.POST.get('sessionsPerMonth')
             treatment_plan.clientConcurred = request.POST.get('clientConcurred')
             treatment_plan.treatmentRemarks = request.POST.get('treatmentRemarks')
+            treatment_plan.patient_signature = request.POST.get('patient_signature')
+            treatment_plan.therapist_signature = request.POST.get('therapist_signature')
+            treatment_plan.patient_name = request.POST.get('patient_name')
+            treatment_plan.therapist_name = request.POST.get('therapist_name')
             treatment_plan.save()
 
             treatment_plan.save()

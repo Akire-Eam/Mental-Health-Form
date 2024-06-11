@@ -419,18 +419,18 @@ th {
                                 <div class="form-group">
                                     <label>Changes in Psychosocial/ Psychological level of distress:</label>
                                     <div>
-                                        <label><input type="radio" name="changesInDistress" value="Greater" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "Greater" %} checked {% endif %} required> Greater </label>
-                                        <label><input type="radio" name="changesInDistress" value="Less" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "Less" %} checked {% endif %} required> Less </label>
-                                        <label><input type="radio" name="changesInDistress" value="None" onclick="toggleChangeDistressInput(this)" {% if form.changesInDistress == "None" %} checked {% endif %} required> None </label>
+                                        <label><input type="radio" name="changesInDistress_{{ form.id }}" value="Greater" {% if form.changesInDistress == "Greater" %} checked {% endif %} required> Greater </label>
+                                        <label><input type="radio" name="changesInDistress_{{ form.id }}" value="Less" {% if form.changesInDistress == "Less" %} checked {% endif %} required> Less </label>
+                                        <label><input type="radio" name="changesInDistress_{{ form.id }}" value="None" {% if form.changesInDistress == "None" %} checked {% endif %} required> None </label>
                                     </div>                                    
                                 </div>
                                 <div class="form-group">
                                     <label>Changes in physical status:</label>
-                                    <input type="text" class="form-control" name="changePhysicalStatus" placeholder="Changes" value="{{ form.changePhysicalStatus | default:'' }}" required>
+                                    <input type="text" class="form-control" name="changePhysicalStatus_{{ form.id }}" placeholder="Changes" value="{{ form.changePhysicalStatus | default:'' }}" required>
                                 </div>                                
                                 <div class="form-group">
                                     <label>Reports received/ Ancillary services documented:</label>
-                                    <input type="text" class="form-control" name="reportsReceived" placeholder="Reports received" value="{{ form.reportsReceived | default:'' }}" required>
+                                    <input type="text" class="form-control" name="reportsReceived_{{ form.id }}" placeholder="Reports received" value="{{ form.reportsReceived | default:'' }}" required>
                                 </div>
                                 <div class="form-group">
                                     <h3>Psychotherapy Progress Note</h3>
@@ -440,15 +440,15 @@ th {
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Session Focus:</label>
-                                        <textarea class="form-control" id="sessionFocus" name="sessionFocus" rows="4" required>{{ form.sessionFocus | default:'' }}</textarea>
+                                        <textarea class="form-control" id="sessionFocus" name="sessionFocus_{{ form.id }}" rows="4" required>{{ form.sessionFocus | default:'' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Therapeutic Intervention:</label>
-                                        <textarea class="form-control" id="therapeuticIntervention" name="therapeuticIntervention" rows="4" required>{{ form.therapeuticIntervention | default:'' }}</textarea>
+                                        <textarea class="form-control" id="therapeuticIntervention" name="therapeuticIntervention_{{ form.id }}" rows="4" required>{{ form.therapeuticIntervention | default:'' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Planned Intervention:</label>
-                                        <textarea class="form-control" id="plannedIntervention" name="plannedIntervention" rows="4" required>{{ form.plannedIntervention | default:'' }}</textarea>
+                                        <textarea class="form-control" id="plannedIntervention" name="plannedIntervention_{{ form.id }}" rows="4" required>{{ form.plannedIntervention | default:'' }}</textarea>
                                     </div>
                                 </div>
                                 

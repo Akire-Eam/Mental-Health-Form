@@ -125,13 +125,57 @@ th {
         window.location.href="/doctor/patient-list/patient/{{ profile.id }}";  
     }
 
-    
+    $(document).ready(function() {
+        // Initialize jSignature for both areas
+        $("#patient_signature_area").jSignature();
+        $("#informant_signature_area").jSignature();
+
+        // Handle save button click for patient signature
+        $("#savePatientSignature").click(function() {
+            var data = $("#patient_signature_area").jSignature("getData", "svgbase64");
+            console.log(data);
+
+            // Display the patient signature image
+            $("#patient_signature_image").html('<img src="data:' + data[0] + ',' + data[1] + '" />');
+
+            // Save the base64 data to the hidden input field
+            $("#patient_signature").val(data[1]);
+        });
+
+        // Handle clear button click for patient signature
+        $("#clearPatientSignature").click(function() {
+            $("#patient_signature_area").jSignature("reset");
+            $("#patient_signature_image").empty();
+            $("#patient_signature").val('');
+        });
+
+        // Handle save button click for informant signature
+        $("#saveTherapistSignature").click(function() {
+            var data = $("#therapist_signature_area").jSignature("getData", "svgbase64");
+            console.log(data);
+
+            // Display the informant signature image
+            $("#therapist_signature_image").html('<img src="data:' + data[0] + ',' + data[1] + '" />');
+
+            // Save the base64 data to the hidden input field
+            $("#therapist_signature").val(data[1]);
+            
+        });
+
+        // Handle clear button click for informant signature
+        $("#clearTherapistSignature").click(function() {
+            $("#therapist_signature_area").jSignature("reset");
+            $("#therapist_signature_image").empty();
+            $("#therapist_signature").val('');
+        });
+    });
+
 </script>
 
 <div class="container register">
     <div class="row">
         <div class="col-md-3 register-left">
-            <h3>Add Treatment Plan</h3>
+            <h3>Update Treatment Plan</h3>
             <p>Nurturing Mental Health, One Mend at a Time</p>
             <input type="submit" name="" value="Cancel" onClick="cancel()"/><br/>
         </div>
@@ -234,6 +278,41 @@ th {
                                 </div>                    
                                                     
                             
+                        </div>
+                        <div class="col-md-12">
+                            <input type="hidden" name="patient_signature" id="patient_signature" />
+                            <input type="hidden" name="therapist_signature" id="therapist_signature" />
+
+                            <div class="form-group">
+                                <label>Patient Name:</label>
+                                <input type="text" name="patient_name" value="{{ patient.patient_name }}" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label>Patient Signature:</label>
+                                <div id="patient_signature_area" style="border: 1px solid black; width: 400px; height: 100px;"></div>
+                                <button type="button" id="savePatientSignature">Save Signature</button>
+                                <button type="button" id="clearPatientSignature">Clear Signature</button>
+                                <div id="patient_signature_image">
+                                {% if patient.patient_signature %}
+                                    <img src="data:image/svg+xml;base64,{{ patient.patient_signature }}" alt="Patient Signature" style="width: 400px; height: 100px;"/>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Therapist Name:</label>
+                                <input type="text" name="therapist_name" value="{{ patient.therapist_name }}" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Therapist Signature:</label>
+                                <div id="therapist_signature_area" style="border: 1px solid black; width: 400px; height: 100px;"></div>
+                                <button type="button" id="saveTherapistSignature">Save Signature</button>
+                                <button type="button" id="clearTherapistSignature">Clear Signature</button>
+                                <div id="therapist_signature_image">
+                                {% if patient.therapist_signature %}
+                                    <img src="data:image/svg+xml;base64,{{ patient.therapist_signature }}" alt="Therapist Signature" style="width: 400px; height: 100px;"/>
+                                {% endif %}   
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <input type="submit" class="btnRegister" value="Update"/>
