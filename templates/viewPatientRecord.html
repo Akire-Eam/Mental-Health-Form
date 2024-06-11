@@ -1025,15 +1025,15 @@
                 <input type="hidden" name="form_id" value="{{ form.id }}">
                 {% for form in counselling_forms %}
                 <div class="card">
-                    <div class="card-header text-white" id="heading{{ form.id }}" style="background-color: #587892;">
+                    <div class="card-header text-white" id="heading{{ forloop.counter }}" style="background-color: #587892;">
                         <h5 class="mb-0 text-center">
-                            <button class="btn btn-link text-decoration-none text-white" data-bs-toggle="collapse" data-bs-target="#collapse{{form.id}}" aria-expanded="true" aria-controls="collapse{{form.id}}">
-                                Session No. {{form.id}}
+                            <button class="btn btn-link text-decoration-none text-white" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                                Session No. {{ forloop.counter }}
                             </button>
                         </h5>
                     </div>                    
               
-                    <div id="collapse{{form.id}}" class="collapse" aria-labelledby="heading{{form.id}}">
+                    <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}">
                        <div class="card-body">
                         {% if request.session.role == "Nurse" or request.session.role == "Doctor" %}
                             <a href="/healthcare/updateCounselling/{{details.id}}/{{ form.id }}" class="btn btn-info btm-sm" style="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin: 2%;">Update Counselling</a>
