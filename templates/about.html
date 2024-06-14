@@ -32,13 +32,28 @@
                   font-size: 80%;
                 }
             }
+
+            p {
+                text-align: justify;
+                font-family: Helvetica, sans-serif;
+                font-size: large;
+                color: #587892;
+            }
+
+            body{
+                width: 100%;
+                background-color: #EEEAE3;
+            }
+
+            
         </style>
     </head>
-    <div class="container-fluid" id="about">
+    <body>
+    <div class="container-fluid" style="background-color: #EEEAE3; border-color: #EEEAE3" id="about">
         <div class="container-fluid" class="aboutImage" >
-            <img class="img-fluid"  src='{% static "/better-brain.gif" %}' alt="" height="700" width="700"> 
+            <img class="img-fluid"  src='{% static "/logIn.png" %}' alt="" height="700" width="700"> 
         </div>
-        <div class="container-fluid" id="aboutContent" style="background-color: :#B0A99F; border-color: :#B0A99F">
+        <div class="container-fluid" id="aboutContent" style="background-color: #EEEAE3; border-color: #EEEAE3">
 
             <p>Mend is a resource dedicated to empowering individuals on their journey to mental well-being. We provide evidence-based information, connect you with helpful tools, and guide you towards finding the support you deserve.</p>
             <p>We understand that mental health is unique to each person. Here, you'll find resources to navigate a variety of challenges and build resilience.</p>
@@ -47,4 +62,5 @@
         </div>
 
     </div>
+    </body>
 {% endblock %}

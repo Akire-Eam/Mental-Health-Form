@@ -43,12 +43,12 @@ class Prescription(models.Model):
     diagnosisId = models.ForeignKey(Diagnosis, on_delete=models.CASCADE)
     medicalDevice = models.ForeignKey(MedicalDevice, on_delete=models.CASCADE)
 class MedicineDirection(models.Model):
-    medicineId = models.ForeignKey(Medicine, on_delete=models.CASCADE)
     doseUnit = models.CharField(max_length=100)
     duration = models.CharField(max_length=100)
     doseTiming = models.CharField(max_length=100)
     additionalInstruction = models.TextField()
     reason = models.TextField()
+    medicine = models.TextField()
 class MedicineDirPrescriptionMap(models.Model):
     prescriptionId = models.ForeignKey(Prescription, on_delete=models.CASCADE)
     medicineDirectionId = models.ForeignKey(MedicineDirection, on_delete=models.CASCADE)

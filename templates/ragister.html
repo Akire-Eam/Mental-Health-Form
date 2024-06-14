@@ -16,7 +16,7 @@
 }
 
 body {
-	background: #f6f5f7;
+	background: #A9B5C2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -56,8 +56,8 @@ a {
 
 button {
 	border-radius: 20px;
-	border: 1px solid #16a085;
-	background-color: #16a085;
+	border: 1px solid #767C80;
+	background-color: #767C80;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -81,7 +81,7 @@ button.ghost {
 }
 
 form {
-	background-color: #FFFFFF;
+	background-color: #D8DEE1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -100,7 +100,7 @@ input {
 }
 
 .container {
-	background-color: #fff;
+	background-color: #a9b5c2;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
 			0 10px 10px rgba(0,0,0,0.22);
@@ -170,13 +170,13 @@ input {
 }
 
 .overlay {
-	background: #16a085;
-	background: -webkit-linear-gradient(to right, #16a085, #65e4ca);
-	background: linear-gradient(to right, #16a085, #65e4ca);
+	background: #EEEAE3;
+	/* background: -webkit-linear-gradient(to right, #39576f, #a9b5c2);
+	background: linear-gradient(to right, #39576f, #a9b5c2); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
-	color: #FFFFFF;
+	color: #587892;
 	position: relative;
 	left: -100%;
 	height: 100%;
@@ -226,7 +226,7 @@ input {
 }
 
 .social-container a {
-	border: 1px solid #DDDDDD;
+	border: 1px solid #a9b5c2;
 	border-radius: 50%;
 	display: inline-flex;
 	justify-content: center;
@@ -275,6 +275,7 @@ footer a {
         <input id="password" type="password" placeholder="Password" name='pwd' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required />
         <input  id="confirm_password" type="password" placeholder="Re-enter password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
 
+		<br>
         <button>Register</button>
       </form>
     </div>
@@ -287,7 +288,7 @@ footer a {
         </div>
         <div class="overlay-panel overlay-right">
           <h1>Welcome</h1>
-		  <h3 style="color: white">{{message}}</h3>
+		  <h3 style="color: #587892">{{message}}</h3>
         </div>
       </div>
     </div>

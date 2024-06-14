@@ -8,85 +8,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
-         
-        [data-tab-content] {
-            display: none;
-          }
-          
-          .active[data-tab-content] {
-            display: block;
-          }
-          .custom-basic li{
-              padding: 10px;
-          }
-    
-        img{
-            height:150px;
-            width:100%;
-          }
-          
-          .item{
-            padding-left:5px;
-            padding-right:5px;
-           
-          }
-          .item-card{
-            transition:0.5s;
-            cursor:pointer;
-            background-color:#16a085 
-          }
-          .item-card-title{  
-            font-size:25px;
-            transition:1s;
-            cursor:pointer;
-           
-            background-color:#16a085 
-          }
-          .item-card-title i{  
-            font-size:30px;
-            transition:1s;
-            cursor:pointer;
-            
-          }
-          .card-title i:hover{
-            transform: scale(1.25) rotate(100deg); 
-            color:#18d4ca;
-            
-          }
-          .card:hover{
-            transform: scale(1.05);
-            box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-          }
-          .card-text{
-            height:80px;  
-          }
-          
-          .card::before, .card::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            transform: scale3d(0, 0, 1);
-            transition: transform .3s ease-out 0s;
-            background: rgba(255, 255, 255, 0.1);
-            content: '';
-            pointer-events: none;
-          }
-          .card::before {
-            transform-origin: left top;
-          }
-          .card::after {
-            transform-origin: right bottom;
-          }
-          .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
-            transform: scale3d(1, 1, 1);
-          }
           table {
         
        
@@ -109,16 +39,17 @@
         border-bottom: 2px solid #ddd;
     }
     
-    #header {
-        background-color: #16a085;
-        color: #fff;
-    }
     
     table h1 {
         font-weight: 600;
         text-align: center;
-        background-color: #16a085;
-        color: #fff;
+        float: center;
+       
+    }
+
+    h1 {
+        text-align: center;
+        float: center;
        
     }
     
@@ -133,43 +64,205 @@
             width: 90%;
         }
     }
+
+    [data-tab-content] {
+            display: none;
+          }
+          
+          .activeDiv[data-tab-content] {
+            display: block;
+          }
+          .custom-basic li{
+              padding: 10px;
+          }
+          /* .activeDiv li{
+              background-color: yellowgreen !important;
+          } */
+
+          .info-msg,
+          .success-msg,
+          .warning-msg,
+          .error-msg {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 3px 3px 3px 3px;
+          }
+          
+          .success-msg {
+            color: #270;
+            background-color: #DFF2BF;
+          }
+          
+          .error-msg {
+            color: #D8000C;
+            background-color: #FFBABA;
+          }
+
+          body {
+        padding: 0px;
+        margin: 0;
+        font-family: Helvetica, sans-serif;
+        background-color: #EEEAE3;
+        }
+
+        .inactiveTab {
+            background-color: #BCC1C4 !important; 
+            border-color: #BCC1C4 !important;
+        }
+
+        .btn-primary, .btn-primary:hover, .btn-primary.activeTab {
+            background-color: #587892;
+            border-color: #587892;
+        }
+
+        .btn-primary, .btn-success, .btn{
+            margin: 3px;
+        } 
+
+        .register{
+            background: -webkit-linear-gradient(left, #A9B5C2, #587892);
+            margin-top: 3%;
+            padding: 3%;
+            width: 70%;
+        }
+        .register-left{
+            text-align: center;
+            color: #fff;
+            margin-top: 4%;
+        }
+        .register-left input{
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            width: 60%;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #383d41;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            cursor: pointer;
+        }
+        .register-right{
+            background: #f8f9fa;
+            border-top-left-radius: 10% 50%;
+            border-bottom-left-radius: 10% 50%;
+        }
+        .register-left img{
+            margin-top: 15%;
+            margin-bottom: 5%;
+            width: 25%;
+            -webkit-animation: mover 2s infinite  alternate;
+            animation: mover 1s infinite  alternate;
+        }
+        @-webkit-keyframes mover {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        @keyframes mover {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        .register-left p{
+            font-weight: lighter;
+            padding: 12%;
+            margin-top: -9%;
+        }
+        .register .register-form{
+            padding: 10%;
+            margin-top: 10%;
+        }
+        .btnRegister{
+            float: right;
+            margin-top: 10%;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            background: #16a085;
+            color: #fff;
+            font-weight: 600;
+            width: 50%;
+            cursor: pointer;
+        }
+        .register .nav-tabs{
+            margin-top: 3%;
+            border: none;
+            background: #16a085;
+            border-radius: 1.5rem;
+            width: 28%;
+            float: right;
+        }
+        .register .nav-tabs .nav-link{
+            padding: 2%;
+            height: 34px;
+            font-weight: 600;
+            color: #fff;
+            border-top-right-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+        .register .nav-tabs .nav-link:hover{
+            border: none;
+        }
+        .register .nav-tabs .nav-link.active{
+            width: 100px;
+            color: #16a085;
+            border: 2px solid #16a085;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
+        }
+        .register-heading{
+            text-align: center;
+            margin-top: 8%;
+            margin-bottom: -15%;
+            color: #495057;
+        }
+        table {
+            border-collapse:separate;
+            border:solid black 1px;
+            border-radius:6px;
+        }
+        
+        td {
+            border-left:solid black 1px;
+            border-top:solid black 1px;
+        }
+
+        p {
+            text-align: justify;
+        }      
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="card text-center custom-basic">
             <div class="card-header">
-              <ul class="nav nav-pills card-header-pills">
-                <li class="nav-item " data-tab-target="#BasicDetails" class="active" >
-                  <a class="nav-link active" href="#" style="background-color: #16a085;" >Diagnosis Details</a>
-                </li>
-                <li class="nav-item"  data-tab-target="#MedicalHistory">
-                    <a class="nav-link active" href="#" style="background-color: #16a085;" >Device Details</a>
-                  </li>
-                  {% if data.laboratoryTest|length %}
-                    <li class="nav-item" data-tab-target="#Prescriptions">
-                      <a class="nav-link active" href="#" style="background-color: #16a085;" >Tests</a>
-                    </li>
-                  {% endif %}
-                  {% if data.medsDirList|length %}
-                    <li class="nav-item" data-tab-target="#Medicines">
-                      <a class="nav-link active" href="#" style="background-color: #16a085;" >Medicines</a>
-                    </li>
-                  {% endif %}
-                  <li class="nav-item" data-tab-target="#Back">
-                    <h3>
-                      <a class="nav-link" href="/doctor/patient-list/patient/{{ data.patient.id }}" style="float: right; position: absolute; right:20px" ><i class="fas fa-caret-square-left fa-lg zoomOut" style="color: #16a085;"></i></a>
-                    </h3>
-                  </li>
-              </ul>
+              <div class="nav nav-pills card-header-pills">
+                <button class="nav-item btn btn-primary activeTab" data-tab-target="#BasicDetails">Diagnosis Details</button>
+                <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#MedicalHistory">Device Details</button>
+                {% if data.laboratoryTest|length %}
+                  <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Prescriptions">Tests</button>
+                {% endif %}
+                {% if data.medsDirList|length %}
+                  <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Medicines">Medicines</button>
+                {% endif %}
+                <h3>
+                    <a class="nav-link" href="/doctor/patient-list/patient/{{ data.patient.id }}" style="float: right; position: absolute; right:1%">
+                        <i class="fas fa-caret-square-left fa-lg zoomOut" style="color: #767C80;"></i>
+                    </a>
+                </h3>
+            </div>
+        </div>
 
             </div>
         </div>
 
-        <div class="tab-content">
-            <div id="BasicDetails" data-tab-content class="active">
+        <div class="tab-content" style="margin-top: 18px; margin-bottom: 0px">
+            <div id="BasicDetails" data-tab-content class="activeDiv">
               {% if request.session.role == "Doctor" %}
-                <h1>Diagnosis Details   <a href="/doctor/laboratoryTest/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#16a085; color:white; float:right; margin-top:5px; margin-right:5px;">Add Test</a><a href="/doctor/medication/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#16a085; color:white; float:right; margin-top:5px; margin-right:5px;">Add Medicine</a></h1>
+                <h1>Diagnosis Details</h1>
+                <h1>
+                <a href="/doctor/laboratoryTest/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Add Test</a>
+                <a href="/doctor/medication/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Add Medicine</a>
+              </h1>
                 {% else %}
                 <h1>Diagnosis Details</h1>
               {% endif %}
@@ -271,19 +364,17 @@
                         <p class="card-text">Welcom to bootstrap card styles</p>
                         <a href="#" class="btn btn-primary">Submit</a>
                       </div>   -->
-                      <div class="row">
+                      <div >
                         {% for meds in data.medsDirList %}
-                        <div class="col-md-3 col-sm-6 item">
-                          <div class="card item-card card-block">
-                            <h5 class="item-card-title text-center" style="text-align: center">{{ meds.medsName.name }}</h5>
-                            <ul class="list-group list-group-flush" style="text-align: center">
+                        <div">
+                          <div class="card item-card card-block" style="background-color: #ddd;">
+                            <ul class="list-group list-group-flush" style="background-color: #ddd; text-align: center">
                               <li class="list-group-item">Dose Unit: {{ meds.medsDir.doseUnit }}</li>
                               <li class="list-group-item">Duration: {{ meds.medsDir.duration }}</li>
                               <li class="list-group-item">Number Of Times: {{ meds.medsDir.doseTiming }}</li>
                               <li class="list-group-item">Additional Instruction: {{ meds.medsDir.additionalInstruction }}</li>
                               <li class="list-group-item">Reason: {{ meds.medsDir.reason }}</li>
-                              <li class="list-group-item"> <a href="{% url 'viewMedicine' medicineId=meds.medsName.id prescriptionId=data.prescriptionId %}
-                                " class="btn btn-info btm-sm">View Medicine</a></li>
+                              <li class="list-group-item">Medicine: {{ meds.medsDir.medicine }}</li>
             
                             </ul>
                       </div>
@@ -301,21 +392,26 @@
     
 </body>
 <script>
-    const tabs = document.querySelectorAll('[data-tab-target]')
-    const tabContents = document.querySelectorAll('[data-tab-content]')
+    const tabs = document.querySelectorAll('[data-tab-target]');
+    const tabContents = document.querySelectorAll('[data-tab-content]');
 
     tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
-        tabContents.forEach(tabContent => {
-        tabContent.classList.remove('active')
-        })
-        tabs.forEach(tab => {
-        tab.classList.remove('active')
-        })
-        tab.classList.add('active')
-        target.classList.add('active')
-})
-})
+        tab.addEventListener('click', () => {
+            const target = document.querySelector(tab.dataset.tabTarget);
+            
+            tabContents.forEach(tabContent => {
+                tabContent.classList.remove('activeDiv');
+            });
+
+            tabs.forEach(otherTab => {
+                otherTab.classList.add('inactiveTab'); // Add class to inactive tabs
+                otherTab.classList.remove('activeTab'); // Remove active class
+            });
+
+            tab.classList.add('activeTab'); // Add active class to clicked tab
+            tab.classList.remove('inactiveTab'); // Remove inactive class from clicked tab
+            target.classList.add('activeDiv');
+        });
+    });
 </script>
 {% endblock %}

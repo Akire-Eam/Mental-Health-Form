@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                 ('doseTiming', models.CharField(max_length=100)),
                 ('additionalInstruction', models.TextField()),
                 ('reason', models.TextField()),
-                ('medicineId', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='doctor.medicine')),
+                ('medicine', models.TextField()),
             ],
         ),
         migrations.CreateModel(

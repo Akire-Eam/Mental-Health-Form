@@ -42,15 +42,15 @@ def medicineFile(request, prescriptionId):
             medsDirList = []
             for entry in medicinDirMap:
                 medsDir = MedicineDirection.objects.filter(pk=entry.medicineDirectionId.id).first()
-                medsName = Medicine.objects.filter(pk=medsDir.medicineId.id).first()
+                # medsName = Medicine.objects.filter(pk=medsDir.medicineId.id).first()
                 medsDirList.append({
                     'medsDir':medsDir,
-                    'medsName':medsName
+                    # 'medsName':medsName
                 })
             lines = []
             for meds in medsDirList:
                 lines.append("Name-")
-                lines.append(meds['medsName'].name)
+                lines.append(meds['medsDir'].medicine)
                 lines.append("Dose Unit-")
                 lines.append(meds['medsDir'].doseUnit)
                 lines.append("Duration-")
@@ -125,11 +125,36 @@ def patientRecord(request, patientId):
         treatment_strategies = TreatmentStrategy.objects.filter(treatmentPlan=treatmentPlan) if treatmentPlan else []
         counselling = Counselling.objects.filter(patientId=patientId)
         counselling_forms = Counselling.objects.filter(patientId=patientId)
+        his = PatientRecord.objects.filter(patientId=patientDetails)
+        allPrescription = Prescription.objects.filter(patientId=patientDetails)
+        prescriptionListData = []
+        for prep in allPrescription:
+            diagnosis = Diagnosis.objects.get(pk=prep.diagnosisId.id)
+            medicinDirMap = MedicineDirPrescriptionMap.objects.filter(prescriptionId=prep.id)
+            medsDirList = []
+            for entry in medicinDirMap:
+                medsDir = MedicineDirection.objects.filter(pk=entry.medicineDirectionId.id).first()
+                if medsDir:
+                    medsDirList.append({
+                        'doseUnit': medsDir.doseUnit,
+                        'duration': medsDir.duration,
+                        'doseTiming': medsDir.doseTiming,
+                        'additionalInstruction': medsDir.additionalInstruction,
+                        'reason': medsDir.reason,
+                        'medicine': medsDir.medicine,
+                    })
+            prescriptionListData.append({
+                'diagnosisCreatedDate': diagnosis.createdDate,
+                'diagnosisName': diagnosis.diagnosisName,
+                'medsDirList': medsDirList,
+                'prescriptionId': prep.id,
+            })
+            
         
         if patientRecordDetails:
-            return render(request, "viewPatientRecord.html", {'details': patientDetails, 'PIS_details': patientRecordDetails, 'consentForm': consentForm, 'noConsent': consentForm is None, 'counselling': counselling, 'noCounselling': counselling is None, 'counselling_forms': counselling_forms, 'treatmentPlan': treatmentPlan, 'treatment_strategies': treatment_strategies, 'noTreatment': treatmentPlan is None})
+            return render(request, "viewPatientRecord.html", {'details': patientDetails, 'PIS_details': patientRecordDetails, 'consentForm': consentForm, 'noConsent': consentForm is None, 'counselling': counselling, 'noCounselling': counselling is None, 'counselling_forms': counselling_forms, 'treatmentPlan': treatmentPlan, 'treatment_strategies': treatment_strategies, 'noTreatment': treatmentPlan is None,'prescriptionList':prescriptionListData})
         else:
-            return render(request, "viewPatientRecord.html", {'noRecord': True, 'details': patientDetails, 'PIS_details': None, 'consentForm': consentForm, 'noConsent': consentForm is None, 'counselling': counselling, 'noCounselling': counselling is None, 'counselling_forms': counselling_forms, 'treatmentPlan': treatmentPlan, 'treatment_strategies': treatment_strategies, 'noTreatment': treatmentPlan is None})
+            return render(request, "viewPatientRecord.html", {'noRecord': True, 'details': patientDetails, 'PIS_details': None, 'consentForm': consentForm, 'noConsent': consentForm is None, 'counselling': counselling, 'noCounselling': counselling is None, 'counselling_forms': counselling_forms, 'treatmentPlan': treatmentPlan, 'treatment_strategies': treatment_strategies, 'noTreatment': treatmentPlan is None,'prescriptionList':prescriptionListData})
     
     except Patient.DoesNotExist:
         messages.add_message(request, messages.ERROR, "Patient not found.")
@@ -137,10 +162,10 @@ def patientRecord(request, patientId):
 
 
 # See Prescription
-def viewMedicine(request,medicineId,prescriptionId):
+def viewMedicine(request,prescriptionId):
     try:
-        medicineDetails = Medicine.objects.get(pk=medicineId)
-        return render(request,'viewMedicine.html',{'medicineDetails': medicineDetails,'prescriptionId':prescriptionId})
+        # medicineDetails = Medicine.objects.get(pk=medicineId)
+        return render(request,'viewMedicine.html',{'prescriptionId':prescriptionId})
     except Exception as e:
         print(e)
         return redirect('viewPrescription',prescriptionId)
@@ -162,10 +187,10 @@ def viewPrescription(request, prescriptionId):
         if len(medicinDirMap) != 0:
             for entry in medicinDirMap:
                 medsDir = MedicineDirection.objects.filter(pk=entry.medicineDirectionId.id).first()
-                medsName = Medicine.objects.filter(pk=medsDir.medicineId.id).first()
+                # medsName = Medicine.objects.filter(pk=medsDir.medicineId.id).first()
                 medsDirList.append({
-                    'medsDir':medsDir,
-                    'medsName':medsName
+                    'medsDir':medsDir
+                    # 'medsName':medsName
                 })
                 print(medsDirList)
         data = {
@@ -247,26 +272,25 @@ def medication(request, prescriptionId):
     try:
         if request.session['role']!= "Doctor":
             return render(request, 'index.html', {'messages': "You Are Not Authenticated"})
-        allMeds = Medicine.objects.all()
+        # allMeds = Medicine.objects.all()
         if request.method == 'POST':
-            medicineId = request.POST['medicineId']
-            medicine = Medicine.objects.filter(id=medicineId).first()
+            medicine = request.POST['medicine']
             doseUnit = request.POST['doseUnit']
             duration = request.POST['duration']
             doseTiming = request.POST['doseTiming']
             additionalInstruction = request.POST['additionalInstruction']
             reason = request.POST['reason']
             with transaction.atomic():
-                medicationData = MedicineDirection.objects.create(medicineId=medicine,doseUnit=doseUnit,duration=duration,doseTiming=doseTiming,additionalInstruction=additionalInstruction,reason=reason)
+                medicationData = MedicineDirection.objects.create(medicine=medicine,doseUnit=doseUnit,duration=duration,doseTiming=doseTiming,additionalInstruction=additionalInstruction,reason=reason)
                 prescription = Prescription.objects.get(pk=prescriptionId)
                 medicationDirData = MedicineDirPrescriptionMap.objects.create(prescriptionId=prescription,medicineDirectionId=medicationData)
-            return render(request, "medicationPage.html",{'prescriptionId':prescriptionId, 'allMeds':allMeds, 'success':"Medicine Added Successfullty"})
+            return render(request, "medicationPage.html",{'prescriptionId':prescriptionId, 'success':"Medicine Added Successfullty"})
         else:
-            return render(request, "medicationPage.html",{'prescriptionId':prescriptionId,'allMeds':allMeds,})
+            return render(request, "medicationPage.html",{'prescriptionId':prescriptionId,})
     except Exception as e:
         print(e)
-        allMeds = Medicine.objects.all()
-        return render(request, "medicationPage.html",{'prescriptionId':prescriptionId,'allMeds':allMeds,'message':"Please Fill All The Required Details!"})
+        # allMeds = Medicine.objects.all()
+        return render(request, "medicationPage.html",{'prescriptionId':prescriptionId,'message':"Please Fill All The Required Details!"})
     
 '''    
 def search_list(request):
