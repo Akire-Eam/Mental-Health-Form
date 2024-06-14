@@ -237,10 +237,6 @@
             <div class="card-header">
               <div class="nav nav-pills card-header-pills">
                 <button class="nav-item btn btn-primary activeTab" data-tab-target="#BasicDetails">Diagnosis Details</button>
-                <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#MedicalHistory">Device Details</button>
-                {% if data.laboratoryTest|length %}
-                  <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Prescriptions">Tests</button>
-                {% endif %}
                 {% if data.medsDirList|length %}
                   <button class="nav-item btn btn-primary inactiveTab" data-tab-target="#Medicines">Medicines</button>
                 {% endif %}
@@ -260,7 +256,7 @@
               {% if request.session.role == "Doctor" %}
                 <h1>Diagnosis Details</h1>
                 <h1>
-                <a href="/doctor/laboratoryTest/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Add Test</a>
+                <!-- <a href="/doctor/laboratoryTest/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Add Test</a> -->
                 <a href="/doctor/medication/{{ data.prescriptionId }}" class="btn btn-info btm-sm" style ="background-color:#B0A99F; border-color:#B0A99F; color:white; float:center; margin-top: 1%;">Add Medicine</a>
               </h1>
                 {% else %}
@@ -274,33 +270,6 @@
                             <td>{{data.diagnosis.diagnosisName}}</td>
                           </tr>
                           <tr>
-                            <th width="30%">Diagnosis Body Part</th>
-                            <td width="2%">:</td>
-                            <td>{{data.diagnosis.diagnosisBodySite}}</td>
-                          </tr>
-                          
-                          <tr>
-                            <th width="30%">Onset Date</th>
-                            <td width="2%">:</td>
-                            <td>{{data.diagnosis.dateOfOnset}}</td>
-                          </tr>
-        
-                          <tr>
-                            <th width="30%">Severity</th>
-                            <td width="2%">:</td>
-                            <td>{{data.diagnosis.severity}}</td>
-                          </tr>
-                          <tr>
-                            <th width="30%">Abatement Date</th>
-                            <td width="2%">:</td>
-                            <td>{{data.diagnosis.dateOfAbatement}}</td>
-                          </tr>
-                          <tr>
-                            <th width="30%">Diagnosis Certainity</th>
-                            <td width="2%">:</td>
-                            <td>{{data.diagnosis.diagnosisCertainity}}</td>
-                          </tr>
-                          <tr>
                             <th width="30%">Diagnosis Description</th>
                             <td width="2%">:</td>
                             <td>{{data.diagnosis.diagnosisDescription}}</td>
@@ -309,33 +278,7 @@
                   </div>
 
             </div>
-            <div id="MedicalHistory" data-tab-content>
-                <h1>Device Details</h1>
-                <div class="card-body pt-0" id="table2">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th width="30%">Medical Device Used</th>
-                            <td width="2%">:</td>
-                            <td>{{data.medicalDevice.deviceName}}</td>
-                          </tr>
-                          <tr>
-                            <th width="30%">Device Body Site</th>
-                            <td width="2%">:</td>
-                            <td>{{data.medicalDevice.deviceBodySite}}</td>
-                          </tr>
-                          <tr>
-                            <th width="30%">Use For</th>
-                            <td width="2%">:</td>
-                            <td>{{data.medicalDevice.deviceUse}}</td>
-                          </tr>
-                          <tr>
-                            <th width="30%">Device Description</th>
-                            <td width="2%">:</td>
-                            <td>{{data.medicalDevice.deviceDscription}}</td>
-                          </tr>
-                    </table>
-                  </div>
-            </div>
+            
             <div id="Prescriptions" data-tab-content>
                 <table class="table" style="max-width: 80%; margin-left:10%;">
                     <tr id="header">

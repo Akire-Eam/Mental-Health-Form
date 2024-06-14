@@ -128,61 +128,21 @@
                                         {% endif %}
                                         </div>
                                         
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <h5>Diagnosis</h5>
                                             <hr>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="diagnosisName" placeholder="Diagnosis Name*" value="" />
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="diagnosisBodySite" placeholder="BodySite*" value="" />
-                                            </div>
-                                            <div class="form-group">
-                                                <input placeholder="Date of onset *" type="text" name="dateOfOnset" class="form-control" value="" onfocus="(this.type='date')"
-                                                onblur="(this.type='text')"/>
-                                            </div>                                           
-                                            <div class="form-group">
-                                                <select class="form-control" name="severity">
-                                                    <option class="hidden"  selected disabled>Severity</option>
-                                                    <option value="acute ">acute </option>
-                                                    <option value="chronic">chronic</option>
-                                                </select>
-                                            </div> 
-                                            <div class="form-group">
-                                                <input placeholder="Date Of Abatement *" type="text" name="dateOfAbatement" class="form-control" value="" onfocus="(this.type='date')"
-                                                onblur="(this.type='text')"/>
-                                            </div>                                                                               
-                                            <div class="form-group">
-                                                <select class="form-control" name="diagnosisCertainity">
-                                                    <option class="hidden"  selected disabled>Certainity</option>
-                                                    <option value="suspected  ">suspected </option>
-                                                    <option value="confirmed">confirmed</option>
-                                                </select>
-                                            </div>    
-                                            <div class="form-group">
                                                 <textarea class="form-control" name="diagnosisDescription" placeholder="Diagnosis Description *" rows="5" value="" ></textarea>
                                             </div>
                                         </div>
-                                                <div class="col-md-6">
-                                                    <h5>Any Medical Device</h5>
-                                                    <hr>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="deviceName" placeholder="Device Name" value="" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="deviceBodySite" placeholder="Body Site " value=""  />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="deviceUse" placeholder="Device Use" value=""  />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <textarea class="form-control" name="deviceDescription" placeholder="Device Description" rows="5" value="" ></textarea>
-                                                    </div>                                 
-                                            {% comment %} #add here {% endcomment %}
-                                            <div >
+
+                                                
+                                            <div class="col-md-12">
                                             <input type="submit" style="width: 150px;" class="btnRegister"  value="Add Diagnosis"/>
                                             </div>
-                                        </div>
                                     </div>
                                 </form>
                             </div>

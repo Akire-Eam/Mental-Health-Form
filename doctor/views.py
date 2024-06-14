@@ -237,27 +237,11 @@ def diagnosis(request, patientId):
         patient = Patient.objects.filter(id=patientId).first()
         if request.method == 'POST':
             diagnosisName = request.POST.get('diagnosisName',None)
-            diagnosisBodySite = request.POST.get('diagnosisBodySite',None)
-            if request.POST['dateOfOnset'] == '':
-                dateOfOnset = None
-            else:
-                dateOfOnset = request.POST['dateOfOnset']
-            severity = request.POST.get('severity',None)
-            if request.POST['dateOfAbatement'] == '':
-                dateOfAbatement = None
-            else:
-                dateOfAbatement = request.POST['dateOfAbatement']
-            diagnosisCertainity = request.POST.get('diagnosisCertainity',None)
             diagnosisDescription = request.POST.get('diagnosisDescription',None)
-            deviceName = request.POST.get('deviceName',None)
-            deviceBodySite = request.POST.get('deviceBodySite',None)
-            deviceUse = request.POST.get('deviceUse',None)
-            deviceDescription = request.POST.get('deviceDescription',None)
-            
+
             with transaction.atomic():
-                diagnosisData = Diagnosis.objects.create(diagnosisName=diagnosisName,diagnosisBodySite=diagnosisBodySite,dateOfOnset=dateOfOnset,severity=severity,dateOfAbatement=dateOfAbatement,diagnosisCertainity=diagnosisCertainity,diagnosisDescription=diagnosisDescription)
-                deviceData = MedicalDevice.objects.create(deviceName=deviceName,deviceBodySite=deviceBodySite,deviceUse=deviceUse,deviceDscription=deviceDescription)
-                prescriptionData = Prescription.objects.create(patientId=patient,diagnosisId=diagnosisData,medicalDevice=deviceData)
+                diagnosisData = Diagnosis.objects.create(diagnosisName=diagnosisName,diagnosisDescription=diagnosisDescription)
+                prescriptionData = Prescription.objects.create(patientId=patient,diagnosisId=diagnosisData)
                 allMeds = Medicine.objects.all()
                 prescriptionId=prescriptionData.id
             return redirect('viewPrescription',prescriptionId)

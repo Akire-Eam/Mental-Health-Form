@@ -21,11 +21,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('diagnosisName', models.CharField(max_length=200)),
-                ('diagnosisBodySite', models.CharField(max_length=100)),
-                ('dateOfOnset', models.DateField()),
-                ('severity', models.CharField(max_length=50)),
-                ('dateOfAbatement', models.DateField()),
-                ('diagnosisCertainity', models.CharField(max_length=100)),
                 ('diagnosisDescription', models.TextField()),
                 ('createdDate', models.DateField(default=datetime.datetime.now)),
             ],
